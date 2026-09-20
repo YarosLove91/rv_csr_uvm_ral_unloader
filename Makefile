@@ -19,8 +19,8 @@ UVM_DIR := $(CURDIR)/uvm-verilator
 # Sources (auto-collected via wildcard)
 # ============================================================
 TOP       := top
-SV_FILES  := $(wildcard $(SRC_DIR)/*.sv)
-SVH_FILES := $(wildcard $(SRC_DIR)/*.svh)
+SV_FILES  := $(wildcard $(SRC_DIR)/*.sv) $(wildcard $(SRC_DIR)/**/*.sv)
+SVH_FILES := $(wildcard $(SRC_DIR)/*.svh) $(wildcard $(SRC_DIR)/**/*.svh)
 SV_SRC    := $(sort $(SV_FILES))          # детерминированный порядок
 
 UVM_PKG    := $(UVM_DIR)/src/uvm_pkg.sv
