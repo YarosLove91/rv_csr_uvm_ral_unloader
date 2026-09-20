@@ -38,18 +38,6 @@ TEST_NAME ?= jelly_bean_reg_test
 # ============================================================
 # Linker selection
 # ============================================================
-# g++ -fuse-ld принимает ТОЛЬКО: bfd | gold | lld | mold
-# Значение 'ld' НЕВЕРНО.
-#
-# ВАЖНО: используем LINKER, а не LD — LD уже определена GNU Make
-# по умолчанию (= ld), поэтому LD ?= ... игнорируется.
-#
-# Приоритет авто-детекта: mold → lld → gold → пусто (GCC default)
-#
-# Переопределить из командной строки:
-#   make LINKER=mold uvm_build
-#   make LINKER=bfd  uvm_build
-#   make LINKER=     uvm_build   # отключить -fuse-ld
 LINKER ?= $(shell \
 	for l in mold lld gold; do \
 		if command -v $$l >/dev/null 2>&1; then echo $$l; break; fi; \
@@ -72,11 +60,6 @@ endif
 # ============================================================
 # Verilator Flags
 # ============================================================
-OUTPUT_GROUPS ?= $(shell \
-	n=$(NPROC); \
-	if [ $$n -lt 8 ]; then echo $$((n)); \
-	else echo $$((n - 4)); fi)
-
 VFLAGS := \
 	--binary \
 	--timing \
@@ -96,7 +79,7 @@ VFLAGS := \
 # ============================================================
 # Main Targets
 # ============================================================
-.PHONY: all uvm_download uvm_build dut_build uvm_run list clean distclean help
+.PHONY: all uvm_download uvm_build uvm_run list clean help
 
 all: uvm_run
 
@@ -124,9 +107,6 @@ uvm_build: $(UVM_MARKER) $(SV_SRC) $(SVH_FILES) | $(OUT_DIR)
 	fi
 	@echo ">>> [build] Verilator: jobs=$(NPROC), ld=$(LD_DISPLAY)"
 	$(VERILATOR) $(VFLAGS) $(UVM_PKG) $(SV_SRC)
-
-# Alias для удобства
-dut_build: uvm_build
 
 $(OUT_DIR):
 	@mkdir -p $@
@@ -158,10 +138,6 @@ clean:
 	@echo ">>> [clean] Removing build artifacts..."
 	@rm -rf $(OUT_DIR) $(OBJ_DIR)
 
-distclean: clean
-	@echo ">>> [distclean] Removing UVM repo..."
-	@rm -rf $(UVM_DIR)
-
 # ------------------------------------------------------------
 # Help
 # ------------------------------------------------------------
@@ -170,16 +146,13 @@ help:
 	@echo "  all          - Build and run test (default)"
 	@echo "  uvm_download - Clone uvm-verilator repository"
 	@echo "  uvm_build    - Build UVM + DUT with Verilator"
-	@echo "  dut_build    - Alias for uvm_build"
-	@echo "  uvm_run      - Build and run simulation (TEST_NAME=...)"
+	@echo "  uvm_run      - Build and run simulation"
 	@echo "  list         - Show collected sources and variables"
 	@echo "  clean        - Remove build artifacts"
-	@echo "  distclean    - Remove artifacts + UVM repo"
 	@echo "  help         - Show this help"
 	@echo ""
 	@echo "Variables:"
-	@echo "  TOP=<name>         - Top module (default: top)"
 	@echo "  TEST_NAME=<name>   - UVM test (default: jelly_bean_reg_test)"
 	@echo "  NPROC=<n>          - Parallel jobs (default: nproc)"
-	@echo "  LD=<linker>        - Linker: mold | lld | gold | bfd | (empty)"
+	@echo "  LINKER=<linker>    - Linker: mold | lld | gold | bfd | (empty)"
 	@echo "                       default: auto-detect mold -> lld -> gold"

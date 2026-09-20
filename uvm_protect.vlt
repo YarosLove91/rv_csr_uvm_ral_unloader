@@ -1,0 +1,6 @@
+`verilator_config
+
+hier_block -module "uvm_wrapper"
+
+lint_off -rule TIMESCALEMOD
+lint_off -rule COVERIGN
