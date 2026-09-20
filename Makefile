@@ -40,7 +40,8 @@ TEST_NAME ?= jelly_bean_reg_test
 # ============================================================
 LINKER ?= $(shell \
 	for l in mold lld gold; do \
-		if command -v $$l >/dev/null 2>&1; then echo $$l; break; fi; \
+		if command -v $$l >/dev/null 2>&1; then echo $$l; break; \
+	fi; \
 	done)
 
 ifeq ($(strip $(LINKER)),)
@@ -62,8 +63,9 @@ endif
 # ============================================================
 VFLAGS := \
 	--binary \
-	--timing \
+	--hierarchical \
 	-j $(NPROC) \
+	--output-split 20000 \
 	-Wno-fatal \
 	-Wno-DECLFILENAME \
 	-Wno-UNUSED \
@@ -105,7 +107,7 @@ uvm_build: $(UVM_MARKER) $(SV_SRC) $(SVH_FILES) | $(OUT_DIR)
 		echo ">>> [build] Headers:"; \
 		printf '    %s\n' $(SVH_FILES); \
 	fi
-	@echo ">>> [build] Verilator: jobs=$(NPROC), ld=$(LD_DISPLAY)"
+	@echo ">>> [build] Verilator: jobs=$(NPROC), ld=$(LINKER_DISPLAY)"
 	$(VERILATOR) $(VFLAGS) $(UVM_PKG) $(SV_SRC)
 
 $(OUT_DIR):
@@ -127,7 +129,7 @@ list:
 	@echo "UVM_PKG   : $(UVM_PKG)"
 	@echo "INC_DIRS  : $(INC_DIRS)"
 	@echo "NPROC     : $(NPROC)"
-	@echo "LD        : $(LD_DISPLAY)"
+	@echo "LD        : $(LINKER_DISPLAY)"
 	@echo "LDFLAGS   : $(LDFLAGS_EXTRA)"
 	@echo "UVM_BIN   : $(UVM_BIN)"
 
