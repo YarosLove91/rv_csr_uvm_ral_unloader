@@ -1,0 +1,261 @@
+= Test Vector Manager
+:toc: left
+:toclevels: 3
+
+== Описание
+
+Проект для стресс-тестирования hardware компонентов с использованием:
+
+* **UVM (Universal Verification Methodology)** - фреймворк для верификации
+* **Verilator** - симулятор SystemVerilog
+* **Shared Memory** - IPC для обмена данными между C++ и SystemVerilog
+
+== Структура проекта
+
+[source,text]
+----
+├── src/                    # C++ исходники (сервер, клиент, DPI)
+├── include/                # Заголовочные файлы
+├── uvm/                    # SystemVerilog UVM тесты
+├── next_task/              # Пример UVM RAL (tutorial_9.sv)
+├── uvm-verilator/          # UVM библиотека (скачивается автоматически)
+├── Makefile                # Основной Makefile
+└── README.md               # Документация
+----
+
+== Быстрый старт
+
+=== Зависимости
+
+* `g++` (C++17)
+* `verilator` (5.x)
+* `git`
+
+=== Установка и сборка
+
+[source,bash]
+----
+# Клонировать репозиторий
+git clone <repo-url>
+cd test-vector-manager
+
+# Собрать все компоненты
+make
+
+# Или по отдельности:
+make server        # C++ сервер
+make uvm_build     # UVM тест через Verilator
+----
+
+=== Запуск стресс-теста
+
+[source,bash]
+----
+# 1. Запустить сервер (генератор трафика)
+./server.out
+
+# 2. В другом терминале запустить UVM тест
+make uvm_run N=1000000
+----
+
+=== Параметры
+
+|=== 
+| Параметр | Описание | По умолчанию
+
+| `N` | Количество транзакций | 1000
+| `SHM_SIZE` | Размер shared memory (байты) | 4096
+| `NUM_TRANSACTIONS` | Макрос в `include/packet.hpp` | 1000000
+|===
+
+== Пример UVM RAL
+
+Директория `next_task/` содержит пример работы с Register Abstraction Layer (RAL).
+
+= UVM RAL Example
+:toc: left
+:toclevels: 3
+
+== Описание
+
+Пример использования **UVM Register Abstraction Layer (RAL)** с Verilator.
+
+Источник: https://github.com/Truncheon-eng/test-vector-manager[next_task/tutorial_9.sv]
+
+== Структура проекта
+[source,text]
+----
+├── src/                    # SystemVerilog исходники
+│   └── tutorial_9.sv       # Полный пример UVM RAL
+├── bin_out/                # Собранные бинарники (Verilator output)
+├── uvm-verilator/          # UVM библиотека (автоклонируется)
+├── Makefile                # Сборка и запуск
+└── README.adoc             # Эта документация
+----
+
+== Зависимости
+
+* `g++` (C++17)
+* `verilator` (5.x)
+* `git`
+
+== Быстрый старт
+[source,bash]
+----
+# Собрать проект
+make
+
+# Запустить тест по умолчанию (jelly_bean_reg_test)
+make uvm_run
+----
+
+== Доступные тесты
+
+|===
+| Тест | Описание
+
+| `jelly_bean_reg_test`
+| Основной тест - запись/чтение регистров через RAL
+
+| `jelly_bean_reg_hw_reset_test`
+| Проверка аппаратного сброса регистров
+
+|===
+
+Запуск конкретного теста:
+
+[source,bash]
+----
+make uvm_run TEST_NAME=jelly_bean_reg_test
+make uvm_run TEST_NAME=jelly_bean_reg_hw_reset_test
+----
+
+== Команды Make
+
+|===
+| Команда | Описание
+
+| `make`
+| Собрать проект (Verilator)
+
+| `make uvm_run`
+| Запустить тест
+
+| `make uvm_run TEST_NAME=...`
+| Запустить конкретный тест
+
+| `make clean`
+| Удалить артефакты сборки
+
+| `make distclean`
+| Удалить всё + UVM репозиторий
+
+|===
+
+== Архитектура примера
+
+=== Компоненты
+
+1. **Interface** (`jelly_bean_if`) - интерфейс DUT
+2. **DUT** (`jelly_bean_taster`) - "дегустатор желе"
+3. **RAL** (`jelly_bean_reg_block`) - регистровая карта:
+   * `jb_recipe_reg` (WO) - вкус, цвет, сахар, кислота
+   * `jb_taste_reg` (RO) - вкус (результат)
+4. **Testbench** - UVM агент, монитор, scoreboard
+
+=== Тест `jelly_bean_reg_test`
+
+[source,systemverilog]
+----
+// Запись в регистр рецепта
+write_reg(jb_recipe_reg, status,
+    { sour, sugar_free, color, flavor });
+
+// Чтение регистра вкуса
+read_reg(jb_taste_reg, status, value);
+----
+
+=== Тест `jelly_bean_reg_hw_reset_test`
+
+Использует встроенную последовательность `uvm_reg_hw_reset_seq` для проверки reset-значений.
+
+== Примечания
+
+* UVM скомпилирован с `UVM_NO_DPI` (Verilator не поддерживает полный DPI)
+* Предупреждения `NO_DPI_USED` можно игнорировать
+* Coverage не поддерживается в Verilator (игнорируется)
+
+[source,bash]
+----
+cd next_task
+
+# Собрать
+make uvm_build
+
+# Запустить тест по умолчанию
+make uvm_run
+
+# Запустить конкретный тест
+make uvm_run TEST_NAME=jelly_bean_reg_test
+make uvm_run TEST_NAME=jelly_bean_reg_hw_reset_test
+----
+
+== Архитектура
+
+=== Компоненты
+
+1. **C++ Сервер** (`src/server.cpp`)
+   - Генерирует пакеты с помощью LFSR
+   - Записывает в shared memory
+
+2. **UVM Тест** (`uvm/stress_test.sv`)
+   - Читает из shared memory через DPI
+   - Проверяет последовательность и данные
+
+3. **Shared Memory** (`include/RingBuffer.hpp`)
+   - Кольцевой буфер для IPC
+   - Блокировка через `flock`
+
+=== LFSR Генератор
+
+Полином: `x^16 + x^5 + x^3 + x^2 + 1` +
+Начальное значение: `0xACE1`
+
+=== Пакет данных
+
+[source,cpp]
+----
+struct test_packet_t {
+    uint64_t seq;    // Номер последовательности
+    uint16_t data;   // Данные LFSR
+};
+----
+
+== Очистка
+
+[source,bash]
+----
+make clean       # Удалить артефакты сборки
+make distclean   # Удалить UVM репозиторий
+----
+
+== Проблемы и решения
+
+=== SIGBUS при запуске
+
+При изменении макроса `SIZE` в `include/auxiliary.hpp` необходимо также изменять `PAGE_SIZE`:
+
+[source,cpp]
+----
+#define SIZE 1024           // Размер буфера
+#define PAGE_SIZE (8 * 0x1000)  // Должно быть >= sizeof(RingBuffer<SIZE, T>)
+----
+
+=== UVM_NO_DPI предупреждение
+
+Verilator работает без DPI для UVM. Предупреждение можно игнорировать.
+
+== Лицензия
+
+MIT License (для tutorial_9.sv) +
+Собственный код проекта
