@@ -97,6 +97,72 @@ class jelly_bean_reg_hw_reset_test extends jelly_bean_base_test;
    endtask: main_phase
 endclass: jelly_bean_reg_hw_reset_test
 
+//------------------------------------------------------------------------------
+// Class: mstatus_mcause_test
+//------------------------------------------------------------------------------
+
+class mstatus_mcause_test extends jelly_bean_base_test;
+   `uvm_component_utils( mstatus_mcause_test )
+
+   function new( string name, uvm_component parent );
+      super.new( name, parent );
+   endfunction: new
+
+   task main_phase( uvm_phase phase );
+      mstatus_mcause_test_sequence test_seq;
+      jelly_bean_reg_printer reg_printer;
+
+      phase.raise_objection( .obj( this ) );
+      
+      `uvm_info( get_name(), "Starting mstatus and mcause register test", UVM_LOW )
+      
+      test_seq = mstatus_mcause_test_sequence::type_id::create( .name( "test_seq" ) );
+      test_seq.model = jb_reg_block;
+      test_seq.start( .sequencer( jb_env.jb_agent.jb_seqr ) );
+      
+      `uvm_info( get_name(), "mstatus and mcause register test completed", UVM_LOW )
+      
+      // Print detailed register information
+      reg_printer = jelly_bean_reg_printer::type_id::create( .name( "reg_printer" ) );
+      reg_printer.print_reg_block_info( jb_reg_block );
+      
+      phase.drop_objection( .obj( this ) );
+   endtask: main_phase
+endclass: mstatus_mcause_test
+
+//------------------------------------------------------------------------------
+// Class: mie_mepc_test - Test for registers with bit fields
+//------------------------------------------------------------------------------
+
+class mie_mepc_test extends jelly_bean_base_test;
+   `uvm_component_utils( mie_mepc_test )
+
+   function new( string name, uvm_component parent );
+      super.new( name, parent );
+   endfunction: new
+
+   task main_phase( uvm_phase phase );
+      mie_mepc_test_sequence test_seq;
+      jelly_bean_reg_printer reg_printer;
+
+      phase.raise_objection( .obj( this ) );
+      
+      `uvm_info( get_name(), "Starting mie and mepc register test with bit fields", UVM_LOW )
+      
+      test_seq = mie_mepc_test_sequence::type_id::create( .name( "test_seq" ) );
+      test_seq.model = jb_reg_block;
+      test_seq.start( .sequencer( jb_env.jb_agent.jb_seqr ) );
+      
+      `uvm_info( get_name(), "mie and mepc register test with bit fields completed", UVM_LOW )
+      
+      // Print detailed register information
+      reg_printer = jelly_bean_reg_printer::type_id::create( .name( "reg_printer" ) );
+      reg_printer.print_reg_block_info( jb_reg_block );
+      
+      phase.drop_objection( .obj( this ) );
+   endtask: main_phase
+endclass: mie_mepc_test
+
 //==============================================================================
 // Copyright (c) 2011-2015 ClueLogic, LLC
 // http://cluelogic.com/
