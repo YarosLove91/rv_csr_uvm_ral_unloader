@@ -12,8 +12,29 @@ UVM_REPO := https://github.com/chipsalliance/uvm-verilator.git
 # ============================================================
 SRC_DIR := src
 OBJ_DIR := obj
-OUT_DIR := bin_out
 UVM_DIR := $(CURDIR)/uvm-verilator
+
+# Определяем использовать ли /dev/shm для ускорения компиляции
+# Можно отключить: make USE_SHM=no
+USE_SHM ?= yes
+SHM_DIR := /dev/shm/verilator_build
+
+# Проверяем доступность /dev/shm
+ifeq ($(USE_SHM),yes)
+  ifneq ($(shell test -d /dev/shm && echo "ok"),ok)
+    USE_SHM := no
+  endif
+endif
+
+# Выбираем директорию для сборки
+ifeq ($(USE_SHM),yes)
+  OUT_DIR := $(SHM_DIR)
+else
+  OUT_DIR := bin_out
+endif
+
+# Директория для финального бинарника (всегда на диске)
+BIN_DIR := bin_out
 
 # ============================================================
 # Sources (auto-collected via wildcard)
@@ -24,7 +45,7 @@ SVH_FILES := $(wildcard $(SRC_DIR)/*.svh) $(wildcard $(SRC_DIR)/**/*.svh)
 SV_SRC    := $(sort $(SV_FILES))          # детерминированный порядок
 
 UVM_PKG    := $(UVM_DIR)/src/uvm_pkg.sv
-UVM_BIN    := $(OUT_DIR)/V$(TOP)
+UVM_BIN    := $(BIN_DIR)/V$(TOP)
 UVM_MARKER := $(UVM_DIR)/.downloaded
 
 INC_DIRS := $(SRC_DIR) $(UVM_DIR)/src
@@ -100,17 +121,24 @@ $(UVM_MARKER):
 # ------------------------------------------------------------
 # Build UVM + DUT with Verilator
 # ------------------------------------------------------------
-uvm_build: $(UVM_MARKER) $(SV_SRC) $(SVH_FILES) | $(OUT_DIR)
+uvm_build: $(UVM_MARKER) $(SV_SRC) $(SVH_FILES) | $(OUT_DIR) $(BIN_DIR)
 	@echo ">>> [build] Sources:"
 	@printf '    %s\n' $(SV_SRC)
 	@if [ -n "$(SVH_FILES)" ]; then \
 		echo ">>> [build] Headers:"; \
 		printf '    %s\n' $(SVH_FILES); \
 	fi
-	@echo ">>> [build] Verilator: jobs=$(NPROC), ld=$(LINKER_DISPLAY)"
+	@echo ">>> [build] Verilator: jobs=$(NPROC), ld=$(LINKER_DISPLAY), shm=$(USE_SHM)"
 	$(VERILATOR) $(VFLAGS) $(UVM_PKG) $(SV_SRC)
+ifeq ($(USE_SHM),yes)
+	@# Копируем бинарник из /dev/shm на диск
+	@cp -f $(OUT_DIR)/V$(TOP) $(BIN_DIR)/V$(TOP) 2>/dev/null || true
+endif
 
 $(OUT_DIR):
+	@mkdir -p $@
+
+$(BIN_DIR):
 	@mkdir -p $@
 
 # ------------------------------------------------------------
@@ -138,7 +166,10 @@ list:
 # ------------------------------------------------------------
 clean:
 	@echo ">>> [clean] Removing build artifacts..."
-	@rm -rf $(OUT_DIR) $(OBJ_DIR)
+	@rm -rf $(BIN_DIR) $(OBJ_DIR)
+ifeq ($(USE_SHM),yes)
+	@rm -rf $(SHM_DIR)
+endif
 
 # ------------------------------------------------------------
 # Help
@@ -158,3 +189,4 @@ help:
 	@echo "  NPROC=<n>          - Parallel jobs (default: nproc)"
 	@echo "  LINKER=<linker>    - Linker: mold | lld | gold | bfd | (empty)"
 	@echo "                       default: auto-detect mold -> lld -> gold"
+	@echo "  USE_SHM=yes/no     - Use /dev/shm for build (default: yes)"
