@@ -153,6 +153,34 @@ class mie_mepc_test extends jelly_bean_base_test;
    endtask: main_phase
 endclass: mie_mepc_test
 
+//------------------------------------------------------------------------------
+// Class: all_csr_registers_test - Test for all CSR registers
+//------------------------------------------------------------------------------
+
+class all_csr_registers_test extends jelly_bean_base_test;
+   `uvm_component_utils( all_csr_registers_test )
+
+   function new( string name, uvm_component parent );
+      super.new( name, parent );
+   endfunction: new
+
+   task main_phase( uvm_phase phase );
+      all_csr_registers_test_sequence test_seq;
+
+      phase.raise_objection( .obj( this ) );
+      
+      `uvm_info( get_name(), "Starting all CSR registers test", UVM_LOW )
+      
+      test_seq = all_csr_registers_test_sequence::type_id::create( .name( "test_seq" ) );
+      test_seq.model = jb_reg_block;
+      test_seq.start( .sequencer( jb_env.jb_agent.jb_seqr ) );
+      
+      `uvm_info( get_name(), "All CSR registers test completed", UVM_LOW )
+      
+      phase.drop_objection( .obj( this ) );
+   endtask: main_phase
+endclass: all_csr_registers_test
+
 //==============================================================================
 // Copyright (c) 2011-2015 ClueLogic, LLC
 // http://cluelogic.com/
