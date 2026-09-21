@@ -114,26 +114,10 @@ class mstatus_mcause_test_sequence extends uvm_reg_sequence;
       
       `uvm_info( get_name(), "mstatus and mcause register tests completed successfully", UVM_LOW )
       
-      // Print register summary
-      `uvm_info( get_name(), "\n=== Register Summary ===", UVM_LOW )
-      jb_reg_block.print();
-      
-      // Detailed register information
-      `uvm_info( get_name(), "\n=== Detailed Register Information ===", UVM_LOW )
-      
-      // Print mstatus register details
-      `uvm_info( get_name(), "\n--- mstatus Register (0x300) ---", UVM_LOW )
-      `uvm_info( get_name(), $sformatf("  Name: %s", jb_reg_block.mstatus.get_name()), UVM_LOW )
-      `uvm_info( get_name(), $sformatf("  Address: 0x%03h", jb_reg_block.mstatus.get_address()), UVM_LOW )
-      `uvm_info( get_name(), $sformatf("  Size: %0d bits", jb_reg_block.mstatus.get_n_bits()), UVM_LOW )
-      `uvm_info( get_name(), $sformatf("  Access: %s", jb_reg_block.mstatus.get_rights()), UVM_LOW )
-      
-      // Print mcause register details
-      `uvm_info( get_name(), "\n--- mcause Register (0x342) ---", UVM_LOW )
-      `uvm_info( get_name(), $sformatf("  Name: %s", jb_reg_block.mcause.get_name()), UVM_LOW )
-      `uvm_info( get_name(), $sformatf("  Address: 0x%03h", jb_reg_block.mcause.get_address()), UVM_LOW )
-      `uvm_info( get_name(), $sformatf("  Size: %0d bits", jb_reg_block.mcause.get_n_bits()), UVM_LOW )
-      `uvm_info( get_name(), $sformatf("  Access: %s", jb_reg_block.mcause.get_rights()), UVM_LOW )
+      // Print register information using UVM RAL methods
+      `uvm_info( get_name(), "\n=== Register Information ===", UVM_LOW )
+      `uvm_info( get_name(), $sformatf("mstatus register:\n%s", jb_reg_block.mstatus.sprint()), UVM_LOW )
+      `uvm_info( get_name(), $sformatf("mcause register:\n%s", jb_reg_block.mcause.sprint()), UVM_LOW )
    endtask: body
      
 endclass: mstatus_mcause_test_sequence
@@ -225,47 +209,12 @@ class mie_mepc_test_sequence extends uvm_reg_sequence;
       
       `uvm_info( get_name(), "mie and mepc register tests with bit fields completed successfully", UVM_LOW )
       
-      // Print register summary
-      `uvm_info( get_name(), "\n=== Register Summary ===", UVM_LOW )
-      jb_reg_block.print();
-      
-      // Detailed register information
-      `uvm_info( get_name(), "\n=== Detailed Register Information ===", UVM_LOW )
-      
-      // Print mstatus register details
-      `uvm_info( get_name(), "\n--- mstatus Register (0x300) ---", UVM_LOW )
-      `uvm_info( get_name(), $sformatf("  Name: %s", jb_reg_block.mstatus.get_name()), UVM_LOW )
-      `uvm_info( get_name(), $sformatf("  Address: 0x%03h", jb_reg_block.mstatus.get_address()), UVM_LOW )
-      `uvm_info( get_name(), $sformatf("  Size: %0d bits", jb_reg_block.mstatus.get_n_bits()), UVM_LOW )
-      `uvm_info( get_name(), $sformatf("  Access: %s", jb_reg_block.mstatus.get_rights()), UVM_LOW )
-      
-      // Print mcause register details
-      `uvm_info( get_name(), "\n--- mcause Register (0x342) ---", UVM_LOW )
-      `uvm_info( get_name(), $sformatf("  Name: %s", jb_reg_block.mcause.get_name()), UVM_LOW )
-      `uvm_info( get_name(), $sformatf("  Address: 0x%03h", jb_reg_block.mcause.get_address()), UVM_LOW )
-      `uvm_info( get_name(), $sformatf("  Size: %0d bits", jb_reg_block.mcause.get_n_bits()), UVM_LOW )
-      `uvm_info( get_name(), $sformatf("  Access: %s", jb_reg_block.mcause.get_rights()), UVM_LOW )
-      
-      // Print mepc register details
-      `uvm_info( get_name(), "\n--- mepc Register (0x341) ---", UVM_LOW )
-      `uvm_info( get_name(), $sformatf("  Name: %s", jb_reg_block.mepc.get_name()), UVM_LOW )
-      `uvm_info( get_name(), $sformatf("  Address: 0x%03h", jb_reg_block.mepc.get_address()), UVM_LOW )
-      `uvm_info( get_name(), $sformatf("  Size: %0d bits", jb_reg_block.mepc.get_n_bits()), UVM_LOW )
-      `uvm_info( get_name(), $sformatf("  Access: %s", jb_reg_block.mepc.get_rights()), UVM_LOW )
-      
-      // Print mie register details
-      `uvm_info( get_name(), "\n--- mie Register (0x304) ---", UVM_LOW )
-      `uvm_info( get_name(), $sformatf("  Name: %s", jb_reg_block.mie.get_name()), UVM_LOW )
-      `uvm_info( get_name(), $sformatf("  Address: 0x%03h", jb_reg_block.mie.get_address()), UVM_LOW )
-      `uvm_info( get_name(), $sformatf("  Size: %0d bits", jb_reg_block.mie.get_n_bits()), UVM_LOW )
-      `uvm_info( get_name(), $sformatf("  Access: %s", jb_reg_block.mie.get_rights()), UVM_LOW )
-      
-      // Print mie field details
-      `uvm_info( get_name(), "\n--- mie Register Fields ---", UVM_LOW )
-      `uvm_info( get_name(), $sformatf("  ssie (bit %0d): Size=%0d bits", jb_reg_block.mie.ssie.get_lsb_pos(), jb_reg_block.mie.ssie.get_n_bits()), UVM_LOW )
-      `uvm_info( get_name(), $sformatf("  msie (bit %0d): Size=%0d bits", jb_reg_block.mie.msie.get_lsb_pos(), jb_reg_block.mie.msie.get_n_bits()), UVM_LOW )
-      `uvm_info( get_name(), $sformatf("  mtie (bit %0d): Size=%0d bits", jb_reg_block.mie.mtie.get_lsb_pos(), jb_reg_block.mie.mtie.get_n_bits()), UVM_LOW )
-      `uvm_info( get_name(), $sformatf("  meie (bit %0d): Size=%0d bits", jb_reg_block.mie.meie.get_lsb_pos(), jb_reg_block.mie.meie.get_n_bits()), UVM_LOW )
+      // Print register information using UVM RAL methods
+      `uvm_info( get_name(), "\n=== Register Information ===", UVM_LOW )
+      `uvm_info( get_name(), $sformatf("mstatus register:\n%s", jb_reg_block.mstatus.sprint()), UVM_LOW )
+      `uvm_info( get_name(), $sformatf("mcause register:\n%s", jb_reg_block.mcause.sprint()), UVM_LOW )
+      `uvm_info( get_name(), $sformatf("mepc register:\n%s", jb_reg_block.mepc.sprint()), UVM_LOW )
+      `uvm_info( get_name(), $sformatf("mie register:\n%s", jb_reg_block.mie.sprint()), UVM_LOW )
    endtask: body
      
 endclass: mie_mepc_test_sequence

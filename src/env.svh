@@ -55,87 +55,6 @@ class jelly_bean_sb_subscriber extends uvm_subscriber#( jelly_bean_transaction )
 endclass: jelly_bean_sb_subscriber
 
 //------------------------------------------------------------------------------
-// Class: jelly_bean_reg_printer
-// Utility class for printing register information
-//------------------------------------------------------------------------------
-
-class jelly_bean_reg_printer extends uvm_object;
-   `uvm_object_utils( jelly_bean_reg_printer )
-
-   function new( string name = "" );
-      super.new( name );
-   endfunction: new
-
-   virtual function void print_reg_block_info( jelly_bean_reg_block reg_block );
-      `uvm_info( get_name(), "\n" , UVM_LOW )
-      `uvm_info( get_name(), "╔══════════════════════════════════════════════════════════════╗", UVM_LOW )
-      `uvm_info( get_name(), "║              CSR Register Information Summary                ║", UVM_LOW )
-      `uvm_info( get_name(), "╚══════════════════════════════════════════════════════════════╝", UVM_LOW )
-      
-      // Print all registers
-      `uvm_info( get_name(), "\n--- All CSR Registers ---", UVM_LOW )
-      reg_block.print();
-      
-      // Detailed information for each register
-      `uvm_info( get_name(), "\n--- Detailed Register Information ---", UVM_LOW )
-      
-      // mstatus register
-      `uvm_info( get_name(), "\n┌─────────────────────────────────────────────────────────────┐", UVM_LOW )
-      `uvm_info( get_name(), "│ mstatus Register (Machine Status)                          │", UVM_LOW )
-      `uvm_info( get_name(), "├─────────────────────────────────────────────────────────────┤", UVM_LOW )
-      `uvm_info( get_name(), $sformatf("│ Address: 0x%03h                                           │", reg_block.mstatus.get_address()), UVM_LOW )
-      `uvm_info( get_name(), $sformatf("│ Size: %0d bits                                            │", reg_block.mstatus.get_n_bits()), UVM_LOW )
-      `uvm_info( get_name(), $sformatf("│ Access: %s                                                │", reg_block.mstatus.get_rights()), UVM_LOW )
-      `uvm_info( get_name(), "│ Description: Tracks and controls the hart's current        │", UVM_LOW )
-      `uvm_info( get_name(), "│              operating state.                              │", UVM_LOW )
-      `uvm_info( get_name(), "└─────────────────────────────────────────────────────────────┘", UVM_LOW )
-      
-      // mcause register
-      `uvm_info( get_name(), "\n┌─────────────────────────────────────────────────────────────┐", UVM_LOW )
-      `uvm_info( get_name(), "│ mcause Register (Machine Cause)                            │", UVM_LOW )
-      `uvm_info( get_name(), "├─────────────────────────────────────────────────────────────┤", UVM_LOW )
-      `uvm_info( get_name(), $sformatf("│ Address: 0x%03h                                           │", reg_block.mcause.get_address()), UVM_LOW )
-      `uvm_info( get_name(), $sformatf("│ Size: %0d bits                                            │", reg_block.mcause.get_n_bits()), UVM_LOW )
-      `uvm_info( get_name(), $sformatf("│ Access: %s                                                │", reg_block.mcause.get_rights()), UVM_LOW )
-      `uvm_info( get_name(), "│ Description: Reports the cause of the latest exception.    │", UVM_LOW )
-      `uvm_info( get_name(), "└─────────────────────────────────────────────────────────────┘", UVM_LOW )
-      
-      // mepc register
-      `uvm_info( get_name(), "\n┌─────────────────────────────────────────────────────────────┐", UVM_LOW )
-      `uvm_info( get_name(), "│ mepc Register (Machine Exception Program Counter)          │", UVM_LOW )
-      `uvm_info( get_name(), "├─────────────────────────────────────────────────────────────┤", UVM_LOW )
-      `uvm_info( get_name(), $sformatf("│ Address: 0x%03h                                           │", reg_block.mepc.get_address()), UVM_LOW )
-      `uvm_info( get_name(), $sformatf("│ Size: %0d bits                                            │", reg_block.mepc.get_n_bits()), UVM_LOW )
-      `uvm_info( get_name(), $sformatf("│ Access: %s                                                │", reg_block.mepc.get_rights()), UVM_LOW )
-      `uvm_info( get_name(), "│ Description: PC of instruction on exception/interrupt      │", UVM_LOW )
-      `uvm_info( get_name(), "│              taken in M-mode.                              │", UVM_LOW )
-      `uvm_info( get_name(), "└─────────────────────────────────────────────────────────────┘", UVM_LOW )
-      
-      // mie register
-      `uvm_info( get_name(), "\n┌─────────────────────────────────────────────────────────────┐", UVM_LOW )
-      `uvm_info( get_name(), "│ mie Register (Machine Interrupt Enable)                    │", UVM_LOW )
-      `uvm_info( get_name(), "├─────────────────────────────────────────────────────────────┤", UVM_LOW )
-      `uvm_info( get_name(), $sformatf("│ Address: 0x%03h                                           │", reg_block.mie.get_address()), UVM_LOW )
-      `uvm_info( get_name(), $sformatf("│ Size: %0d bits                                            │", reg_block.mie.get_n_bits()), UVM_LOW )
-      `uvm_info( get_name(), $sformatf("│ Access: %s                                                │", reg_block.mie.get_rights()), UVM_LOW )
-      `uvm_info( get_name(), "│ Fields:                                                  │", UVM_LOW )
-      `uvm_info( get_name(), $sformatf("│   ssie (bit %0d): Supervisor Software Interrupt Enable    │", reg_block.mie.ssie.get_lsb_pos()), UVM_LOW )
-      `uvm_info( get_name(), $sformatf("│   msie (bit %0d): Machine Software Interrupt Enable      │", reg_block.mie.msie.get_lsb_pos()), UVM_LOW )
-      `uvm_info( get_name(), $sformatf("│   stie (bit %0d): Supervisor Timer Interrupt Enable      │", reg_block.mie.stie.get_lsb_pos()), UVM_LOW )
-      `uvm_info( get_name(), $sformatf("│   mtie (bit %0d): Machine Timer Interrupt Enable        │", reg_block.mie.mtie.get_lsb_pos()), UVM_LOW )
-      `uvm_info( get_name(), $sformatf("│   seie (bit %0d): Supervisor External Interrupt Enable  │", reg_block.mie.seie.get_lsb_pos()), UVM_LOW )
-      `uvm_info( get_name(), $sformatf("│   meie (bit %0d): Machine External Interrupt Enable    │", reg_block.mie.meie.get_lsb_pos()), UVM_LOW )
-      `uvm_info( get_name(), $sformatf("│   lcofie (bit %0d): Local Counter Overflow Int Enable  │", reg_block.mie.lcofie.get_lsb_pos()), UVM_LOW )
-      `uvm_info( get_name(), "│ Description: Controls which interrupts are enabled.        │", UVM_LOW )
-      `uvm_info( get_name(), "└─────────────────────────────────────────────────────────────┘", UVM_LOW )
-      
-      `uvm_info( get_name(), "\n══════════════════════════════════════════════════════════════", UVM_LOW )
-      `uvm_info( get_name(), "End of CSR Register Information Summary", UVM_LOW )
-      `uvm_info( get_name(), "══════════════════════════════════════════════════════════════\n", UVM_LOW )
-   endfunction: print_reg_block_info
-endclass: jelly_bean_reg_printer
-
-//------------------------------------------------------------------------------
 // Class: jelly_bean_scoreboard
 //------------------------------------------------------------------------------
 
@@ -168,9 +87,10 @@ class jelly_bean_scoreboard extends uvm_scoreboard;
          `uvm_error( "jelly_bean_scoreboard", 
                      { "You lost sense of taste!\n", jb_tx.sprint( p ) } );
       end else begin
+         // Changed to UVM_HIGH to reduce noise for CSR register operations
          `uvm_info( "jelly_bean_scoreboard",
                     { "You have a good sense of taste.\n", jb_tx.sprint( p ) },
-                    UVM_LOW );
+                    UVM_HIGH );
       end
    endfunction: check_jelly_bean_taste
 

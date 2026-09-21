@@ -110,7 +110,6 @@ class mstatus_mcause_test extends jelly_bean_base_test;
 
    task main_phase( uvm_phase phase );
       mstatus_mcause_test_sequence test_seq;
-      jelly_bean_reg_printer reg_printer;
 
       phase.raise_objection( .obj( this ) );
       
@@ -121,10 +120,6 @@ class mstatus_mcause_test extends jelly_bean_base_test;
       test_seq.start( .sequencer( jb_env.jb_agent.jb_seqr ) );
       
       `uvm_info( get_name(), "mstatus and mcause register test completed", UVM_LOW )
-      
-      // Print detailed register information
-      reg_printer = jelly_bean_reg_printer::type_id::create( .name( "reg_printer" ) );
-      reg_printer.print_reg_block_info( jb_reg_block );
       
       phase.drop_objection( .obj( this ) );
    endtask: main_phase
@@ -143,7 +138,6 @@ class mie_mepc_test extends jelly_bean_base_test;
 
    task main_phase( uvm_phase phase );
       mie_mepc_test_sequence test_seq;
-      jelly_bean_reg_printer reg_printer;
 
       phase.raise_objection( .obj( this ) );
       
@@ -154,10 +148,6 @@ class mie_mepc_test extends jelly_bean_base_test;
       test_seq.start( .sequencer( jb_env.jb_agent.jb_seqr ) );
       
       `uvm_info( get_name(), "mie and mepc register test with bit fields completed", UVM_LOW )
-      
-      // Print detailed register information
-      reg_printer = jelly_bean_reg_printer::type_id::create( .name( "reg_printer" ) );
-      reg_printer.print_reg_block_info( jb_reg_block );
       
       phase.drop_objection( .obj( this ) );
    endtask: main_phase
