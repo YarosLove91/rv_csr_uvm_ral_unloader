@@ -41,13 +41,13 @@ BIN_DIR := bin_out
 # ============================================================
 TOP       := tb_top
 
-SV_FILES  := $(SRC_DIR)/testchamber_src_pkg.sv $(SRC_DIR)/DUT/design.sv $(SRC_DIR)/testbench.sv $(SRC_DIR)/uvm_wrapper.sv
+SV_FILES  := $(SRC_DIR)/csr/csr_pkg.sv $(SRC_DIR)/testchamber_src_pkg.sv $(SRC_DIR)/DUT/design.sv $(SRC_DIR)/testbench.sv $(SRC_DIR)/uvm_wrapper.sv
 SVH_FILES :=
 UVM_PKG    := $(UVM_DIR)/src/uvm_pkg.sv
 UVM_BIN    := $(BIN_DIR)/V$(TOP)
 UVM_MARKER := $(UVM_DIR)/.downloaded
 
-INC_DIRS  := $(SRC_DIR) $(UVM_DIR)/src
+INC_DIRS := $(SRC_DIR) $(SRC_DIR)/csr $(UVM_DIR)/src
 INC_FLAGS := $(addprefix +incdir+,$(INC_DIRS))
 
 # ============================================================
