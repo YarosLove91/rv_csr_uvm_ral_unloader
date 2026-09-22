@@ -41,15 +41,14 @@ BIN_DIR := bin_out
 # ============================================================
 TOP       := tb_top
 
-SV_FILES  := src/DUT/design.sv src/interface.sv src/package.sv src/testbench.sv src/uvm_wrapper.sv
+SV_FILES  := $(SRC_DIR)/testchamber_src_pkg.sv $(SRC_DIR)/DUT/design.sv $(SRC_DIR)/testbench.sv $(SRC_DIR)/uvm_wrapper.sv
 SVH_FILES :=
-SV_SRC    := $(sort $(SV_FILES))          # детерминированный порядок
-
 UVM_PKG    := $(UVM_DIR)/src/uvm_pkg.sv
 UVM_BIN    := $(BIN_DIR)/V$(TOP)
 UVM_MARKER := $(UVM_DIR)/.downloaded
 
-INC_DIRS := $(SRC_DIR) $(UVM_DIR)/src
+INC_DIRS  := $(SRC_DIR) $(UVM_DIR)/src
+INC_FLAGS := $(addprefix +incdir+,$(INC_DIRS))
 
 # ============================================================
 # Parameters
@@ -99,7 +98,7 @@ VFLAGS := \
 	-Wno-CASTCONST \
 	+define+UVM_NO_DPI \
 	+define+UVM_REPORT_DISABLE_BANNER \
-	$(addprefix +incdir+,$(INC_DIRS)) \
+	$(INC_FLAGS) \
 	--top-module $(TOP) \
 	--Mdir $(OUT_DIR) \
 	$(VFLAGS_LDFLAGS)
@@ -126,15 +125,15 @@ $(UVM_MARKER):
 # ------------------------------------------------------------
 # Build UVM + DUT with Verilator
 # ------------------------------------------------------------
-uvm_build: $(UVM_MARKER) $(SV_SRC) $(SVH_FILES) | $(OUT_DIR) $(BIN_DIR)
+uvm_build: $(UVM_MARKER) $(SV_FILES) $(SVH_FILES) | $(OUT_DIR) $(BIN_DIR)
 	@echo ">>> [build] Sources:"
-	@printf '    %s\n' $(SV_SRC)
+	@printf '    %s\n' $(SV_FILES)
 	@if [ -n "$(SVH_FILES)" ]; then \
 		echo ">>> [build] Headers:"; \
 		printf '    %s\n' $(SVH_FILES); \
 	fi
 	@echo ">>> [build] Verilator: jobs=$(NPROC), ld=$(LINKER_DISPLAY), shm=$(USE_SHM)"
-	$(VERILATOR) $(VFLAGS) $(UVM_PKG) $(SV_SRC)
+	$(VERILATOR) $(VFLAGS) $(UVM_PKG) $(SV_FILES)
 ifeq ($(USE_SHM),yes)
 	@# Копируем бинарник из /dev/shm на диск
 	@cp -f $(OUT_DIR)/V$(TOP) $(BIN_DIR)/V$(TOP) 2>/dev/null || true
@@ -161,6 +160,7 @@ list:
 	@echo "SVH_FILES : $(SVH_FILES)"
 	@echo "UVM_PKG   : $(UVM_PKG)"
 	@echo "INC_DIRS  : $(INC_DIRS)"
+	@echo "INC_FLAGS : $(INC_FLAGS)"
 	@echo "NPROC     : $(NPROC)"
 	@echo "LD        : $(LINKER_DISPLAY)"
 	@echo "LDFLAGS   : $(LDFLAGS_EXTRA)"
