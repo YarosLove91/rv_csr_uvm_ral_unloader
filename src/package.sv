@@ -3,6 +3,7 @@
 
 `include "reg_pkg.sv"
 `include "reg2axi_adapter.sv"
+`include "probe_scoreboard.sv"
 
 `include "base_seq.sv"
 `include "sequencer.sv"
