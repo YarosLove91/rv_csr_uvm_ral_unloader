@@ -1,36 +1,44 @@
-//------------------------------------------------------------------------------
-// Module: top
-//------------------------------------------------------------------------------
+`include "uvm_macros.svh"
+import uvm_pkg::*;
 
-module top;
-   import uvm_pkg::*;
+`include "interface.sv"
+`include "base_test.sv"
 
-   reg clk;
-   
-   jelly_bean_if     jb_if( clk );
-   jelly_bean_taster jb_taster( jb_if );
-
-   initial begin
-      clk = 0;
-      #5ns ;
-      forever #5ns clk = ! clk;
-   end
+module tb_top;
+  bit clk;
+  bit reset_n;
+  always #2 clk = ~clk;
   
-   initial begin
-     $dumpfile( "dump.vcd" );
-     $dumpvars;
-   end
-
-   initial begin
-      uvm_config_db#( virtual jelly_bean_if )::set( .cntxt( null ), 
-                                                    .inst_name( "uvm_test_top" ),
-                                                    .field_name( "jb_if" ),
-                                                    .value( jb_if ) );
-      run_test();
-   end
-endmodule: top
-
-//==============================================================================
-// Copyright (c) 2011-2015 ClueLogic, LLC
-// http://cluelogic.com/
-//==============================================================================
+  initial begin
+    //clk = 0;
+    reset_n = 0;
+    #5; 
+    reset_n = 1;
+  end
+  sfr_if vif(clk, reset_n);
+  
+  design_sfr DUT(vif.clk, 
+                vif.reset_n, 
+                vif.i_wr_en, 
+                vif.i_rd_en, 
+                vif.i_waddr, 
+                vif.i_raddr, 
+                vif.i_wdata, 
+                vif.i_wstrobe, 
+                vif.o_rdata, 
+                vif.o_wready, 
+                vif.o_rvalid);
+  
+  initial begin
+    // set interface in config_db
+    uvm_config_db#(virtual sfr_if)::set(uvm_root::get(), "*", "vif", vif);
+    // Dump waves
+    $dumpfile("dump.vcd");
+    $dumpvars(0); //(0, tb_top);
+  end
+  initial begin
+    run_test("reg_test");
+    //#100;
+    //$finish;
+  end
+endmodule

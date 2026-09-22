@@ -1,55 +1,57 @@
-`include "uvm_macros.svh"
-`include "jelly_bean_pkg.sv"
-`include "jelly_bean_if.sv"
-
-//------------------------------------------------------------------------------
-// Module: jelly_bean_taster
-//   This is the DUT.
-//------------------------------------------------------------------------------
-
-module jelly_bean_taster( jelly_bean_if.slave_mp jb_slave_if );
-   import jelly_bean_pkg::*;
-
-   reg [2:0] flavor;
-   reg [1:0] color;
-   reg       sugar_free;
-   reg       sour;
-   reg [1:0] command;
-   reg [1:0] taste;
-
-   initial begin
-      flavor     = 0;
-      color      = 0;
-      sugar_free = 0;
-      sour       = 0;
-      command    = 0;
-      taste      = 0;
-   end
-
-   always @ ( posedge jb_slave_if.clk ) begin
-      if ( jb_slave_if.command == jelly_bean_types::WRITE ) begin
-         flavor     <= jb_slave_if.flavor;
-         color      <= jb_slave_if.color;
-         sugar_free <= jb_slave_if.sugar_free;
-         sour       <= jb_slave_if.sour;
-      end /*else if ( jb_slave_if.command == jelly_bean_types::READ ) begin
-         jb_slave_if.taste <= taste;
-      end*/
-   end
+// Code your design here
+module design_sfr(
+  input clk,
+  input reset_n,
+  input i_wr_en, i_rd_en, 
+  input [31:0] i_waddr, i_raddr, 
+  input [31:0] i_wdata, 
+  input [3:0] i_wstrobe, 
+  output reg [31:0] o_rdata, 
+  output reg o_wready,
+  output reg o_rvalid
+);
   
-  assign jb_slave_if.taste = taste;
 
-   always @ ( posedge jb_slave_if.clk ) begin
-      if ( jb_slave_if.flavor == jelly_bean_types::CHOCOLATE &&
-           jb_slave_if.sour ) begin
-         taste <= jelly_bean_types::YUCKY;
-      end else if ( jb_slave_if.flavor != jelly_bean_types::NO_FLAVOR ) begin
-         taste <= jelly_bean_types::YUMMY;
-      end
-   end
-endmodule: jelly_bean_taster
-
-//==============================================================================
-// Copyright (c) 2011-2015 ClueLogic, LLC
-// http://cluelogic.com/
-//==============================================================================
+  // RTL registers
+  reg [31:0] control_reg;
+  reg [31:0] intr_sts_reg;
+  reg [31:0] intr_msk_reg;
+  
+  //reg [31:0] 
+  always@(posedge clk) begin 
+    if(!reset_n) begin
+      control_reg  <= 5; //reset value
+      intr_sts_reg <= 0;
+      intr_msk_reg <= 1; // reset value
+    end
+  end
+  
+  
+  always @(posedge clk) begin
+    if(i_wr_en) begin
+      case(i_waddr)
+        'h0 : control_reg  <= i_wdata;
+        'h4 : intr_sts_reg <= i_wdata;
+        'h8 : intr_msk_reg <= i_wdata;
+      endcase
+      o_wready <= 1; //Issue
+      @(posedge clk);
+      o_wready <= 0;
+    end
+    else o_wready <= 0;
+  end
+        
+  always @(posedge clk) begin
+    if(i_rd_en & !i_wr_en) begin
+      case(i_raddr)
+        'h0 : o_rdata <= control_reg;
+        'h4 : o_rdata <= intr_sts_reg;
+        'h8 : o_rdata <= intr_msk_reg;
+      endcase
+      o_rvalid <= 1;
+      @(posedge clk);
+      o_rvalid <= 0;
+    end
+    else o_rvalid <= 0;
+  end
+endmodule
