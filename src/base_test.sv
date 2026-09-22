@@ -14,8 +14,10 @@ class base_test extends uvm_test;
   task run_phase(uvm_phase phase);
     phase.raise_objection(this);
     test_imp();
+    // TODO: Normal end
+    #20;
     phase.drop_objection(this);
-    `uvm_info(get_type_name, "End of testcase", UVM_LOW);
+    `uvm_info(get_type_name(), "End of testcase", UVM_LOW);
   endtask : run_phase
   
   virtual task test_imp();
