@@ -309,6 +309,8 @@ class RegModel_SFR extends uvm_reg_block;
   rand mie_reg               mie;
 
   uvm_reg_map axi_map;
+  uvm_reg_map csr_map;
+
   `uvm_object_utils(RegModel_SFR)
   
   function new(string name = "RegModel_SFR");
@@ -331,6 +333,13 @@ class RegModel_SFR extends uvm_reg_block;
     mie = mie_reg::type_id::create( "mie" );
     mie.configure( .blk_parent( this ) );
     mie.build();
+
+    csr_map = create_map("csr_map", 'h0, 8, UVM_LITTLE_ENDIAN, 1);
+
+    csr_map.add_reg(mstatus, 12'h300, "RW");
+    csr_map.add_reg(mie,     12'h304, "RW");
+    csr_map.add_reg(mepc,    12'h341, "RW");
+    csr_map.add_reg(mcause,  12'h342, "RW");
   endfunction : build_machine_reg
 
   virtual function void build();
