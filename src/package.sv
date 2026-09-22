@@ -1,4 +1,6 @@
 `include "seq_item.sv"
+`include "probe_transaction.sv"
+
 `include "reg_pkg.sv"
 `include "reg2axi_adapter.sv"
 
