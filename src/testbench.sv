@@ -37,7 +37,7 @@ module tb_top;
     $dumpvars(0); //(0, tb_top);
   end
   initial begin
-    run_test("reg_test");
+    run_test();
     //#100;
     //$finish;
   end
