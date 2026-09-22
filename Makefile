@@ -39,9 +39,10 @@ BIN_DIR := bin_out
 # ============================================================
 # Sources (auto-collected via wildcard)
 # ============================================================
-TOP       := top
-SV_FILES  := $(wildcard $(SRC_DIR)/*.sv) $(wildcard $(SRC_DIR)/**/*.sv)
-SVH_FILES := $(wildcard $(SRC_DIR)/*.svh) $(wildcard $(SRC_DIR)/**/*.svh)
+TOP       := tb_top
+
+SV_FILES  := src/DUT/design.sv src/interface.sv src/package.sv src/testbench.sv src/uvm_wrapper.sv
+SVH_FILES :=
 SV_SRC    := $(sort $(SV_FILES))          # детерминированный порядок
 
 UVM_PKG    := $(UVM_DIR)/src/uvm_pkg.sv
@@ -54,7 +55,7 @@ INC_DIRS := $(SRC_DIR) $(UVM_DIR)/src
 # Parameters
 # ============================================================
 NPROC     := $(shell nproc 2>/dev/null || echo 4)
-TEST_NAME ?= jelly_bean_reg_test
+TEST_NAME ?= reg_test
 
 # ============================================================
 # Linker selection
@@ -92,6 +93,10 @@ VFLAGS := \
 	-Wno-UNUSED \
 	-Wno-WIDTHTRUNC \
 	-Wno-UNSIGNED \
+	-Wno-MODDUP \
+	-Wno-WIDTHEXPAND \
+	-Wno-TIMESCALEMOD \
+	-Wno-CASTCONST \
 	+define+UVM_NO_DPI \
 	+define+UVM_REPORT_DISABLE_BANNER \
 	$(addprefix +incdir+,$(INC_DIRS)) \
@@ -185,7 +190,7 @@ help:
 	@echo "  help         - Show this help"
 	@echo ""
 	@echo "Variables:"
-	@echo "  TEST_NAME=<name>   - UVM test (default: jelly_bean_reg_test)"
+	@echo "  TEST_NAME=<name>   - UVM test (default: reg_test)"
 	@echo "  NPROC=<n>          - Parallel jobs (default: nproc)"
 	@echo "  LINKER=<linker>    - Linker: mold | lld | gold | bfd | (empty)"
 	@echo "                       default: auto-detect mold -> lld -> gold"
