@@ -16,4 +16,11 @@ class seq_item extends uvm_sequence_item;
   
   constraint addr_c {addr inside {'h0, 'h4, 'h8, 'hc};}
   constraint rd_or_wr_c {rd_or_wr dist {1:=30, 0:=70};} 
-endclass
+
+  function string convert2string();
+    return $sformatf ("bus addr=0x%02h %s data=0x%08h",
+                      addr,
+                      rd_or_wr ? "RD" : "WR",
+                      data);
+  endfunction
+endclass : seq_item
