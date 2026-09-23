@@ -407,9 +407,6 @@ def main():
             continue
         if not matches_ext_filter(csr, ext_filter):
             continue
-        exts = extract_extensions(csr.get("definedBy"))
-        if "Sm" not in exts:
-            continue
         g = get_group(csr, xlen=64)
         if g is None or g == "rv32_only":
             continue
