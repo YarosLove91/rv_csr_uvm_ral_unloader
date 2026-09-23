@@ -1,7 +1,7 @@
 class env extends uvm_env;
   `uvm_component_utils(env)
 
-  csr_reg_block reg_model;
+  csr_sm_base_reg_block reg_sm_model;
 
   probe_scoreboard                      probe_sb;
   uvm_analysis_port#(probe_transaction) probe_ap;
@@ -13,14 +13,14 @@ class env extends uvm_env;
   function void build_phase( uvm_phase phase );
     super.build_phase(phase);
 
-    reg_model = csr_reg_block::type_id::create("reg_model");
-    reg_model.build();
-    reg_model.lock_model();
-    reg_model.reset();
-    reg_model.print();
+    reg_sm_model = csr_sm_base_reg_block::type_id::create("reg_sm_model");
+    reg_sm_model.build();
+    reg_sm_model.lock_model();
+    reg_sm_model.reset();
+    reg_sm_model.print();
 
-    uvm_config_db#(csr_reg_block)::set( uvm_root::get(), "*",
-                                        "reg_model", reg_model );
+    uvm_config_db#(csr_sm_base_reg_block)::set( uvm_root::get(), "*",
+                                                "reg_sm_model", reg_sm_model );
 
     probe_sb = probe_scoreboard::type_id::create("probe_sb", this);
     probe_ap = new("probe_ap", this);

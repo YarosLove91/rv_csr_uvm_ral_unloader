@@ -1,13 +1,13 @@
 //------------------------------------------------------------------------------
 // csr_pkg.sv
+//
+// АВТОГЕНЕРАЦИЯ. Не редактировать вручную.
 //------------------------------------------------------------------------------
-
 package csr_pkg;
   import uvm_pkg::*;
 
-  // Регистры по расширениям
-  `include "csr_m_extension.svh"
-  // Блок, собирающий все расширения
-  `include "csr_reg_block.svh"
+  // Sm_base
+  `include "csr_sm_base_extension.svh"
+  `include "csr_sm_base_reg_block_extension.svh"
 
 endpackage : csr_pkg
