@@ -397,7 +397,7 @@ def main():
     for ext, names in sorted(by_ext.items(), key=lambda x: -len(x[1])):
         print(f"  {ext:15s} {len(names):3d}")
 
-    # M-регистры по группам
+    # --- M-регистры по группам ---
     print("\n=== M-регистры по группам (RV64) ===")
     m_by_group = defaultdict(list)
     for path, csr in iter_csr_paths(CSR_DIR):
@@ -416,7 +416,46 @@ def main():
         print(f"  {g:15s} {len(names):3d}")
     print(f"\nВсего M-регистров (RV64): {sum(len(v) for v in m_by_group.values())}")
 
-    # Выгрузка
+    # --- CSR по ВСЕМ группам ---
+    print("\n=== CSR по группам (все) ===")
+    all_by_group = defaultdict(list)
+    for path, csr in iter_csr_paths(CSR_DIR):
+        if args.profile and not csr_in_profile(csr, mandatory, optional, allow_extra):
+            continue
+        if not matches_ext_filter(csr, ext_filter):
+            continue
+        g = get_group(csr, xlen=64)
+        if g is None:
+            g = "<none>"
+        all_by_group[g].append(csr["name"])
+
+    for g, names in sorted(all_by_group.items(), key=lambda x: -len(x[1])):
+        print(f"  {g:15s} {len(names):3d}")
+    print(f"\nВсего CSR по группам: "
+          f"{sum(len(v) for v in all_by_group.values())}")
+
+    # --- Группы x priv_mode ---
+    print("\n=== Группы x priv_mode ===")
+    group_priv = defaultdict(lambda: defaultdict(list))
+    for path, csr in iter_csr_paths(CSR_DIR):
+        if args.profile and not csr_in_profile(csr, mandatory, optional, allow_extra):
+            continue
+        if not matches_ext_filter(csr, ext_filter):
+            continue
+        g = get_group(csr, xlen=64)
+        if g is None:
+            g = "<none>"
+        p = csr.get("priv_mode", "?")
+        group_priv[g][p].append(csr["name"])
+
+    for g in sorted(group_priv.keys(),
+                    key=lambda x: -sum(len(v) for v in group_priv[x].values())):
+        privs = group_priv[g]
+        total_g = sum(len(v) for v in privs.values())
+        parts = ", ".join(f"{p}={len(v)}" for p, v in sorted(privs.items()))
+        print(f"  {g:15s} {total_g:3d}  ({parts})")
+
+    # --- Выгрузка ---
     if args.list_files:
         with open(args.list_files, "w") as f:
             f.writelines(os.path.relpath(p, ".") + "\n" for p in used_paths)
