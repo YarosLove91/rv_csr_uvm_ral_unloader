@@ -1,0 +1,380 @@
+= CSR Generation Tools
+:toc:
+:toclevels: 3
+
+Набор Python-скриптов для генерации RAL-модели CSR из YAML-описаний
+riscv-unified-db.
+
+== Обзор
+
+Полный pipeline:
+
+[source]
+----
+csr_spec/csr/*.yaml
+        │
+        ▼  parse_csr.py
+tools/csr_monolith_filtered.yaml    (сырой монолит)
+        │
+        ▼  reduce_csr.py
+tools/csr_monolith_reduced.yaml     (компактный монолит)
+        │
+        ▼  gen_one.py
+src/csr/csr_<group>_extension.svh              (классы регистров)
+src/csr/csr_<group>_reg_block_extension.svh    (uvm_reg_block)
+----
+
+== Требования
+
+* Python 3.8+
+* PyYAML
+
+[source,bash]
+----
+pip install -r requirements.txt
+----
+
+== Скрипты
+
+=== parse_csr.py
+
+Обходит `csr_spec/csr/**/*.yaml`, фильтрует по профилю и расширениям,
+фильтрует поля внутри CSR, группирует по `_group`, пишет сырой монолит.
+
+==== Аргументы
+
+[cols="1,3"]
+|===
+| Аргумент | Описание
+
+| `--profile PATH`
+| Путь к профилю (RVA23S64.yaml, RVA23U64.yaml)
+
+| `--priv MODE`
+| Фильтр по `priv_mode` (M, S, U, VS)
+
+| `--ext EXT[,EXT]`
+| Фильтр по расширениям (можно несколько раз: `--ext Sm --ext C`)
+
+| `--list-files FILE`
+| Записать список использованных `.yaml`
+
+| `--monolith FILE`
+| Записать монолитный YAML
+|===
+
+==== Пример
+
+[source,bash]
+----
+python3 tools/parse_csr.py \
+    --profile csr_spec/profile/RVA23S64.yaml \
+    --monolith tools/csr_monolith_filtered.yaml
+----
+
+=== reduce_csr.py
+
+Читает сырой монолит, прореживает: оставляет только `_lsb`, `_size`,
+`type`, `reset_value`. Убирает `description`, `long_name`, IDL-функции.
+
+==== Аргументы
+
+[cols="1,3"]
+|===
+| Аргумент | Описание
+
+| `--in FILE`
+| Входной монолит (из parse_csr.py)
+
+| `--out FILE`
+| Выходной компактный монолит
+|===
+
+==== Пример
+
+[source,bash]
+----
+python3 tools/reduce_csr.py \
+    --in tools/csr_monolith_filtered.yaml \
+    --out tools/csr_monolith_reduced.yaml
+----
+
+=== gen_one.py
+
+Генерирует SystemVerilog-классы регистров и `uvm_reg_block` из
+редуцированного монолита.
+
+==== Режимы
+
+[cols="1,3"]
+|===
+| Режим | Описание
+
+| `<name> [out]`
+| Один CSR в `.sv` файл
+
+| `--group G --out F`
+| Все CSR группы в один `.svh`
+
+| `--group G --reg-block --reg-block-out F`
+| Только `uvm_reg_block` для группы
+
+| `--group G --both --out F1 --reg-block-out F2`
+| И регистры, и блок одной командой
+|===
+
+==== Примеры
+
+Один CSR:
+
+[source,bash]
+----
+python3 tools/gen_one.py mstatus tools/batches/mstatus_reg.sv
+----
+
+Вся группа (регистры + блок):
+
+[source,bash]
+----
+python3 tools/gen_one.py --group Sm_base --both \
+    --out src/csr/csr_sm_base_extension.svh \
+    --reg-block-out src/csr/csr_sm_base_reg_block_extension.svh
+----
+
+Только регистры:
+
+[source,bash]
+----
+python3 tools/gen_one.py --group Sm_base \
+    --out src/csr/csr_sm_base_extension.svh
+----
+
+Только блок:
+
+[source,bash]
+----
+python3 tools/gen_one.py --group Sm_base --reg-block \
+    --reg-block-out src/csr/csr_sm_base_reg_block_extension.svh
+----
+
+== Полный workflow
+
+=== 1. Монолит (один раз)
+
+[source,bash]
+----
+python3 tools/parse_csr.py \
+    --profile csr_spec/profile/RVA23S64.yaml \
+    --monolith tools/csr_monolith_filtered.yaml
+
+python3 tools/reduce_csr.py \
+    --in tools/csr_monolith_filtered.yaml \
+    --out tools/csr_monolith_reduced.yaml
+----
+
+=== 2. Группы
+
+Порядок генерации:
+
+[cols="1,1,3"]
+|===
+| Группа | Кол-во | Что
+
+| `Sm_base`    | 17 | Базовые M-регистры
+| `Sm_zicntr`  |  3 | mcountinhibit, mcycle, minstret
+| `Sm_misc`    | 10 | mstateen, mseccfg, mtinst, mtval2
+| `Sm_pmp`     | 80 | pmpcfg, pmpaddr
+| `Sm_zihpm`   | 58 | mhpmcounter, mhpmevent
+| `S_misc`     | 22 | S-регистры
+| `U_misc`     | 74 | U-регистры
+| `VS_misc`    |  6 | VS-регистры
+|===
+
+Для каждой группы:
+
+[source,bash]
+----
+python3 tools/gen_one.py --group <G> --both \
+    --out src/csr/csr_<g>_extension.svh \
+    --reg-block-out src/csr/csr_<g>_reg_block_extension.svh
+----
+
+=== 3. Подключение в проекте
+
+После каждой группы обновить:
+
+* `src/csr/csr_pkg.sv`:
+
+[source,systemverilog]
+----
+package csr_pkg;
+  import uvm_pkg::*;
+
+  `include "csr_sm_base_extension.svh"
+  `include "csr_sm_base_reg_block_extension.svh"
+
+  `include "csr_sm_zicntr_extension.svh"
+  `include "csr_sm_zicntr_reg_block_extension.svh"
+
+  // ... остальные группы
+
+endpackage : csr_pkg
+----
+
+* `src/env.sv`:
+
+[source,systemverilog]
+----
+csr_sm_base_reg_block   reg_sm_base_model;
+csr_sm_zicntr_reg_block reg_sm_zicntr_model;
+
+// в build_phase:
+reg_sm_base_model = csr_sm_base_reg_block::type_id::create("reg_sm_base_model");
+reg_sm_base_model.build();
+reg_sm_base_model.lock_model();
+reg_sm_base_model.reset();
+reg_sm_base_model.print();
+
+uvm_config_db#(csr_sm_base_reg_block)::set(
+  uvm_root::get(), "*", "reg_sm_base_model", reg_sm_base_model);
+----
+
+* `src/probe_scoreboard.sv`:
+
+[source,systemverilog]
+----
+csr_sm_base_reg_block   reg_sm_base_model;
+csr_sm_zicntr_reg_block reg_sm_zicntr_model;
+
+// в check_config:
+if (!uvm_config_db#(csr_sm_base_reg_block)::get(
+        this, "", "reg_sm_base_model", reg_sm_base_model))
+  `uvm_fatal(get_name(), "reg_sm_base_model not found")
+
+// в find_reg:
+r = reg_sm_base_model.get_reg_by_addr(addr);
+if (r != null) return r;
+
+r = reg_sm_zicntr_model.get_reg_by_addr(addr);
+if (r != null) return r;
+----
+
+* `src/testchamber_src_pkg.sv`:
+
+[source,systemverilog]
+----
+`include "probe_base_test.sv"
+`include "probe_sm_base_test.sv"
+`include "probe_sm_zicntr_test.sv"
+----
+
+=== 4. Тест
+
+[source,systemverilog]
+----
+class probe_sm_zicntr_test extends probe_base_test;
+  `uvm_component_utils(probe_sm_zicntr_test)
+
+  virtual task test_imp();
+    read_check_csr(32'h320, 64'h0000_0000_0000_0005);   // mcountinhibit
+    read_check_csr(32'hB00, 64'h0000_0000_0000_1000);   // mcycle
+    read_check_csr(32'hB02, 64'h0000_0000_0000_2000);   // minstret
+
+    #10;
+    env_o.probe_sb.dump_all();
+  endtask
+endclass
+----
+
+Запуск:
+
+[source,bash]
+----
+make uvm_build
+make uvm_run TEST_NAME=probe_sm_zicntr_test
+----
+
+== Структура файлов
+
+[source]
+----
+tools/
+├── parse_csr.py                       # YAML → сырой монолит
+├── reduce_csr.py                      # сырой → компактный монолит
+├── gen_one.py                         # монолит → SV-классы + reg_block
+├── requirements.txt                   # PyYAML
+├── README.adoc                        # этот файл
+├── csr_monolith_filtered.yaml         # генерируется
+├── csr_monolith_reduced.yaml          # генерируется
+├── csr_files.txt                      # генерируется
+└── batches/
+    ├── batch_*.txt                    # промпты (опционально)
+    └── *_reg.sv                       # отдельные регистры
+
+src/csr/
+├── csr_sm_base_extension.svh
+├── csr_sm_base_reg_block_extension.svh
+├── csr_sm_zicntr_extension.svh
+├── csr_sm_zicntr_reg_block_extension.svh
+├── csr_pkg.sv
+└── ...
+----
+
+== Группы CSR
+
+[cols="1,1,3"]
+|===
+| Группа | priv_mode | Что
+
+| `Sm_base`   | M  | mstatus, misa, medeleg, mideleg, mie, mtvec, mcounteren, mscratch, mepc, mcause, mtval, mip, mvendorid, marchid, mimpid, mhartid, mconfigptr
+| `Sm_zicntr` | M  | mcountinhibit, mcycle, minstret
+| `Sm_misc`   | M  | mstateen*, mseccfg*, mtinst, mtval2
+| `Sm_pmp`    | M  | pmpcfg0..15, pmpaddr0..63
+| `Sm_zihpm`  | M  | mhpmcounter3..31, mhpmevent3..31
+| `S_misc`    | S  | sstatus, stvec, sepc, scause, stval, sip, satp, ...
+| `U_misc`    | U  | cycle, time, instret, hpmcounter*, ...
+| `VS_misc`   | VS | vsstatus, vstvec, vsepc, ...
+| `rv32_only` | M  | h-версии (mhpmcounter*h, mcycleh, mstatush) — не генерируются для RV64
+|===
+
+== Известные ограничения
+
+* **Одно поле на регистр** — без разбиения на битовые поля.
+* **Все поля RW** — без `RO`, `W1C`, `WARL`, `WLRL`.
+* **Reset = 0** — IDL-функции не вычисляются.
+* **`uvm_reg::get()` не работает** под Verilator 5.052 — используется своё
+  зеркало `shadow[]` в `probe_scoreboard`.
+
+== Troubleshooting
+
+=== `ERROR: no CSRs in group <G>`
+
+Проверьте, что группа есть в монолите:
+
+[source,bash]
+----
+python3 -c "
+import yaml
+from collections import Counter
+with open('tools/csr_monolith_reduced.yaml') as f:
+    m = yaml.safe_load(f)
+print(dict(Counter(c.get('_group') for c in m)))
+"
+----
+
+=== `ERROR: --out required`
+
+Для `--group` обязательно указывать `--out` (и `--reg-block-out` для
+`--both`).
+
+=== Дубликат в сгенерированном файле
+
+Удалите старый файл и перегенерируйте:
+
+[source,bash]
+----
+rm -f src/csr/csr_<g>_extension.svh
+python3 tools/gen_one.py --group <G> --both \
+    --out src/csr/csr_<g>_extension.svh \
+    --reg-block-out src/csr/csr_<g>_reg_block_extension.svh
+----
