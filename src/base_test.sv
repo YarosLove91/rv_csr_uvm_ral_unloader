@@ -28,47 +28,44 @@ class probe_base_test extends uvm_test;
     `uvm_info(get_type_name(), "Default test_imp", UVM_LOW)
   endtask : test_imp
 
-  // Записать
-  virtual task write_csr(bit [31:0] addr, logic [63:0] value);
+  virtual task write_reg(uvm_reg r, logic [63:0] value);
     probe_transaction tx;
     tx = probe_transaction::type_id::create("tx");
-    tx.addr     = addr;
+    tx.addr     = r.get_address();
     tx.value    = value;
     tx.rd_or_wr = 1'b0;
     tx.valid    = 1'b1;
     env_o.probe_ap.write(tx);
-  endtask : write_csr
+  endtask : write_reg
 
-  // Прочитать
-  virtual task read_csr(bit [31:0] addr, output logic [63:0] value);
+  virtual task read_reg(uvm_reg r, output logic [63:0] value);
     probe_transaction tx;
     tx = probe_transaction::type_id::create("tx");
-    tx.addr     = addr;
+    tx.addr     = r.get_address();
     tx.value    = 'x;
     tx.rd_or_wr = 1'b1;
     tx.valid    = 1'b1;
     env_o.probe_ap.write(tx);
     value = tx.value;
-  endtask : read_csr
+  endtask : read_reg
 
-  // Записать → считать → сравнить
-  virtual task read_check_csr(bit [31:0] addr, logic [63:0] expected);
+  virtual task read_check_reg(uvm_reg r, logic [63:0] expected);
     logic [63:0] actual;
 
-    write_csr(addr, expected);
-    read_csr(addr, actual);
+    write_reg(r, expected);
+    read_reg(r, actual);
 
     if (actual !== expected) begin
-      `uvm_error (get_name(),
-                $sformatf("CSR 0x%03h mismatch: wrote=0x%016h read=0x%016h",
-                          addr, expected, actual))
+      `uvm_error(get_name(),
+                $sformatf("%s mismatch: wrote=0x%016h read=0x%016h",
+                          r.get_name(), expected, actual))
     end
     else begin
       `uvm_info(get_name(),
-                $sformatf("CSR 0x%03h = 0x%016h OK", addr, actual),
+                $sformatf("%s = 0x%016h OK", r.get_name(), actual),
                 UVM_LOW)
     end
-  endtask : read_check_csr
+  endtask : read_check_reg
 
   function void end_of_elaboration_phase(uvm_phase phase);
     super.end_of_elaboration_phase(phase);
@@ -94,30 +91,32 @@ class probe_sm_base_test extends probe_base_test;
   endfunction : new
 
   virtual task test_imp();
+    csr_sm_base_reg_block rb;
+
     `uvm_info(get_type_name(), "probe_sm_base_test: start", UVM_LOW)
 
-    read_check_csr(32'h300, 64'h0000_0000_0000_1880);   // mstatus
-    read_check_csr(32'h301, 64'h8000_0000_0014_112D);   // misa
-    read_check_csr(32'h302, 64'h0000_0000_0000_B3FF);   // medeleg
-    read_check_csr(32'h303, 64'h0000_0000_0000_0222);   // mideleg
-    read_check_csr(32'h304, 64'h0000_0000_0000_0A8A);   // mie
-    read_check_csr(32'h305, 64'h0000_0000_8000_0001);   // mtvec
-    read_check_csr(32'h306, 64'h0000_0000_0000_0007);   // mcounteren
-    read_check_csr(32'h340, 64'hDEAD_BEEF_CAFE_BABE);   // mscratch
-    read_check_csr(32'h341, 64'h0000_0000_8000_0000);   // mepc
-    read_check_csr(32'h342, 64'h8000_0000_0000_0007);   // mcause
-    read_check_csr(32'h343, 64'h0000_0000_DEAD_BEEF);   // mtval
-    read_check_csr(32'h344, 64'h0000_0000_0000_0888);   // mip
-    read_check_csr(32'hF11, 64'h0000_0000_0000_0000);   // mvendorid
-    read_check_csr(32'hF12, 64'h0000_0000_0000_0000);   // marchid
-    read_check_csr(32'hF13, 64'h0000_0000_0000_0001);   // mimpid
-    read_check_csr(32'hF14, 64'h0000_0000_0000_0000);   // mhartid
-    read_check_csr(32'hF15, 64'h0000_0000_0000_0000);   // mconfigptr
+    rb = env_o.reg_sm_base_model;
+
+    read_check_reg(rb.mstatus,    64'h0000_0000_0000_1880);
+    read_check_reg(rb.misa,       64'h8000_0000_0014_112D);
+    read_check_reg(rb.medeleg,    64'h0000_0000_0000_B3FF);
+    read_check_reg(rb.mideleg,    64'h0000_0000_0000_0222);
+    read_check_reg(rb.mie,        64'h0000_0000_0000_0A8A);
+    read_check_reg(rb.mtvec,      64'h0000_0000_8000_0001);
+    read_check_reg(rb.mcounteren, 64'h0000_0000_0000_0007);
+    read_check_reg(rb.mscratch,   64'hDEAD_BEEF_CAFE_BABE);
+    read_check_reg(rb.mepc,       64'h0000_0000_8000_0000);
+    read_check_reg(rb.mcause,     64'h8000_0000_0000_0007);
+    read_check_reg(rb.mtval,      64'h0000_0000_DEAD_BEEF);
+    read_check_reg(rb.mip,        64'h0000_0000_0000_0888);
+    read_check_reg(rb.mvendorid,  64'h0000_0000_0000_0000);
+    read_check_reg(rb.marchid,    64'h0000_0000_0000_0000);
+    read_check_reg(rb.mimpid,     64'h0000_0000_0000_0001);
+    read_check_reg(rb.mhartid,    64'h0000_0000_0000_0000);
+    read_check_reg(rb.mconfigptr, 64'h0000_0000_0000_0000);
 
     #10;
     env_o.probe_sb.dump_all();
-
-    `uvm_info(get_type_name(), "probe_sm_base_test: done", UVM_LOW)
   endtask : test_imp
 endclass : probe_sm_base_test
 
@@ -130,11 +129,15 @@ class probe_sm_zicntr_test extends probe_base_test;
   endfunction : new
 
   virtual task test_imp();
+    csr_sm_zicntr_reg_block rb;
+
     `uvm_info(get_type_name(), "probe_sm_zicntr_test: start", UVM_LOW)
 
-    read_check_csr(32'h320, 64'h0000_0000_0000_0005);   // mcountinhibit
-    read_check_csr(32'hB00, 64'h0000_0000_0000_1000);   // mcycle
-    read_check_csr(32'hB02, 64'h0000_0000_0000_2000);   // minstret
+    rb = env_o.reg_sm_zicntr_model;
+
+    read_check_reg(rb.mcountinhibit, 64'h0000_0000_0000_0005);
+    read_check_reg(rb.mcycle,       64'h0000_0000_0000_1000);
+    read_check_reg(rb.minstret,     64'h0000_0000_0000_2000);
 
     #10;
     env_o.probe_sb.dump_all();
