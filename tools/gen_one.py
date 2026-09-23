@@ -1,6 +1,14 @@
 """
-Ручной генератор одного CSR-класса из монолита.
+Ручной генератор CSR-классов из монолита.
 Один CSR → одно поле на весь регистр.
+
+Режимы:
+  gen_one.py <csr_name> [out_file]               — один CSR
+  gen_one.py --group <g> --out <f>               — все CSR группы
+  gen_one.py --group <g> --reg-block --reg-block-out <f>
+                                                 — сборка для csr_reg_block
+  gen_one.py --group <g> --both --out <f> --reg-block-out <f2>
+                                                 — и регистры, и сборка
 """
 
 import argparse
@@ -46,12 +54,82 @@ def gen_class(csr):
     return "\n".join(lines)
 
 
+def gen_reg_block_extension(group, csrs):
+    """
+    Генерирует csr_<group>_reg_block — uvm_reg_block для группы.
+    """
+    g = group.lower()
+    cls_name = f"csr_{g}_reg_block"
+
+    lines = []
+    lines.append("//" + "-" * 78)
+    lines.append(f"// {cls_name}.svh")
+    lines.append("//")
+    lines.append(f"// RAL-модель {group}.")
+    lines.append("// АВТОГЕНЕРАЦИЯ. Не редактировать вручную.")
+    lines.append("//" + "-" * 78)
+    lines.append("")
+    lines.append(f"class {cls_name} extends uvm_reg_block;")
+    lines.append(f"  `uvm_object_utils( {cls_name} )")
+    lines.append("")
+
+    # Поля
+    for csr in csrs:
+        n = csr["name"]
+        lines.append(f"  rand {n}_reg {n};")
+    lines.append("")
+    lines.append("  uvm_reg_map csr_map;")
+    lines.append("")
+    lines.append(f"  function new( string name = \"{cls_name}\" );")
+    lines.append("    super.new( .name(name), .has_coverage(UVM_NO_COVERAGE) );")
+    lines.append("  endfunction : new")
+    lines.append("")
+    lines.append("  virtual function void build();")
+
+    # Создание регистров
+    for csr in csrs:
+        n = csr["name"]
+        lines.append(f"    {n} = {n}_reg::type_id::create(\"{n}\");")
+        lines.append(f"    {n}.configure( .blk_parent(this) );")
+        lines.append(f"    {n}.build();")
+        lines.append("")
+
+    # Map
+    lines.append("    csr_map = create_map(\"csr_map\", 'h0, 8, UVM_LITTLE_ENDIAN, 1);")
+    lines.append("")
+    for csr in csrs:
+        n = csr["name"]
+        a = csr["address"]
+        lines.append(f"    csr_map.add_reg({n}, 12'h{a:03x}, \"RW\");")
+    lines.append("")
+    lines.append("    lock_model();")
+    lines.append("  endfunction : build")
+    lines.append("")
+    lines.append("  function uvm_reg get_reg_by_addr( bit [31:0] addr );")
+    lines.append("    case (addr)")
+    for csr in csrs:
+        n = csr["name"]
+        a = csr["address"]
+        lines.append(f"      32'h{a:03X}: return {n};")
+    lines.append("      default: return null;")
+    lines.append("    endcase")
+    lines.append("  endfunction : get_reg_by_addr")
+    lines.append(f"endclass : {cls_name}")
+    lines.append("")
+
+    return "\n".join(lines)
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("name", nargs="?", help="Имя CSR (mstatus)")
-    parser.add_argument("out", nargs="?", help="Выходной .sv файл")
-    parser.add_argument("--group", help="Группа (Sm_base) — все CSR в файл")
-    parser.add_argument("--out", dest="out_group", help="Выходной файл для --group")
+    parser.add_argument("out", nargs="?", help="Выходной .sv файл (для одного CSR)")
+    parser.add_argument("--group", help="Группа (Sm_base)")
+    parser.add_argument("--out", dest="out_group", help="Выходной .svh для регистров группы")
+    parser.add_argument("--reg-block", action="store_true", help="Генерировать сборку для csr_reg_block")
+    parser.add_argument("--reg-block-out", help="Выходной .svh для сборки")
+    parser.add_argument("--both", action="store_true", help="Генерировать и регистры, и сборку")
+
     args = parser.parse_args()
 
     with open(MONOLITH) as f:
@@ -63,16 +141,34 @@ def main():
             print(f"ERROR: no CSRs in group {args.group}", file=sys.stderr)
             sys.exit(1)
         csrs.sort(key=lambda c: c["address"])
-        out_file = args.out_group or f"tools/batches/batch_{args.group}.sv"
-        code = "\n\n".join(gen_class(c) for c in csrs)
-        with open(out_file, "w") as f:
-            f.write(code)
-        print(f"Generated {out_file} ({len(csrs)} classes)")
+
+        gen_regs   = args.both or not args.reg_block
+        gen_block  = args.both or args.reg_block
+
+        if gen_regs:
+            if not args.out_group:
+                print("ERROR: --out required for registers", file=sys.stderr)
+                sys.exit(1)
+            code = "\n\n".join(gen_class(c) for c in csrs)
+            with open(args.out_group, "w") as f:
+                f.write(code)
+            print(f"Generated {args.out_group} ({len(csrs)} classes)")
+
+        if gen_block:
+            if not args.reg_block_out:
+                print("ERROR: --reg-block-out required for reg-block", file=sys.stderr)
+                sys.exit(1)
+            code = gen_reg_block_extension(args.group, csrs)
+            with open(args.reg_block_out, "w") as f:
+                f.write(code)
+            print(f"Generated {args.reg_block_out} ({args.group})")
+
         return
 
     if not args.name:
         print("Usage: gen_one.py <csr_name> [out_file]", file=sys.stderr)
         print("       gen_one.py --group <group> --out <file>", file=sys.stderr)
+        print("       gen_one.py --group <group> --both --out <f> --reg-block-out <f2>", file=sys.stderr)
         sys.exit(1)
 
     csr = next((c for c in monolith if c["name"] == args.name), None)
