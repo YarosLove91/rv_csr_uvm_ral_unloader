@@ -1,6 +1,5 @@
-#!/usr/bin/env python3
 """
-Готовит батч для одного вызова агента Kilocode.
+Готовит батч для одного вызова ИИ агента .
 Берёт CSR указанной группы из редуцированного монолита,
 формирует файл с system + user промптом.
 
@@ -9,9 +8,10 @@
 и --batch K выбирает K-й батч.
 """
 
+import argparse
 import os
 import sys
-import argparse
+
 import yaml
 
 MONOLITH_PATH = "tools/csr_monolith_reduced.yaml"
@@ -127,7 +127,7 @@ def main():
     print(f"Fields: {total_fields}")
     print(f"Names:  {', '.join(c['name'] for c in batch)}")
     print(f"\nЗаписан: {out_path}")
-    print(f"Скопируй содержимое в агента Kilocode.")
+    print("Скопируй содержимое в ИИ агента.")
 
 
 if __name__ == "__main__":

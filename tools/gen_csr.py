@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Профильный генератор RAL-модели CSR.
 
@@ -7,12 +6,12 @@
 раскладывает по файлам — одно расширение = один файл.
 """
 
-import os
-import re
-import sys
 import glob
-import yaml
+import os
+import sys
 from collections import defaultdict
+
+import yaml
 
 PROFILE      = "csr_spec/profile/RVA23U64.yaml"
 CSR_DIR      = "csr_spec/csr"
@@ -131,7 +130,6 @@ SV_KEYWORDS = {
     "extern", "export", "import", "context", "type", "var",
     "with", "inside", "matches", "dist", "solve", "before",
     "soft", "hard", "std", "process", "mailbox", "semaphore",
-    "mailbox", "semaphore",
     # типы из UVM
     "uvm_reg", "uvm_reg_field", "uvm_reg_block", "uvm_reg_map",
     "uvm_component", "uvm_object", "uvm_sequence", "uvm_driver",
@@ -175,14 +173,14 @@ def gen_reg(f, csr, params):
 
     f.write(f"  function new( string name = \"{cls}\" );\n")
     f.write(f"    super.new( .name(name), .n_bits({length}), .has_coverage(UVM_NO_COVERAGE) );\n")
-    f.write(f"  endfunction : new\n\n")
+    f.write("  endfunction : new\n\n")
 
     f.write("  virtual function void build();\n")
     for fname, fspec in fields.items():
         floc   = get_field_location(fspec, params)
         flen   = fspec.get("length", 1)
         ftype  = fspec.get("type", "RW")
-        freset = get_reset(fspec)
+        #freset = get_reset(fspec)
         faccess = map_access(ftype)
         fvar = sanitize(fname)
 
@@ -191,11 +189,11 @@ def gen_reg(f, csr, params):
         f.write(f"                       .size({flen}),\n")
         f.write(f"                       .lsb_pos({floc}),\n")
         f.write(f"                       .access(\"{faccess}\"),\n")
-        f.write(f"                       .volatile(0),\n")
-        f.write(f"                       .reset(64'h{freset:x}),\n")
-        f.write(f"                       .has_reset(1),\n")
-        f.write(f"                       .is_rand(1),\n")
-        f.write(f"                       .individually_accessible(1) );\n\n")
+        f.write("                       .volatile(0),\n")
+        f.write("                       .reset(64'h{freset:x}),\n")
+        f.write("                       .has_reset(1),\n")
+        f.write("                       .is_rand(1),\n")
+        f.write("                       .individually_accessible(1) );\n\n")
     f.write("  endfunction : build\n")
     f.write(f"endclass : {cls}\n\n")
 
@@ -221,7 +219,7 @@ def main():
         try:
             with open(path) as fh:
                 csr = yaml.safe_load(fh)
-        except Exception as e:
+        except (OSError, yaml.YAMLError) as e:
             print(f"WARN: skip {path}: {e}", file=sys.stderr)
             continue
         if not isinstance(csr, dict):

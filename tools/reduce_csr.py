@@ -1,12 +1,11 @@
-#!/usr/bin/env python3
 """
 Редусер монолита CSR: убирает всё, что не нужно для RAL-генерации.
 Вход:  монолит из parse_csr.py (--monolith)
 Выход: компактный монолит (--out)
 """
 
-import sys
 import argparse
+
 import yaml
 
 
