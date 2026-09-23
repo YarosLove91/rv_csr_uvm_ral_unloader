@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Парсер CSR YAML из riscv-unified-db.
 
@@ -10,12 +9,13 @@
   - монолитный YAML со всеми CSR (--monolith)
 """
 
+import argparse
+import glob
 import os
 import sys
-import glob
-import argparse
-import yaml
 from collections import defaultdict
+
+import yaml
 
 CSR_DIR = "csr_spec/csr"
 
@@ -72,20 +72,18 @@ def get_group(csr, xlen=64):
     priv = csr.get("priv_mode", "?")
 
     # RV32-only (h-версии)
-    if xlen == 64:
-        if name.endswith("h") and (
-            name.startswith("mhpmcounter") or
-            name.startswith("mhpmevent") or
-            name in ("mcycleh", "minstreth", "mstatush")
-        ):
-            return "rv32_only"
+    if (xlen == 64
+            and name.endswith("h")
+            and (name.startswith(("mhpmcounter", "mhpmevent"))
+                 or name in ("mcycleh", "minstreth", "mstatush"))):
+        return "rv32_only"
 
     # PMP
     if name.startswith("pmp"):
         return "Sm_pmp"
 
     # Zihpm counters
-    if name.startswith("mhpmcounter") or name.startswith("mhpmevent"):
+    if name.startswith(("mhpmcounter", "mhpmevent")):
         return "Sm_zihpm"
 
     # Zicntr
@@ -123,7 +121,7 @@ def iter_csr_paths(csr_dir):
         try:
             with open(path) as f:
                 csr = yaml.safe_load(f)
-        except Exception as e:
+        except (OSError, yaml.YAMLError) as e:
             print(f"WARN: {path}: {e}", file=sys.stderr)
             continue
         if not isinstance(csr, dict):
@@ -224,12 +222,7 @@ def condition_matches(cond, mandatory, optional, allow_extra, xlen=64):
             )
 
         # param — не фильтруем
-        if "param" in cond:
-            return True
-
-        return False
-
-    return False
+        return "param" in cond
 
 
 def field_in_profile(field, mandatory, optional, allow_extra, xlen=64):
@@ -398,14 +391,14 @@ def main():
     if args.profile or args.priv or ext_filter:
         print(f"После фильтра: {filtered}")
     print(f"Всего полей: {total_fields}")
-    print(f"По priv_mode: " + ", ".join(
+    print("По priv_mode: " + ", ".join(
         f"{k}={v}" for k, v in sorted(by_priv.items())))
     print(f"\nРасширений (в definedBy): {len(by_ext)}")
     for ext, names in sorted(by_ext.items(), key=lambda x: -len(x[1])):
         print(f"  {ext:15s} {len(names):3d}")
 
     # M-регистры по группам
-    print(f"\n=== M-регистры по группам (RV64) ===")
+    print("\n=== M-регистры по группам (RV64) ===")
     m_by_group = defaultdict(list)
     for path, csr in iter_csr_paths(CSR_DIR):
         if csr.get("priv_mode") != "M":
@@ -429,8 +422,7 @@ def main():
     # Выгрузка
     if args.list_files:
         with open(args.list_files, "w") as f:
-            for p in used_paths:
-                f.write(os.path.relpath(p, ".") + "\n")
+            f.writelines(os.path.relpath(p, ".") + "\n" for p in used_paths)
         print(f"\nЗаписан список файлов: {args.list_files} ({len(used_paths)})")
 
     if args.monolith:
