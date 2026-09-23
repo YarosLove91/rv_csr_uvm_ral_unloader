@@ -1,8 +1,13 @@
 #!/usr/bin/env python3
 """
 Парсер CSR YAML из riscv-unified-db.
+
 Собирает статистику по priv_mode и definedBy.
 Опционально фильтрует по профилю (RVA23S64, RVA23U64) и по расширениям.
+Фильтрует поля внутри CSR по definedBy и xlen.
+Может выгружать:
+  - список использованных .yaml файлов (--list-files)
+  - монолитный YAML со всеми CSR (--monolith)
 """
 
 import os
@@ -14,8 +19,16 @@ from collections import defaultdict
 
 CSR_DIR = "csr_spec/csr"
 
+# Расширения, которые принудительно исключаются (для отладки).
+# По умолчанию пусто.
+EXCLUDE_EXTENSIONS = set()
 
+
+# ============================================================================
+# Извлечение расширений из definedBy
+# ============================================================================
 def extract_extensions(defined_by):
+    """Извлекает список имён расширений из definedBy (любая форма)."""
     if defined_by is None:
         return []
     if isinstance(defined_by, str):
@@ -29,7 +42,14 @@ def extract_extensions(defined_by):
         if "extension" in defined_by:
             ext = defined_by["extension"]
             if isinstance(ext, dict):
-                return [ext.get("name", "")]
+                if "name" in ext:
+                    return [ext["name"]]
+                if "anyOf" in ext:
+                    out = []
+                    for e in ext["anyOf"]:
+                        if isinstance(e, dict) and "name" in e:
+                            out.append(e["name"])
+                    return out
             return [str(ext)]
         if "anyOf" in defined_by:
             return extract_extensions(defined_by["anyOf"])
@@ -37,12 +57,19 @@ def extract_extensions(defined_by):
             return extract_extensions(defined_by["allOf"])
         if "param" in defined_by:
             return []
+        if "xlen" in defined_by:
+            return []
         return []
     return []
 
 
+# ============================================================================
+# Группировка M-регистров
+# ============================================================================
 def get_group(csr, xlen=64):
+    """Определяет группу для генерации (только для M-регистров расширения Sm)."""
     name = csr["name"]
+
     if xlen == 64:
         if name.endswith("h") and (
             name.startswith("mhpmcounter") or
@@ -50,12 +77,14 @@ def get_group(csr, xlen=64):
             name in ("mcycleh", "minstreth", "mstatush")
         ):
             return None
+
     if name.startswith("pmp"):
         return "Sm_pmp"
     if name.startswith("mhpmcounter") or name.startswith("mhpmevent"):
         return "Sm_zihpm"
     if name in ("mcycle", "mcycleh", "minstret", "minstreth", "mcountinhibit"):
         return "Sm_zicntr"
+
     base_m = {
         "mstatus", "misa", "medeleg", "mideleg", "mie", "mtvec",
         "mcounteren", "mscratch", "mepc", "mcause", "mtval", "mip",
@@ -64,16 +93,22 @@ def get_group(csr, xlen=64):
     }
     if name in base_m:
         return "Sm_base"
+
     return "Sm_misc"
 
 
-def iter_csrs(csr_dir):
-    for path in glob.glob(os.path.join(csr_dir, "**", "*.yaml"), recursive=True):
+# ============================================================================
+# Итераторы
+# ============================================================================
+def iter_csr_paths(csr_dir):
+    """Итератор по (path, csr)."""
+    for path in sorted(glob.glob(os.path.join(csr_dir, "**", "*.yaml"),
+                                 recursive=True)):
         try:
             with open(path) as f:
                 csr = yaml.safe_load(f)
         except Exception as e:
-            print(f"WARN: {path}: {e}")
+            print(f"WARN: {path}: {e}", file=sys.stderr)
             continue
         if not isinstance(csr, dict):
             continue
@@ -81,9 +116,12 @@ def iter_csrs(csr_dir):
             continue
         if "address" not in csr:
             continue
-        yield csr
+        yield path, csr
 
 
+# ============================================================================
+# Профиль
+# ============================================================================
 def load_profile(path):
     with open(path) as f:
         return yaml.safe_load(f)
@@ -105,25 +143,166 @@ def csr_in_profile(csr, mandatory, optional, allow_extra):
 
 
 def matches_ext_filter(csr, ext_filter):
-    """CSR подходит, если хотя бы одно его расширение в ext_filter."""
     if not ext_filter:
         return True
     exts = extract_extensions(csr.get("definedBy"))
     return any(e in ext_filter for e in exts)
 
 
+# ============================================================================
+# Фильтрация полей внутри CSR
+# ============================================================================
+def condition_matches(cond, mandatory, optional, allow_extra, xlen=64):
+    """Проверяет condition (definedBy) на соответствие профилю."""
+    if cond is None:
+        return True
+
+    if isinstance(cond, str):
+        if cond in EXCLUDE_EXTENSIONS:
+            return False
+        allowed = mandatory | (optional if allow_extra else set())
+        return cond in allowed
+
+    if isinstance(cond, list):
+        return all(
+            condition_matches(c, mandatory, optional, allow_extra, xlen)
+            for c in cond
+        )
+
+    if isinstance(cond, dict):
+        # xlen
+        if "xlen" in cond:
+            return cond["xlen"] == xlen
+
+        # extension
+        if "extension" in cond:
+            ext = cond["extension"]
+            if isinstance(ext, dict):
+                if "name" in ext:
+                    name = ext["name"]
+                    if name in EXCLUDE_EXTENSIONS:
+                        return False
+                    allowed = mandatory | (optional if allow_extra else set())
+                    return name in allowed
+                if "anyOf" in ext:
+                    allowed = mandatory | (optional if allow_extra else set())
+                    return any(
+                        e.get("name") in allowed
+                        and e.get("name") not in EXCLUDE_EXTENSIONS
+                        for e in ext["anyOf"]
+                    )
+            return False
+
+        # anyOf
+        if "anyOf" in cond:
+            return any(
+                condition_matches(c, mandatory, optional, allow_extra, xlen)
+                for c in cond["anyOf"]
+            )
+
+        # allOf
+        if "allOf" in cond:
+            return all(
+                condition_matches(c, mandatory, optional, allow_extra, xlen)
+                for c in cond["allOf"]
+            )
+
+        # param — не фильтруем
+        if "param" in cond:
+            return True
+
+        return False
+
+    return False
+
+
+def field_in_profile(field, mandatory, optional, allow_extra, xlen=64):
+    """Поле включается, если его definedBy проходит фильтр."""
+    db = field.get("definedBy")
+    if db is None:
+        return True
+    return condition_matches(db, mandatory, optional, allow_extra, xlen)
+
+
+def parse_location(fspec, xlen=64):
+    """Возвращает (lsb, size) из location/location_rv32/location_rv64."""
+    loc = None
+    if xlen == 64 and "location_rv64" in fspec:
+        loc = fspec["location_rv64"]
+    elif xlen == 32 and "location_rv32" in fspec:
+        loc = fspec["location_rv32"]
+    elif "location" in fspec:
+        loc = fspec["location"]
+
+    if loc is None:
+        return (0, 1)
+
+    if isinstance(loc, str) and "-" in loc:
+        hi, lo = loc.split("-")
+        hi = int(hi.strip())
+        lo = int(lo.strip())
+        return (lo, hi - lo + 1)
+
+    if isinstance(loc, int):
+        return (loc, 1)
+
+    if isinstance(loc, str):
+        try:
+            return (int(loc), 1)
+        except ValueError:
+            return (0, 1)
+
+    return (0, 1)
+
+
+def filter_fields(csr, mandatory, optional, allow_extra, xlen=64):
+    """Возвращает копию CSR с отфильтрованными полями."""
+    fields = csr.get("fields", {})
+    if not fields:
+        return csr
+
+    filtered = {}
+    for fname, fspec in fields.items():
+        if not field_in_profile(fspec, mandatory, optional, allow_extra, xlen):
+            continue
+        clean = dict(fspec)
+
+        # type() → RW
+        if "type()" in clean and "type" not in clean:
+            clean["type"] = "RW"
+
+        # Нормализуем reset_value
+        if "reset_value" in clean:
+            clean["reset_value"] = normalize_reset(clean["reset_value"])
+        elif "reset_value()" in clean:
+            clean["reset_value"] = 0
+        else:
+            clean["reset_value"] = 0
+
+        # Вычисляем lsb и size
+        lsb, size = parse_location(fspec, xlen)
+        clean["_lsb"] = lsb
+        clean["_size"] = size
+
+        filtered[fname] = clean
+
+    result = dict(csr)
+    result["fields"] = filtered
+    return result
+
+# ============================================================================
+# Main
+# ============================================================================
 def main():
-    parser = argparse.ArgumentParser(
-        description="Парсер CSR YAML из riscv-unified-db")
-    parser.add_argument("--profile", help="Путь к профилю (RVA23S64.yaml)")
-    parser.add_argument("--priv", help="Фильтр по priv_mode (M, S, U, ...)")
-    parser.add_argument(
-        "--ext", action="append", default=[],
-        help="Фильтр по расширениям (можно несколько: --ext Sm --ext C). "
-             "Можно списком через запятую: --ext Sm,C")
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--profile", help="Путь к профилю")
+    parser.add_argument("--priv", help="Фильтр по priv_mode")
+    parser.add_argument("--ext", action="append", default=[],
+                        help="Фильтр по расширениям (--ext Sm,C)")
+    parser.add_argument("--list-files", help="Записать список .yaml в файл")
+    parser.add_argument("--monolith", help="Записать монолитный YAML в файл")
     args = parser.parse_args()
 
-    # Разбираем --ext Sm,C → {'Sm', 'C'}
     ext_filter = set()
     for item in args.ext:
         for e in item.split(","):
@@ -139,22 +318,21 @@ def main():
         print(f"  Mandatory: {len(mandatory)}")
         print(f"  Optional:  {len(optional)}")
         print(f"  Allow extra: {allow_extra}")
-
     if ext_filter:
         print(f"  Ext filter: {sorted(ext_filter)}")
-
     if args.priv:
         print(f"  Priv filter: {args.priv}")
-
     print()
 
+    used_paths = []
+    monolith = []
     by_priv = defaultdict(int)
     by_ext = defaultdict(list)
     total_fields = 0
     total_csrs = 0
     filtered = 0
 
-    for csr in iter_csrs(CSR_DIR):
+    for path, csr in iter_csr_paths(CSR_DIR):
         total_csrs += 1
 
         if args.profile and not csr_in_profile(csr, mandatory, optional, allow_extra):
@@ -165,15 +343,24 @@ def main():
             continue
 
         filtered += 1
-        name = csr["name"]
-        priv = csr.get("priv_mode", "?")
-        by_priv[priv] += 1
+        used_paths.append(path)
 
+        # Фильтрация полей
+        if args.profile:
+            csr = filter_fields(csr, mandatory, optional, allow_extra, xlen=64)
+
+        # Подсчёт после фильтрации
+        total_fields += len(csr.get("fields", {}))
+        by_priv[csr.get("priv_mode", "?")] += 1
         exts = extract_extensions(csr.get("definedBy")) or ["<none>"]
         for ext in exts:
-            by_ext[ext].append(name)
+            by_ext[ext].append(csr["name"])
 
-        total_fields += len(csr.get("fields", {}))
+        # Монолит
+        entry = dict(csr)
+        entry["_source"] = os.path.relpath(path, CSR_DIR)
+        entry["_group"] = get_group(csr, xlen=64)
+        monolith.append(entry)
 
     print(f"Всего CSR: {total_csrs}")
     if args.profile or args.priv or ext_filter:
@@ -188,7 +375,7 @@ def main():
     # M-регистры по группам
     print(f"\n=== M-регистры по группам (RV64) ===")
     m_by_group = defaultdict(list)
-    for csr in iter_csrs(CSR_DIR):
+    for path, csr in iter_csr_paths(CSR_DIR):
         if csr.get("priv_mode") != "M":
             continue
         if args.profile and not csr_in_profile(csr, mandatory, optional, allow_extra):
@@ -206,6 +393,36 @@ def main():
     for g, names in sorted(m_by_group.items(), key=lambda x: -len(x[1])):
         print(f"  {g:15s} {len(names):3d}")
     print(f"\nВсего M-регистров (RV64): {sum(len(v) for v in m_by_group.values())}")
+
+    # Выгрузка
+    if args.list_files:
+        with open(args.list_files, "w") as f:
+            for p in used_paths:
+                f.write(os.path.relpath(p, ".") + "\n")
+        print(f"\nЗаписан список файлов: {args.list_files} ({len(used_paths)})")
+
+    if args.monolith:
+        monolith.sort(key=lambda c: c.get("address", 0))
+        with open(args.monolith, "w") as f:
+            yaml.dump(monolith, f, allow_unicode=True,
+                      default_flow_style=False, sort_keys=False)
+        print(f"Записан монолит:      {args.monolith} ({len(monolith)} CSR)")
+
+def normalize_reset(rv):
+    """Приводит reset_value к числу."""
+    if rv is None:
+        return 0
+    if rv == "UNDEFINED_LEGAL":
+        return 0
+    if isinstance(rv, int):
+        return rv
+    if isinstance(rv, str):
+        try:
+            return int(rv, 0)
+        except ValueError:
+            return 0
+    return 0
+
 
 
 if __name__ == "__main__":
