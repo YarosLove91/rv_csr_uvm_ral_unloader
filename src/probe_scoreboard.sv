@@ -68,35 +68,121 @@ class probe_scoreboard extends uvm_scoreboard;
                 $sformatf("WR 0x%03h <- 0x%016h [%s]",
                           tx.addr, tx.value, r.get_name()),
                 UVM_LOW)
-    end
-    else begin
-      `uvm_error(get_name(),
-                 $sformatf("WR 0x%03h <- 0x%016h : no reg_block",
-                           tx.addr, tx.value))
+    end else begin
+      `uvm_error (get_name(),
+                  $sformatf("WR 0x%03h <- 0x%016h : no reg_block",
+                            tx.addr, tx.value))
     end
   endfunction : do_write
 
-  // READ: заполняем tx.value из shadow
   protected function void do_read(probe_transaction tx);
     uvm_reg        r;
     logic [63:0]   actual;
 
-    actual = shadow.exists(tx.addr[11:0]) ? shadow[tx.addr[11:0]] : 64'h0;
-    tx.value = actual;
-
     r = find_reg(tx.addr);
     if (r != null) begin
-      `uvm_info(get_name(),
-                $sformatf("RD 0x%03h -> 0x%016h [%s]",
-                          tx.addr, actual, r.get_name()),
-                UVM_LOW)
-    end
-    else begin
+      if (get_reg_value(r, actual)) begin
+        tx.value = actual;
+        `uvm_info(get_name(),
+                  $sformatf("RD 0x%03h -> 0x%016h [%s] (RAL)",
+                            tx.addr, actual, r.get_name()), UVM_LOW)
+      end else begin
+        actual = shadow.exists(tx.addr[11:0]) ? shadow[tx.addr[11:0]] : 64'h0;
+        tx.value = actual;
+        `uvm_warning(get_name(),
+                    $sformatf("RD 0x%03h -> 0x%016h [%s] (shadow fallback)",
+                              tx.addr, actual, r.get_name()))
+      end
+    end else begin
+      actual = shadow.exists(tx.addr[11:0]) ? shadow[tx.addr[11:0]] : 64'h0;
+      tx.value = actual;
       `uvm_warning(get_name(),
-                   $sformatf("RD 0x%03h -> 0x%016h : no reg_block",
-                             tx.addr, actual))
+                  $sformatf("RD 0x%03h -> 0x%016h : no reg_block",
+                            tx.addr, actual))
     end
   endfunction : do_read
+
+  // Ручной поиск подстроки в строке (Ограничение verilator)
+  protected function int find_substr(string s, string sub);
+    int len_s   = s.len();
+    int len_sub = sub.len();
+    if (len_sub == 0 || len_sub > len_s) return -1;
+
+    for (int i = 0; i <= len_s - len_sub; i++) begin
+      if (s.substr(i, i + len_sub - 1) == sub)
+        return i;
+    end
+    return -1;
+  endfunction : find_substr
+
+  // Извлечение значения из sprint() через парсинг
+  protected function bit get_reg_value(uvm_reg r, output uvm_reg_data_t value);
+    string s;
+    int    pos;
+    int    hpos;
+    int    matched;
+
+    s = r.sprint();
+
+    pos = find_substr(s, "=64'h");
+    if (pos < 0) pos = find_substr(s, "=32'h");
+    if (pos < 0) return 0;
+
+    // pos — индекс '=', после него "64'h..."
+    // Найти "'h" после '='
+    hpos = find_substr(s.substr(pos, s.len() - 1), "'h");
+    if (hpos < 0) return 0;
+
+    // hpos — индекс "'h" в подстроке, начиная с '='
+    // Реальная позиция "'h" в s:
+    hpos = pos + hpos;
+
+    // Передаём $sscanf строку ПОСЛЕ 'h
+    matched = $sscanf(s.substr(hpos + 2, s.len() - 1), "%h", value);
+    return (matched == 1);
+  endfunction : get_reg_value
+
+  //------------------------------------------------------------------------------
+  // Проверка согласованности RAL и shadow
+  //------------------------------------------------------------------------------
+  function void check_ral_vs_shadow();
+    int errors = 0;
+    int checked = 0;
+
+    foreach (shadow[addr]) begin
+      uvm_reg        r;
+      uvm_reg_data_t ral_val;
+      uvm_reg_data_t shadow_val;
+
+      r = find_reg(addr);
+      if (r == null) begin
+        `uvm_warning(get_name(),
+                    $sformatf("shadow[0x%03h] exists, no RAL reg", addr))
+        continue;
+      end
+
+      shadow_val = shadow[addr];
+      if (!get_reg_value(r, ral_val)) begin
+        `uvm_warning(get_name(),
+                    $sformatf("cannot read RAL[%s]", r.get_name()))
+        continue;
+      end
+
+      checked++;
+      if (ral_val !== shadow_val) begin
+        `uvm_error(get_name(),
+                  $sformatf("%s mismatch: RAL=0x%016h shadow=0x%016h",
+                            r.get_name(), ral_val, shadow_val))
+        errors++;
+      end
+    end
+
+    `uvm_info(get_name(),
+              $sformatf("RAL vs shadow: %0d checked, %0d mismatches",
+                        checked, errors),
+              UVM_HIGH)
+  endfunction : check_ral_vs_shadow
+
 
   function void dump_all();
     `uvm_info(get_name(), "\n=== CSR shadow dump ===", UVM_LOW)
@@ -104,5 +190,12 @@ class probe_scoreboard extends uvm_scoreboard;
       `uvm_info(get_name(),
                 $sformatf("0x%03h = 0x%016h", a, shadow[a]),
                 UVM_LOW)
+
+    `uvm_info(get_name(), "\n=== RAL model dump (sprint) ===", UVM_LOW)
+    `uvm_info(get_name(), reg_sm_base_model.sprint(),   UVM_LOW)
+    `uvm_info(get_name(), reg_sm_zicntr_model.sprint(), UVM_LOW)
+
+    // Проверка согласованности
+    this.check_ral_vs_shadow();
   endfunction : dump_all
 endclass : probe_scoreboard
