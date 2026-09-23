@@ -69,7 +69,9 @@ def extract_extensions(defined_by):
 def get_group(csr, xlen=64):
     """Определяет группу для генерации (только для M-регистров расширения Sm)."""
     name = csr["name"]
+    priv = csr.get("priv_mode", "?")
 
+    # RV32-only (h-версии)
     if xlen == 64:
         if name.endswith("h") and (
             name.startswith("mhpmcounter") or
@@ -78,23 +80,37 @@ def get_group(csr, xlen=64):
         ):
             return "rv32_only"
 
+    # PMP
     if name.startswith("pmp"):
         return "Sm_pmp"
+
+    # Zihpm counters
     if name.startswith("mhpmcounter") or name.startswith("mhpmevent"):
         return "Sm_zihpm"
+
+    # Zicntr
     if name in ("mcycle", "mcycleh", "minstret", "minstreth", "mcountinhibit"):
         return "Sm_zicntr"
 
+    # Базовая M
     base_m = {
         "mstatus", "misa", "medeleg", "mideleg", "mie", "mtvec",
         "mcounteren", "mscratch", "mepc", "mcause", "mtval", "mip",
         "mvendorid", "marchid", "mimpid", "mhartid", "mconfigptr",
-        "mstatush", "mtinst", "mtval2",
     }
     if name in base_m:
         return "Sm_base"
 
-    return "Sm_misc"
+    # Fallback по priv_mode
+    if priv == "M":
+        return "Sm_misc"
+    if priv == "S":
+        return "S_misc"
+    if priv == "U":
+        return "U_misc"
+    if priv == "VS":
+        return "VS_misc"
+    return "misc"
 
 
 # ============================================================================
