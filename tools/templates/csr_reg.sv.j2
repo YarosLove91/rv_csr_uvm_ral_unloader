@@ -1,0 +1,25 @@
+//------------------------------------------------------------------------------
+// {{ csr.name }} (0x{{ "%03x"|format(csr.address) }}) - {{ csr.name }}
+//------------------------------------------------------------------------------
+class {{ csr.name }}_reg extends uvm_reg;
+  `uvm_object_utils( {{ csr.name }}_reg )
+
+  rand uvm_reg_field {{ csr.name }}_field;
+
+  function new( string name = "{{ csr.name }}_reg" );
+    super.new( .name(name), .n_bits({{ csr.length }}), .has_coverage(UVM_NO_COVERAGE) );
+  endfunction : new
+
+  virtual function void build();
+    {{ csr.name }}_field = uvm_reg_field::type_id::create("{{ csr.name }}_field");
+    {{ csr.name }}_field.configure( .parent(this),
+                            .size({{ csr.length }}),
+                            .lsb_pos(0),
+                            .access("RW"),
+                            .volatile(0),
+                            .reset(64'h0),
+                            .has_reset(1),
+                            .is_rand(1),
+                            .individually_accessible(1) );
+  endfunction : build
+endclass : {{ csr.name }}_reg
