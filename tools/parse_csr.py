@@ -76,7 +76,7 @@ def get_group(csr, xlen=64):
             name.startswith("mhpmevent") or
             name in ("mcycleh", "minstreth", "mstatush")
         ):
-            return None
+            return "rv32_only"
 
     if name.startswith("pmp"):
         return "Sm_pmp"
@@ -386,7 +386,7 @@ def main():
         if "Sm" not in exts:
             continue
         g = get_group(csr, xlen=64)
-        if g is None:
+        if g is None or g == "rv32_only":
             continue
         m_by_group[g].append(csr["name"])
 
