@@ -270,6 +270,21 @@ def parse_location(fspec, xlen=64):
 
     return (0, 1)
 
+def normalize_reset(rv):
+    """Приводит reset_value к числу."""
+    if rv is None:
+        return 0
+    if rv == "UNDEFINED_LEGAL":
+        return 0
+    if isinstance(rv, int):
+        return rv
+    if isinstance(rv, str):
+        try:
+            return int(rv, 0)
+        except ValueError:
+            return 0
+    return 0
+
 
 def filter_fields(csr, mandatory, optional, allow_extra, xlen=64):
     """Возвращает копию CSR с отфильтрованными полями."""
@@ -305,6 +320,7 @@ def filter_fields(csr, mandatory, optional, allow_extra, xlen=64):
     result = dict(csr)
     result["fields"] = filtered
     return result
+
 
 # ============================================================================
 # Main
@@ -423,23 +439,6 @@ def main():
             yaml.dump(monolith, f, allow_unicode=True,
                       default_flow_style=False, sort_keys=False)
         print(f"Записан монолит:      {args.monolith} ({len(monolith)} CSR)")
-
-def normalize_reset(rv):
-    """Приводит reset_value к числу."""
-    if rv is None:
-        return 0
-    if rv == "UNDEFINED_LEGAL":
-        return 0
-    if isinstance(rv, int):
-        return rv
-    if isinstance(rv, str):
-        try:
-            return int(rv, 0)
-        except ValueError:
-            return 0
-    return 0
-
-
 
 if __name__ == "__main__":
     main()
