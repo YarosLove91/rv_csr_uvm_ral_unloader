@@ -18,6 +18,17 @@ import yaml
 
 MONOLITH = "tools/csr_monolith_reduced.yaml"
 
+# Зарезервированные слова SystemVerilog, недопустимые как имена переменных
+SV_KEYWORDS = {
+    "bit", "byte", "int", "integer", "logic", "reg", "time", "real",
+    "realtime", "shortint", "longint", "string", "event", "chandle", "void",
+}
+
+
+def member_name(name):
+    """Имя члена reg_block; для ключевых слов SV добавляет суффикс _f."""
+    return f"{name}_f" if name in SV_KEYWORDS else name
+
 
 def gen_class(csr):
     name   = csr["name"]
@@ -76,7 +87,7 @@ def gen_reg_block_extension(group, csrs):
     # Поля
     for csr in csrs:
         n = csr["name"]
-        lines.append(f"  rand {n}_reg {n};")
+        lines.append(f"  rand {n}_reg {member_name(n)};")
     lines.append("")
     lines.append("  uvm_reg_map csr_map;")
     lines.append("")
@@ -89,9 +100,10 @@ def gen_reg_block_extension(group, csrs):
     # Создание регистров
     for csr in csrs:
         n = csr["name"]
-        lines.append(f"    {n} = {n}_reg::type_id::create(\"{n}\");")
-        lines.append(f"    {n}.configure( .blk_parent(this) );")
-        lines.append(f"    {n}.build();")
+        m = member_name(n)
+        lines.append(f"    {m} = {n}_reg::type_id::create(\"{n}\");")
+        lines.append(f"    {m}.configure( .blk_parent(this) );")
+        lines.append(f"    {m}.build();")
         lines.append("")
 
     # Map
@@ -100,7 +112,7 @@ def gen_reg_block_extension(group, csrs):
     for csr in csrs:
         n = csr["name"]
         a = csr["address"]
-        lines.append(f"    csr_map.add_reg({n}, 12'h{a:03x}, \"RW\");")
+        lines.append(f"    csr_map.add_reg({member_name(n)}, 12'h{a:03x}, \"RW\");")
     lines.append("")
     lines.append("    lock_model();")
     lines.append("  endfunction : build")

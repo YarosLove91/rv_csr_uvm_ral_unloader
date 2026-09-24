@@ -1,45 +1,18 @@
 //------------------------------------------------------------------------------
-// mcountinhibit (0x320) - mcountinhibit
+// cycle (0xc00) - cycle
 //------------------------------------------------------------------------------
-class mcountinhibit_reg extends uvm_reg;
-  `uvm_object_utils( mcountinhibit_reg )
+class cycle_reg extends uvm_reg;
+  `uvm_object_utils( cycle_reg )
 
-  rand uvm_reg_field mcountinhibit_field;
+  rand uvm_reg_field cycle_field;
 
-  function new( string name = "mcountinhibit_reg" );
-    super.new( .name(name), .n_bits(32), .has_coverage(UVM_NO_COVERAGE) );
-  endfunction : new
-
-  virtual function void build();
-    mcountinhibit_field = uvm_reg_field::type_id::create("mcountinhibit_field");
-    mcountinhibit_field.configure( .parent(this),
-                            .size(32),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
-  endfunction : build
-endclass : mcountinhibit_reg
-
-
-//------------------------------------------------------------------------------
-// mcycle (0xb00) - mcycle
-//------------------------------------------------------------------------------
-class mcycle_reg extends uvm_reg;
-  `uvm_object_utils( mcycle_reg )
-
-  rand uvm_reg_field mcycle_field;
-
-  function new( string name = "mcycle_reg" );
+  function new( string name = "cycle_reg" );
     super.new( .name(name), .n_bits(64), .has_coverage(UVM_NO_COVERAGE) );
   endfunction : new
 
   virtual function void build();
-    mcycle_field = uvm_reg_field::type_id::create("mcycle_field");
-    mcycle_field.configure( .parent(this),
+    cycle_field = uvm_reg_field::type_id::create("cycle_field");
+    cycle_field.configure( .parent(this),
                             .size(64),
                             .lsb_pos(0),
                             .access("RW"),
@@ -49,24 +22,24 @@ class mcycle_reg extends uvm_reg;
                             .is_rand(1),
                             .individually_accessible(1) );
   endfunction : build
-endclass : mcycle_reg
+endclass : cycle_reg
 
 
 //------------------------------------------------------------------------------
-// minstret (0xb02) - minstret
+// time (0xc01) - time
 //------------------------------------------------------------------------------
-class minstret_reg extends uvm_reg;
-  `uvm_object_utils( minstret_reg )
+class time_reg extends uvm_reg;
+  `uvm_object_utils( time_reg )
 
-  rand uvm_reg_field minstret_field;
+  rand uvm_reg_field time_field;
 
-  function new( string name = "minstret_reg" );
+  function new( string name = "time_reg" );
     super.new( .name(name), .n_bits(64), .has_coverage(UVM_NO_COVERAGE) );
   endfunction : new
 
   virtual function void build();
-    minstret_field = uvm_reg_field::type_id::create("minstret_field");
-    minstret_field.configure( .parent(this),
+    time_field = uvm_reg_field::type_id::create("time_field");
+    time_field.configure( .parent(this),
                             .size(64),
                             .lsb_pos(0),
                             .access("RW"),
@@ -76,4 +49,31 @@ class minstret_reg extends uvm_reg;
                             .is_rand(1),
                             .individually_accessible(1) );
   endfunction : build
-endclass : minstret_reg
+endclass : time_reg
+
+
+//------------------------------------------------------------------------------
+// instret (0xc02) - instret
+//------------------------------------------------------------------------------
+class instret_reg extends uvm_reg;
+  `uvm_object_utils( instret_reg )
+
+  rand uvm_reg_field instret_field;
+
+  function new( string name = "instret_reg" );
+    super.new( .name(name), .n_bits(64), .has_coverage(UVM_NO_COVERAGE) );
+  endfunction : new
+
+  virtual function void build();
+    instret_field = uvm_reg_field::type_id::create("instret_field");
+    instret_field.configure( .parent(this),
+                            .size(64),
+                            .lsb_pos(0),
+                            .access("RW"),
+                            .volatile(0),
+                            .reset(64'h0),
+                            .has_reset(1),
+                            .is_rand(1),
+                            .individually_accessible(1) );
+  endfunction : build
+endclass : instret_reg

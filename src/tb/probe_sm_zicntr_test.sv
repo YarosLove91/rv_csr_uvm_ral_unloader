@@ -12,11 +12,11 @@ class probe_sm_zicntr_test extends probe_base_test;
   endfunction : new
 
   virtual task test_imp();
-    csr_sm_zicntr_reg_block rb;
+    csr_sm_reg_block rb;
 
     `uvm_info(get_type_name(), "probe_sm_zicntr_test: start", UVM_LOW)
 
-    rb = env_o.reg_top_model.sm_zicntr;
+    rb = env_o.reg_top_model.Sm;
 
     read_check_reg(rb.mcountinhibit, 64'h0000_0000_0000_0005);
     read_check_reg(rb.mcycle,       64'h0000_0000_0000_1000);

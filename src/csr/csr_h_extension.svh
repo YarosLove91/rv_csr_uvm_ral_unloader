@@ -1,18 +1,18 @@
 //------------------------------------------------------------------------------
-// mstatus (0x300) - mstatus
+// vsstatus (0x200) - vsstatus
 //------------------------------------------------------------------------------
-class mstatus_reg extends uvm_reg;
-  `uvm_object_utils( mstatus_reg )
+class vsstatus_reg extends uvm_reg;
+  `uvm_object_utils( vsstatus_reg )
 
-  rand uvm_reg_field mstatus_field;
+  rand uvm_reg_field vsstatus_field;
 
-  function new( string name = "mstatus_reg" );
+  function new( string name = "vsstatus_reg" );
     super.new( .name(name), .n_bits(64), .has_coverage(UVM_NO_COVERAGE) );
   endfunction : new
 
   virtual function void build();
-    mstatus_field = uvm_reg_field::type_id::create("mstatus_field");
-    mstatus_field.configure( .parent(this),
+    vsstatus_field = uvm_reg_field::type_id::create("vsstatus_field");
+    vsstatus_field.configure( .parent(this),
                             .size(64),
                             .lsb_pos(0),
                             .access("RW"),
@@ -22,24 +22,24 @@ class mstatus_reg extends uvm_reg;
                             .is_rand(1),
                             .individually_accessible(1) );
   endfunction : build
-endclass : mstatus_reg
+endclass : vsstatus_reg
 
 
 //------------------------------------------------------------------------------
-// misa (0x301) - misa
+// vstvec (0x205) - vstvec
 //------------------------------------------------------------------------------
-class misa_reg extends uvm_reg;
-  `uvm_object_utils( misa_reg )
+class vstvec_reg extends uvm_reg;
+  `uvm_object_utils( vstvec_reg )
 
-  rand uvm_reg_field misa_field;
+  rand uvm_reg_field vstvec_field;
 
-  function new( string name = "misa_reg" );
+  function new( string name = "vstvec_reg" );
     super.new( .name(name), .n_bits(64), .has_coverage(UVM_NO_COVERAGE) );
   endfunction : new
 
   virtual function void build();
-    misa_field = uvm_reg_field::type_id::create("misa_field");
-    misa_field.configure( .parent(this),
+    vstvec_field = uvm_reg_field::type_id::create("vstvec_field");
+    vstvec_field.configure( .parent(this),
                             .size(64),
                             .lsb_pos(0),
                             .access("RW"),
@@ -49,24 +49,24 @@ class misa_reg extends uvm_reg;
                             .is_rand(1),
                             .individually_accessible(1) );
   endfunction : build
-endclass : misa_reg
+endclass : vstvec_reg
 
 
 //------------------------------------------------------------------------------
-// medeleg (0x302) - medeleg
+// vsepc (0x241) - vsepc
 //------------------------------------------------------------------------------
-class medeleg_reg extends uvm_reg;
-  `uvm_object_utils( medeleg_reg )
+class vsepc_reg extends uvm_reg;
+  `uvm_object_utils( vsepc_reg )
 
-  rand uvm_reg_field medeleg_field;
+  rand uvm_reg_field vsepc_field;
 
-  function new( string name = "medeleg_reg" );
+  function new( string name = "vsepc_reg" );
     super.new( .name(name), .n_bits(64), .has_coverage(UVM_NO_COVERAGE) );
   endfunction : new
 
   virtual function void build();
-    medeleg_field = uvm_reg_field::type_id::create("medeleg_field");
-    medeleg_field.configure( .parent(this),
+    vsepc_field = uvm_reg_field::type_id::create("vsepc_field");
+    vsepc_field.configure( .parent(this),
                             .size(64),
                             .lsb_pos(0),
                             .access("RW"),
@@ -76,24 +76,24 @@ class medeleg_reg extends uvm_reg;
                             .is_rand(1),
                             .individually_accessible(1) );
   endfunction : build
-endclass : medeleg_reg
+endclass : vsepc_reg
 
 
 //------------------------------------------------------------------------------
-// mideleg (0x303) - mideleg
+// vscause (0x242) - vscause
 //------------------------------------------------------------------------------
-class mideleg_reg extends uvm_reg;
-  `uvm_object_utils( mideleg_reg )
+class vscause_reg extends uvm_reg;
+  `uvm_object_utils( vscause_reg )
 
-  rand uvm_reg_field mideleg_field;
+  rand uvm_reg_field vscause_field;
 
-  function new( string name = "mideleg_reg" );
+  function new( string name = "vscause_reg" );
     super.new( .name(name), .n_bits(64), .has_coverage(UVM_NO_COVERAGE) );
   endfunction : new
 
   virtual function void build();
-    mideleg_field = uvm_reg_field::type_id::create("mideleg_field");
-    mideleg_field.configure( .parent(this),
+    vscause_field = uvm_reg_field::type_id::create("vscause_field");
+    vscause_field.configure( .parent(this),
                             .size(64),
                             .lsb_pos(0),
                             .access("RW"),
@@ -103,24 +103,24 @@ class mideleg_reg extends uvm_reg;
                             .is_rand(1),
                             .individually_accessible(1) );
   endfunction : build
-endclass : mideleg_reg
+endclass : vscause_reg
 
 
 //------------------------------------------------------------------------------
-// mie (0x304) - mie
+// vstval (0x243) - vstval
 //------------------------------------------------------------------------------
-class mie_reg extends uvm_reg;
-  `uvm_object_utils( mie_reg )
+class vstval_reg extends uvm_reg;
+  `uvm_object_utils( vstval_reg )
 
-  rand uvm_reg_field mie_field;
+  rand uvm_reg_field vstval_field;
 
-  function new( string name = "mie_reg" );
+  function new( string name = "vstval_reg" );
     super.new( .name(name), .n_bits(64), .has_coverage(UVM_NO_COVERAGE) );
   endfunction : new
 
   virtual function void build();
-    mie_field = uvm_reg_field::type_id::create("mie_field");
-    mie_field.configure( .parent(this),
+    vstval_field = uvm_reg_field::type_id::create("vstval_field");
+    vstval_field.configure( .parent(this),
                             .size(64),
                             .lsb_pos(0),
                             .access("RW"),
@@ -130,24 +130,24 @@ class mie_reg extends uvm_reg;
                             .is_rand(1),
                             .individually_accessible(1) );
   endfunction : build
-endclass : mie_reg
+endclass : vstval_reg
 
 
 //------------------------------------------------------------------------------
-// mtvec (0x305) - mtvec
+// vstimecmp (0x24d) - vstimecmp
 //------------------------------------------------------------------------------
-class mtvec_reg extends uvm_reg;
-  `uvm_object_utils( mtvec_reg )
+class vstimecmp_reg extends uvm_reg;
+  `uvm_object_utils( vstimecmp_reg )
 
-  rand uvm_reg_field mtvec_field;
+  rand uvm_reg_field vstimecmp_field;
 
-  function new( string name = "mtvec_reg" );
+  function new( string name = "vstimecmp_reg" );
     super.new( .name(name), .n_bits(64), .has_coverage(UVM_NO_COVERAGE) );
   endfunction : new
 
   virtual function void build();
-    mtvec_field = uvm_reg_field::type_id::create("mtvec_field");
-    mtvec_field.configure( .parent(this),
+    vstimecmp_field = uvm_reg_field::type_id::create("vstimecmp_field");
+    vstimecmp_field.configure( .parent(this),
                             .size(64),
                             .lsb_pos(0),
                             .access("RW"),
@@ -157,24 +157,213 @@ class mtvec_reg extends uvm_reg;
                             .is_rand(1),
                             .individually_accessible(1) );
   endfunction : build
-endclass : mtvec_reg
+endclass : vstimecmp_reg
 
 
 //------------------------------------------------------------------------------
-// mcounteren (0x306) - mcounteren
+// vsctrctl (0x24e) - vsctrctl
 //------------------------------------------------------------------------------
-class mcounteren_reg extends uvm_reg;
-  `uvm_object_utils( mcounteren_reg )
+class vsctrctl_reg extends uvm_reg;
+  `uvm_object_utils( vsctrctl_reg )
 
-  rand uvm_reg_field mcounteren_field;
+  rand uvm_reg_field vsctrctl_field;
 
-  function new( string name = "mcounteren_reg" );
+  function new( string name = "vsctrctl_reg" );
+    super.new( .name(name), .n_bits(64), .has_coverage(UVM_NO_COVERAGE) );
+  endfunction : new
+
+  virtual function void build();
+    vsctrctl_field = uvm_reg_field::type_id::create("vsctrctl_field");
+    vsctrctl_field.configure( .parent(this),
+                            .size(64),
+                            .lsb_pos(0),
+                            .access("RW"),
+                            .volatile(0),
+                            .reset(64'h0),
+                            .has_reset(1),
+                            .is_rand(1),
+                            .individually_accessible(1) );
+  endfunction : build
+endclass : vsctrctl_reg
+
+
+//------------------------------------------------------------------------------
+// vsatp (0x280) - vsatp
+//------------------------------------------------------------------------------
+class vsatp_reg extends uvm_reg;
+  `uvm_object_utils( vsatp_reg )
+
+  rand uvm_reg_field vsatp_field;
+
+  function new( string name = "vsatp_reg" );
+    super.new( .name(name), .n_bits(64), .has_coverage(UVM_NO_COVERAGE) );
+  endfunction : new
+
+  virtual function void build();
+    vsatp_field = uvm_reg_field::type_id::create("vsatp_field");
+    vsatp_field.configure( .parent(this),
+                            .size(64),
+                            .lsb_pos(0),
+                            .access("RW"),
+                            .volatile(0),
+                            .reset(64'h0),
+                            .has_reset(1),
+                            .is_rand(1),
+                            .individually_accessible(1) );
+  endfunction : build
+endclass : vsatp_reg
+
+
+//------------------------------------------------------------------------------
+// mtinst (0x34a) - mtinst
+//------------------------------------------------------------------------------
+class mtinst_reg extends uvm_reg;
+  `uvm_object_utils( mtinst_reg )
+
+  rand uvm_reg_field mtinst_field;
+
+  function new( string name = "mtinst_reg" );
+    super.new( .name(name), .n_bits(64), .has_coverage(UVM_NO_COVERAGE) );
+  endfunction : new
+
+  virtual function void build();
+    mtinst_field = uvm_reg_field::type_id::create("mtinst_field");
+    mtinst_field.configure( .parent(this),
+                            .size(64),
+                            .lsb_pos(0),
+                            .access("RW"),
+                            .volatile(0),
+                            .reset(64'h0),
+                            .has_reset(1),
+                            .is_rand(1),
+                            .individually_accessible(1) );
+  endfunction : build
+endclass : mtinst_reg
+
+
+//------------------------------------------------------------------------------
+// mtval2 (0x34b) - mtval2
+//------------------------------------------------------------------------------
+class mtval2_reg extends uvm_reg;
+  `uvm_object_utils( mtval2_reg )
+
+  rand uvm_reg_field mtval2_field;
+
+  function new( string name = "mtval2_reg" );
+    super.new( .name(name), .n_bits(64), .has_coverage(UVM_NO_COVERAGE) );
+  endfunction : new
+
+  virtual function void build();
+    mtval2_field = uvm_reg_field::type_id::create("mtval2_field");
+    mtval2_field.configure( .parent(this),
+                            .size(64),
+                            .lsb_pos(0),
+                            .access("RW"),
+                            .volatile(0),
+                            .reset(64'h0),
+                            .has_reset(1),
+                            .is_rand(1),
+                            .individually_accessible(1) );
+  endfunction : build
+endclass : mtval2_reg
+
+
+//------------------------------------------------------------------------------
+// hstatus (0x600) - hstatus
+//------------------------------------------------------------------------------
+class hstatus_reg extends uvm_reg;
+  `uvm_object_utils( hstatus_reg )
+
+  rand uvm_reg_field hstatus_field;
+
+  function new( string name = "hstatus_reg" );
+    super.new( .name(name), .n_bits(64), .has_coverage(UVM_NO_COVERAGE) );
+  endfunction : new
+
+  virtual function void build();
+    hstatus_field = uvm_reg_field::type_id::create("hstatus_field");
+    hstatus_field.configure( .parent(this),
+                            .size(64),
+                            .lsb_pos(0),
+                            .access("RW"),
+                            .volatile(0),
+                            .reset(64'h0),
+                            .has_reset(1),
+                            .is_rand(1),
+                            .individually_accessible(1) );
+  endfunction : build
+endclass : hstatus_reg
+
+
+//------------------------------------------------------------------------------
+// hedeleg (0x602) - hedeleg
+//------------------------------------------------------------------------------
+class hedeleg_reg extends uvm_reg;
+  `uvm_object_utils( hedeleg_reg )
+
+  rand uvm_reg_field hedeleg_field;
+
+  function new( string name = "hedeleg_reg" );
+    super.new( .name(name), .n_bits(64), .has_coverage(UVM_NO_COVERAGE) );
+  endfunction : new
+
+  virtual function void build();
+    hedeleg_field = uvm_reg_field::type_id::create("hedeleg_field");
+    hedeleg_field.configure( .parent(this),
+                            .size(64),
+                            .lsb_pos(0),
+                            .access("RW"),
+                            .volatile(0),
+                            .reset(64'h0),
+                            .has_reset(1),
+                            .is_rand(1),
+                            .individually_accessible(1) );
+  endfunction : build
+endclass : hedeleg_reg
+
+
+//------------------------------------------------------------------------------
+// htimedelta (0x605) - htimedelta
+//------------------------------------------------------------------------------
+class htimedelta_reg extends uvm_reg;
+  `uvm_object_utils( htimedelta_reg )
+
+  rand uvm_reg_field htimedelta_field;
+
+  function new( string name = "htimedelta_reg" );
+    super.new( .name(name), .n_bits(64), .has_coverage(UVM_NO_COVERAGE) );
+  endfunction : new
+
+  virtual function void build();
+    htimedelta_field = uvm_reg_field::type_id::create("htimedelta_field");
+    htimedelta_field.configure( .parent(this),
+                            .size(64),
+                            .lsb_pos(0),
+                            .access("RW"),
+                            .volatile(0),
+                            .reset(64'h0),
+                            .has_reset(1),
+                            .is_rand(1),
+                            .individually_accessible(1) );
+  endfunction : build
+endclass : htimedelta_reg
+
+
+//------------------------------------------------------------------------------
+// hcounteren (0x606) - hcounteren
+//------------------------------------------------------------------------------
+class hcounteren_reg extends uvm_reg;
+  `uvm_object_utils( hcounteren_reg )
+
+  rand uvm_reg_field hcounteren_field;
+
+  function new( string name = "hcounteren_reg" );
     super.new( .name(name), .n_bits(32), .has_coverage(UVM_NO_COVERAGE) );
   endfunction : new
 
   virtual function void build();
-    mcounteren_field = uvm_reg_field::type_id::create("mcounteren_field");
-    mcounteren_field.configure( .parent(this),
+    hcounteren_field = uvm_reg_field::type_id::create("hcounteren_field");
+    hcounteren_field.configure( .parent(this),
                             .size(32),
                             .lsb_pos(0),
                             .access("RW"),
@@ -184,24 +373,24 @@ class mcounteren_reg extends uvm_reg;
                             .is_rand(1),
                             .individually_accessible(1) );
   endfunction : build
-endclass : mcounteren_reg
+endclass : hcounteren_reg
 
 
 //------------------------------------------------------------------------------
-// mscratch (0x340) - mscratch
+// hstateen0 (0x60c) - hstateen0
 //------------------------------------------------------------------------------
-class mscratch_reg extends uvm_reg;
-  `uvm_object_utils( mscratch_reg )
+class hstateen0_reg extends uvm_reg;
+  `uvm_object_utils( hstateen0_reg )
 
-  rand uvm_reg_field mscratch_field;
+  rand uvm_reg_field hstateen0_field;
 
-  function new( string name = "mscratch_reg" );
+  function new( string name = "hstateen0_reg" );
     super.new( .name(name), .n_bits(64), .has_coverage(UVM_NO_COVERAGE) );
   endfunction : new
 
   virtual function void build();
-    mscratch_field = uvm_reg_field::type_id::create("mscratch_field");
-    mscratch_field.configure( .parent(this),
+    hstateen0_field = uvm_reg_field::type_id::create("hstateen0_field");
+    hstateen0_field.configure( .parent(this),
                             .size(64),
                             .lsb_pos(0),
                             .access("RW"),
@@ -211,24 +400,24 @@ class mscratch_reg extends uvm_reg;
                             .is_rand(1),
                             .individually_accessible(1) );
   endfunction : build
-endclass : mscratch_reg
+endclass : hstateen0_reg
 
 
 //------------------------------------------------------------------------------
-// mepc (0x341) - mepc
+// hstateen1 (0x60d) - hstateen1
 //------------------------------------------------------------------------------
-class mepc_reg extends uvm_reg;
-  `uvm_object_utils( mepc_reg )
+class hstateen1_reg extends uvm_reg;
+  `uvm_object_utils( hstateen1_reg )
 
-  rand uvm_reg_field mepc_field;
+  rand uvm_reg_field hstateen1_field;
 
-  function new( string name = "mepc_reg" );
+  function new( string name = "hstateen1_reg" );
     super.new( .name(name), .n_bits(64), .has_coverage(UVM_NO_COVERAGE) );
   endfunction : new
 
   virtual function void build();
-    mepc_field = uvm_reg_field::type_id::create("mepc_field");
-    mepc_field.configure( .parent(this),
+    hstateen1_field = uvm_reg_field::type_id::create("hstateen1_field");
+    hstateen1_field.configure( .parent(this),
                             .size(64),
                             .lsb_pos(0),
                             .access("RW"),
@@ -238,24 +427,24 @@ class mepc_reg extends uvm_reg;
                             .is_rand(1),
                             .individually_accessible(1) );
   endfunction : build
-endclass : mepc_reg
+endclass : hstateen1_reg
 
 
 //------------------------------------------------------------------------------
-// mcause (0x342) - mcause
+// hstateen2 (0x60e) - hstateen2
 //------------------------------------------------------------------------------
-class mcause_reg extends uvm_reg;
-  `uvm_object_utils( mcause_reg )
+class hstateen2_reg extends uvm_reg;
+  `uvm_object_utils( hstateen2_reg )
 
-  rand uvm_reg_field mcause_field;
+  rand uvm_reg_field hstateen2_field;
 
-  function new( string name = "mcause_reg" );
+  function new( string name = "hstateen2_reg" );
     super.new( .name(name), .n_bits(64), .has_coverage(UVM_NO_COVERAGE) );
   endfunction : new
 
   virtual function void build();
-    mcause_field = uvm_reg_field::type_id::create("mcause_field");
-    mcause_field.configure( .parent(this),
+    hstateen2_field = uvm_reg_field::type_id::create("hstateen2_field");
+    hstateen2_field.configure( .parent(this),
                             .size(64),
                             .lsb_pos(0),
                             .access("RW"),
@@ -265,24 +454,24 @@ class mcause_reg extends uvm_reg;
                             .is_rand(1),
                             .individually_accessible(1) );
   endfunction : build
-endclass : mcause_reg
+endclass : hstateen2_reg
 
 
 //------------------------------------------------------------------------------
-// mtval (0x343) - mtval
+// hstateen3 (0x60f) - hstateen3
 //------------------------------------------------------------------------------
-class mtval_reg extends uvm_reg;
-  `uvm_object_utils( mtval_reg )
+class hstateen3_reg extends uvm_reg;
+  `uvm_object_utils( hstateen3_reg )
 
-  rand uvm_reg_field mtval_field;
+  rand uvm_reg_field hstateen3_field;
 
-  function new( string name = "mtval_reg" );
+  function new( string name = "hstateen3_reg" );
     super.new( .name(name), .n_bits(64), .has_coverage(UVM_NO_COVERAGE) );
   endfunction : new
 
   virtual function void build();
-    mtval_field = uvm_reg_field::type_id::create("mtval_field");
-    mtval_field.configure( .parent(this),
+    hstateen3_field = uvm_reg_field::type_id::create("hstateen3_field");
+    hstateen3_field.configure( .parent(this),
                             .size(64),
                             .lsb_pos(0),
                             .access("RW"),
@@ -292,24 +481,24 @@ class mtval_reg extends uvm_reg;
                             .is_rand(1),
                             .individually_accessible(1) );
   endfunction : build
-endclass : mtval_reg
+endclass : hstateen3_reg
 
 
 //------------------------------------------------------------------------------
-// mip (0x344) - mip
+// htval (0x643) - htval
 //------------------------------------------------------------------------------
-class mip_reg extends uvm_reg;
-  `uvm_object_utils( mip_reg )
+class htval_reg extends uvm_reg;
+  `uvm_object_utils( htval_reg )
 
-  rand uvm_reg_field mip_field;
+  rand uvm_reg_field htval_field;
 
-  function new( string name = "mip_reg" );
+  function new( string name = "htval_reg" );
     super.new( .name(name), .n_bits(64), .has_coverage(UVM_NO_COVERAGE) );
   endfunction : new
 
   virtual function void build();
-    mip_field = uvm_reg_field::type_id::create("mip_field");
-    mip_field.configure( .parent(this),
+    htval_field = uvm_reg_field::type_id::create("htval_field");
+    htval_field.configure( .parent(this),
                             .size(64),
                             .lsb_pos(0),
                             .access("RW"),
@@ -319,51 +508,24 @@ class mip_reg extends uvm_reg;
                             .is_rand(1),
                             .individually_accessible(1) );
   endfunction : build
-endclass : mip_reg
+endclass : htval_reg
 
 
 //------------------------------------------------------------------------------
-// mvendorid (0xf11) - mvendorid
+// htinst (0x64a) - htinst
 //------------------------------------------------------------------------------
-class mvendorid_reg extends uvm_reg;
-  `uvm_object_utils( mvendorid_reg )
+class htinst_reg extends uvm_reg;
+  `uvm_object_utils( htinst_reg )
 
-  rand uvm_reg_field mvendorid_field;
+  rand uvm_reg_field htinst_field;
 
-  function new( string name = "mvendorid_reg" );
-    super.new( .name(name), .n_bits(32), .has_coverage(UVM_NO_COVERAGE) );
-  endfunction : new
-
-  virtual function void build();
-    mvendorid_field = uvm_reg_field::type_id::create("mvendorid_field");
-    mvendorid_field.configure( .parent(this),
-                            .size(32),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
-  endfunction : build
-endclass : mvendorid_reg
-
-
-//------------------------------------------------------------------------------
-// marchid (0xf12) - marchid
-//------------------------------------------------------------------------------
-class marchid_reg extends uvm_reg;
-  `uvm_object_utils( marchid_reg )
-
-  rand uvm_reg_field marchid_field;
-
-  function new( string name = "marchid_reg" );
+  function new( string name = "htinst_reg" );
     super.new( .name(name), .n_bits(64), .has_coverage(UVM_NO_COVERAGE) );
   endfunction : new
 
   virtual function void build();
-    marchid_field = uvm_reg_field::type_id::create("marchid_field");
-    marchid_field.configure( .parent(this),
+    htinst_field = uvm_reg_field::type_id::create("htinst_field");
+    htinst_field.configure( .parent(this),
                             .size(64),
                             .lsb_pos(0),
                             .access("RW"),
@@ -373,24 +535,24 @@ class marchid_reg extends uvm_reg;
                             .is_rand(1),
                             .individually_accessible(1) );
   endfunction : build
-endclass : marchid_reg
+endclass : htinst_reg
 
 
 //------------------------------------------------------------------------------
-// mimpid (0xf13) - mimpid
+// hgatp (0x680) - hgatp
 //------------------------------------------------------------------------------
-class mimpid_reg extends uvm_reg;
-  `uvm_object_utils( mimpid_reg )
+class hgatp_reg extends uvm_reg;
+  `uvm_object_utils( hgatp_reg )
 
-  rand uvm_reg_field mimpid_field;
+  rand uvm_reg_field hgatp_field;
 
-  function new( string name = "mimpid_reg" );
+  function new( string name = "hgatp_reg" );
     super.new( .name(name), .n_bits(64), .has_coverage(UVM_NO_COVERAGE) );
   endfunction : new
 
   virtual function void build();
-    mimpid_field = uvm_reg_field::type_id::create("mimpid_field");
-    mimpid_field.configure( .parent(this),
+    hgatp_field = uvm_reg_field::type_id::create("hgatp_field");
+    hgatp_field.configure( .parent(this),
                             .size(64),
                             .lsb_pos(0),
                             .access("RW"),
@@ -400,24 +562,24 @@ class mimpid_reg extends uvm_reg;
                             .is_rand(1),
                             .individually_accessible(1) );
   endfunction : build
-endclass : mimpid_reg
+endclass : hgatp_reg
 
 
 //------------------------------------------------------------------------------
-// mhartid (0xf14) - mhartid
+// hcontext (0x6a8) - hcontext
 //------------------------------------------------------------------------------
-class mhartid_reg extends uvm_reg;
-  `uvm_object_utils( mhartid_reg )
+class hcontext_reg extends uvm_reg;
+  `uvm_object_utils( hcontext_reg )
 
-  rand uvm_reg_field mhartid_field;
+  rand uvm_reg_field hcontext_field;
 
-  function new( string name = "mhartid_reg" );
+  function new( string name = "hcontext_reg" );
     super.new( .name(name), .n_bits(64), .has_coverage(UVM_NO_COVERAGE) );
   endfunction : new
 
   virtual function void build();
-    mhartid_field = uvm_reg_field::type_id::create("mhartid_field");
-    mhartid_field.configure( .parent(this),
+    hcontext_field = uvm_reg_field::type_id::create("hcontext_field");
+    hcontext_field.configure( .parent(this),
                             .size(64),
                             .lsb_pos(0),
                             .access("RW"),
@@ -427,31 +589,4 @@ class mhartid_reg extends uvm_reg;
                             .is_rand(1),
                             .individually_accessible(1) );
   endfunction : build
-endclass : mhartid_reg
-
-
-//------------------------------------------------------------------------------
-// mconfigptr (0xf15) - mconfigptr
-//------------------------------------------------------------------------------
-class mconfigptr_reg extends uvm_reg;
-  `uvm_object_utils( mconfigptr_reg )
-
-  rand uvm_reg_field mconfigptr_field;
-
-  function new( string name = "mconfigptr_reg" );
-    super.new( .name(name), .n_bits(64), .has_coverage(UVM_NO_COVERAGE) );
-  endfunction : new
-
-  virtual function void build();
-    mconfigptr_field = uvm_reg_field::type_id::create("mconfigptr_field");
-    mconfigptr_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
-  endfunction : build
-endclass : mconfigptr_reg
+endclass : hcontext_reg
