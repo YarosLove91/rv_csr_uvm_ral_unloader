@@ -44,7 +44,7 @@ class misa_reg extends uvm_reg;
                             .lsb_pos(0),
                             .access("RW"),
                             .volatile(0),
-                            .reset(64'h0),
+                            .reset(64'h100),
                             .has_reset(1),
                             .is_rand(1),
                             .individually_accessible(1) );
@@ -71,7 +71,7 @@ class mideleg_reg extends uvm_reg;
                             .lsb_pos(0),
                             .access("RW"),
                             .volatile(0),
-                            .reset(64'h0),
+                            .reset(64'h1444),
                             .has_reset(1),
                             .is_rand(1),
                             .individually_accessible(1) );

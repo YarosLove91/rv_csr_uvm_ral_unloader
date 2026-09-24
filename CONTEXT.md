@@ -152,7 +152,8 @@ make uvm_run TEST_NAME=probe_zvl32b_test
   - переход на группировку по расширениям.
 - `gen_one.py`: дубликат `--group`; отсутствовал `--list`; убрана генерация
   `get_reg_by_addr` (устаревший метод); санитизация имён-ключевых слов SV
-  (`time` → `time_f`).
+  (`time` → `time_f`); reset регистра теперь берётся из спецификации
+  (`reg_reset`, а не жёсткий `64'h0`).
 - `reduce_csr.py`: проверен, корректен (изменений не требовал).
 
 ## Git (последние коммиты)
@@ -173,5 +174,8 @@ d6c02b2 ref(tools): fix definedBy expansion and RV32-only grouping in parse_csr
 - `mseccfg` в reduced имеет `fields=0` (подполя требуют `Smepmp`/`Zkr` вне профиля);
   `gen_one` делает одно полноширинное поле.
 - Dedicated probe-тесты есть только для части групп; остальные (S/H/Zihpm/…) без тестов.
-- Генератор делает **одно поле на регистр** (без битовых полей, все `RW`, reset 0).
+- Генератор делает **одно поле на регистр** (без битовых полей, все `RW`).
+  Reset регистра вычисляется как `OR(field.reset_value << field._lsb)` из
+  reduced-монолита (см. `gen_one.reg_reset`); из спецификации ненулевой reset
+  имеют `misa`=0x100, `mideleg`=0x1444, `sstatus`=0x2_0000_0000.
 - `uvm_reg::get()` под Verilator 5.052 не работает — в scoreboard своё зеркало `shadow[]`.

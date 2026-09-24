@@ -30,10 +30,22 @@ def member_name(name):
     return f"{name}_f" if name in SV_KEYWORDS else name
 
 
+def reg_reset(csr):
+    """Reset регистра: OR полевых reset_value, сдвинутых на _lsb."""
+    reset = 0
+    for f in (csr.get("fields") or {}).values():
+        rv = f.get("reset_value", 0) or 0
+        size = f.get("_size", 1)
+        lsb = f.get("_lsb", 0)
+        reset |= (rv & ((1 << size) - 1)) << lsb
+    return reset
+
+
 def gen_class(csr):
     name   = csr["name"]
     addr   = csr["address"]
     length = csr["length"]
+    reset  = reg_reset(csr)
 
     lines = []
     lines.append("//" + "-" * 78)
@@ -55,7 +67,7 @@ def gen_class(csr):
     lines.append("                            .lsb_pos(0),")
     lines.append("                            .access(\"RW\"),")
     lines.append("                            .volatile(0),")
-    lines.append("                            .reset(64'h0),")
+    lines.append(f"                            .reset(64'h{reset:x}),")
     lines.append("                            .has_reset(1),")
     lines.append("                            .is_rand(1),")
     lines.append("                            .individually_accessible(1) );")
