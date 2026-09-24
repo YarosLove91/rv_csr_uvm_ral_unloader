@@ -157,6 +157,16 @@ python3 tools/gen_one.py --group Sm_base --reg-block \
     --reg-block-out src/csr/csr_sm_base_reg_block_extension.svh
 ----
 
+=== count_by_ext.py
+
+Статистика CSR из `csr_spec/`: по расширениям (`definedBy`), `priv_mode`,
+группам (`_group`) и файлам. Подробная справка — в `count_by_ext.adoc`.
+
+[source,bash]
+----
+python3 tools/count_by_ext.py --profile csr_spec/profile/RVA23S64.yaml
+----
+
 == Полный workflow
 
 === 1. Монолит (один раз)
@@ -302,6 +312,8 @@ tools/
 ├── parse_csr.py                       # YAML → сырой монолит
 ├── reduce_csr.py                      # сырой → компактный монолит
 ├── gen_one.py                         # монолит → SV-классы + reg_block
+├── count_by_ext.py                    # статистика CSR по расширениям/priv/группам
+├── count_by_ext.adoc                  # справка по count_by_ext.py
 ├── requirements.txt                   # PyYAML
 ├── README.adoc                        # этот файл
 ├── csr_monolith_filtered.yaml         # генерируется

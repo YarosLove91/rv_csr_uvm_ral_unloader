@@ -1,0 +1,218 @@
+= count_by_ext.py — статистика CSR
+:toc:
+:toclevels: 3
+
+Справка по `tools/count_by_ext.py` — скрипт для подсчёта CSR
+из `csr_spec/` по расширениям (`definedBy`), уровню привилегий
+(`priv_mode`), группам (`_group`) и файлам. Используется для выбора
+спек-файлов при выгрузке RAL-модели.
+
+Скрипт только читает YAML и печатает статистику; ничего не пишет на диск.
+
+== Требования
+
+* Python 3.8+
+* PyYAML
+
+[source,bash]
+----
+pip install -r requirements.txt
+----
+
+== Запуск
+
+Скрипт использует относительные пути по умолчанию, поэтому запускать его
+нужно из корня репозитория:
+
+[source,bash]
+----
+cd <корень репозитория>
+python3 tools/count_by_ext.py [опции]
+----
+
+== Аргументы
+
+[cols="1,1,3"]
+|===
+| Аргумент | Значение | Описание
+
+| `--dir PATH`
+| `csr_spec/csr`
+| Директория с CSR YAML (обходится рекурсивно)
+
+| `--profile PATH`
+| —
+| Профиль (`csr_spec/profile/RVA23S64.yaml`) — фильтр по расширениям
+
+| `--monolith PATH`
+| —
+| Готовый монолит (reduced.yaml) — источник `_group`. Обязателен для `--groups`
+
+| `--priv`
+| —
+| Добавить разбивку по `priv_mode` (M, S, U, VS)
+
+| `--groups`
+| —
+| Разбивка по `_group` из `--monolith` (вместо `definedBy`)
+
+| `--files`
+| —
+| Напечатать список использованных `.yaml` файлов
+
+| `--all`
+| —
+| Все секции: `definedBy` + `priv_mode` + список файлов
+|===
+
+== Режимы
+
+=== По умолчанию — по `definedBy`
+
+[source,bash]
+----
+python3 tools/count_by_ext.py
+----
+
+Считает каждый CSR по расширениям из `definedBy` и сортирует по убыванию.
+С `--profile` дополнительно фильтрует и печатает строку `In profile`:
+
+[source,bash]
+----
+python3 tools/count_by_ext.py \
+    --profile csr_spec/profile/RVA23S64.yaml
+----
+
+Пример вывода:
+
+[source]
+----
+============================================================
+Profile: RVA23S64
+  Total CSRs scanned: 404
+  In profile:         356
+  Extensions:         18
+============================================================
+  Sm                              224
+  Zihpm                            58
+  H                                31
+  ...
+----
+
+=== `--priv` — по `priv_mode`
+
+[source,bash]
+----
+python3 tools/count_by_ext.py --priv
+python3 tools/count_by_ext.py --profile csr_spec/profile/RVA23S64.yaml --priv
+----
+
+К основной секции добавляется разбивка `By priv_mode`.
+
+=== `--groups` — по `_group`
+
+Требует `--monolith` и работает вместо `definedBy`:
+
+[source,bash]
+----
+python3 tools/count_by_ext.py --groups \
+    --monolith tools/yaml_processing_example/csr_monolith_reduced.yaml
+----
+
+Пример вывода:
+
+[source]
+----
+============================================================
+  Groups (tools/yaml_processing_example/csr_monolith_reduced.yaml)
+============================================================
+  Sm_pmp                 80
+  U_misc                 74
+  rv32_only              61
+  Sm_zihpm               58
+  ...
+  Sm_zicntr               3
+  TOTAL                 331
+----
+
+=== `--files` — список файлов
+
+[source,bash]
+----
+python3 tools/count_by_ext.py --files
+----
+
+Печатает пути относительно корня репозитория.
+
+=== `--all` — всё сразу
+
+[source,bash]
+----
+python3 tools/count_by_ext.py --all
+----
+
+Эквивалентно секциям `definedBy` + `priv_mode` + список файлов.
+
+== Семантика фильтрации
+
+Скрипт берёт из `csr_spec/csr/**/*.yaml` только документы, у которых:
+
+* верхний уровень — словарь,
+* `kind: csr`,
+* есть ключ `address`.
+
+Остальные файлы (схемы, не-CSR YAML) молча пропускаются.
+
+=== Профиль
+
+Профиль (`RVA23S64.yaml`) даёт два множества имён расширений —
+`mandatory_extensions` и `non_mandatory_extensions`.
+Флаг `additional_extensions` (по умолчанию `true`, если ключ отсутствует)
+разрешает учитывать также опциональные расширения.
+
+CSR попадает в профиль, если хотя бы одно из расширений его `definedBy`
+входит в разрешённое множество. Если `definedBy` отсутствует или не даёт
+имён расширений, CSR считается входящим в профиль.
+
+=== Формы `definedBy`
+
+Поддерживаются (рекурсивно): строка, список, `extension`, `anyOf`,
+`allOf`, а также узлы `name` (даёт имя расширения) и `param`/`xlen`
+(игнорируются, имён не дают).
+
+== Известные ограничения
+
+* `allOf`/`anyOf` разворачиваются в плоский список имён: логика
+  «И»/«ИЛИ» теряется, профиль матчит по правилу «хотя бы одно».
+* Один CSR может попасть в несколько строк разбивки `definedBy`
+  (по числу своих расширений) — суммы по строке не равны `Total`.
+* `--groups` использует `_group` только из `--monolith`; по умолчанию
+  файл не ищется, путь нужно задавать явно.
+
+== Troubleshooting
+
+=== `ERROR: --groups requires --monolith`
+
+Передайте монолит явно:
+
+[source,bash]
+----
+python3 tools/count_by_ext.py --groups --monolith <путь к reduced.yaml>
+----
+
+=== Пустой список файлов
+
+Проверьте, что `--dir` указывает на директорию с CSR YAML и что запуск
+происходит из корня репозитория (пути относительные):
+
+[source,bash]
+----
+python3 tools/count_by_ext.py --dir csr_spec/csr --files | wc -l
+----
+
+=== Мусорные ключи вида `{'allOf': [...]}` в разбивке
+
+Признак того, что `extract_extensions()` не разворачивает вложенный
+`extension.allOf` / `extension.anyOf`. В исправленной версии таких строк
+быть не должно; проверьте, что функция рекурсивно вызывает себя для
+значения ключа `extension`.

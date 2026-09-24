@@ -59,16 +59,40 @@ def extract_extensions(defined_by):
 # ============================================================================
 # Группировка M-регистров
 # ============================================================================
+def has_xlen(defined_by, value):
+    """Рекурсивно ищет {'xlen': value} в definedBy (dict/list любой вложенности)."""
+    if isinstance(defined_by, dict):
+        if defined_by.get("xlen") == value:
+            return True
+        return any(has_xlen(v, value) for v in defined_by.values())
+    if isinstance(defined_by, list):
+        return any(has_xlen(v, value) for v in defined_by)
+    return False
+
+
+def is_rv32_only(csr, xlen=64):
+    """CSR существует только в RV32: definedBy требует xlen:32 без xlen:64,
+    либо это h-половина известного RV64-регистра."""
+    if xlen != 64:
+        return False
+
+    db = csr.get("definedBy")
+    if has_xlen(db, 32) and not has_xlen(db, 64):
+        return True
+
+    name = csr["name"]
+    return (name.endswith("h")
+            and (name.startswith(("mhpmcounter", "mhpmevent"))
+                 or name in ("mcycleh", "minstreth", "mstatush")))
+
+
 def get_group(csr, xlen=64):
     """Определяет группу для генерации (только для M-регистров расширения Sm)."""
     name = csr["name"]
     priv = csr.get("priv_mode", "?")
 
-    # RV32-only (h-версии)
-    if (xlen == 64
-            and name.endswith("h")
-            and (name.startswith(("mhpmcounter", "mhpmevent"))
-                 or name in ("mcycleh", "minstreth", "mstatush"))):
+    # RV32-only
+    if is_rv32_only(csr, xlen):
         return "rv32_only"
 
     # PMP
