@@ -4,18 +4,13 @@ package testchamber_src_pkg;
   import uvm_pkg::*;
   import csr_pkg::*;
   
-  //`include "seq_item.sv"
+  typedef logic [11:0] csr_addr_t;   //12 bit addr width
+  typedef logic [63:0] csr_data_t;   //64 bit data width
+
   `include "probe_transaction.sv"
 
-  //`include "reg_pkg.sv"
-  //`include "reg2axi_adapter.sv"
   `include "probe_scoreboard.sv"
 
-  //`include "base_seq.sv"
-  //`include "sequencer.sv"
-  //`include "driver.sv"
-  //`include "monitor.sv"
-  //`include "agent.sv"
   `include "env.sv"
   `include "base_test.sv"
 

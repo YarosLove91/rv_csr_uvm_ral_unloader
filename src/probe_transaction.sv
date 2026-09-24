@@ -6,14 +6,14 @@
 //   rd_or_wr = 1 — read  (значение прочитано из CSR)
 //------------------------------------------------------------------------------
 class probe_transaction extends uvm_sequence_item;
-  rand bit [31:0] addr;      // адрес CSR: 0x300, 0x304, 0x341, 0x342
-  rand bit [63:0] value;     // 64-битное значение
+  rand csr_addr_t addr;      // 12 bit
+  rand csr_data_t value;     // 64 bit
   rand bit        rd_or_wr;  // 0 = write, 1 = read
   rand bit        valid;
 
   function new(string name = "probe_transaction");
     super.new(name);
-  endfunction
+  endfunction : new
 
   `uvm_object_utils_begin(probe_transaction)
     `uvm_field_int(addr,     UVM_ALL_ON)

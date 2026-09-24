@@ -95,7 +95,7 @@ class probe_sm_base_test extends probe_base_test;
 
     `uvm_info(get_type_name(), "probe_sm_base_test: start", UVM_LOW)
 
-    rb = env_o.reg_sm_base_model;
+    rb = env_o.reg_top_model.sm_base;
 
     read_check_reg(rb.mstatus,    64'h0000_0000_0000_1880);
     read_check_reg(rb.misa,       64'h8000_0000_0014_112D);
@@ -133,7 +133,7 @@ class probe_sm_zicntr_test extends probe_base_test;
 
     `uvm_info(get_type_name(), "probe_sm_zicntr_test: start", UVM_LOW)
 
-    rb = env_o.reg_sm_zicntr_model;
+    rb = env_o.reg_top_model.sm_zicntr;
 
     read_check_reg(rb.mcountinhibit, 64'h0000_0000_0000_0005);
     read_check_reg(rb.mcycle,       64'h0000_0000_0000_1000);

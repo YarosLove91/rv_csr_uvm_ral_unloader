@@ -3,10 +3,9 @@ class probe_scoreboard extends uvm_scoreboard;
 
   uvm_analysis_imp#(probe_transaction, probe_scoreboard) probe_imp;
 
-  csr_sm_base_reg_block   reg_sm_base_model;
-  csr_sm_zicntr_reg_block reg_sm_zicntr_model;
+  csr_top_reg_block reg_top_model;
 
-  logic [63:0]  shadow [bit [11:0]];
+  logic [63:0] shadow [bit [11:0]];
 
   function new(string name = "probe_scoreboard", uvm_component parent = null);
     super.new(name, parent);
@@ -19,26 +18,19 @@ class probe_scoreboard extends uvm_scoreboard;
   endfunction : build_phase
 
   function void check_config();
-    if (!uvm_config_db#(csr_sm_base_reg_block)::get(
-            this, "", "reg_sm_base_model", reg_sm_base_model))
-      `uvm_fatal(get_name(), "reg_sm_base_model not found")
-    if (!uvm_config_db#(csr_sm_zicntr_reg_block)::get(
-            this, "", "reg_sm_zicntr_model", reg_sm_zicntr_model))
-      `uvm_fatal(get_name(), "reg_sm_zicntr_model not found")
+    if (!uvm_config_db#(csr_top_reg_block)::get(
+            this, "", "reg_top_model", reg_top_model))
+      `uvm_fatal(get_name(), "reg_top_model not found")
   endfunction : check_config
 
-  // Поиск регистра по адресу среди всех блоков
+  // Поиск регистра
   protected function uvm_reg find_reg(bit [31:0] addr);
     uvm_reg r;
-
-    r = reg_sm_base_model.get_reg_by_addr(addr);
-    if (r != null) return r;
-
-    r = reg_sm_zicntr_model.get_reg_by_addr(addr);
-    if (r != null) return r;
-
-    `uvm_error(get_name(),
-              $sformatf("CSR 0x%03h not found in any reg_block", addr))
+    r = reg_top_model.get_reg_by_addr(addr);
+    if (r == null)
+      `uvm_error (get_name(),
+                  $sformatf("CSR 0x%03h not found", addr))
+    return r;
   endfunction : find_reg
 
   // Диспетчер: WRITE или READ
@@ -189,13 +181,11 @@ class probe_scoreboard extends uvm_scoreboard;
     foreach (shadow[a])
       `uvm_info(get_name(),
                 $sformatf("0x%03h = 0x%016h", a, shadow[a]),
-                UVM_LOW)
+                          UVM_LOW)
 
     `uvm_info(get_name(), "\n=== RAL model dump (sprint) ===", UVM_LOW)
-    `uvm_info(get_name(), reg_sm_base_model.sprint(),   UVM_LOW)
-    `uvm_info(get_name(), reg_sm_zicntr_model.sprint(), UVM_LOW)
+    `uvm_info(get_name(), reg_top_model.sprint(), UVM_LOW)
 
-    // Проверка согласованности
     this.check_ral_vs_shadow();
   endfunction : dump_all
 endclass : probe_scoreboard

@@ -14,4 +14,5 @@ package csr_pkg;
   `include "csr_sm_zicntr_extension.svh"
   `include "csr_sm_zicntr_reg_block_extension.svh"
 
+  `include "csr_top_reg_block.svh" 
 endpackage : csr_pkg
