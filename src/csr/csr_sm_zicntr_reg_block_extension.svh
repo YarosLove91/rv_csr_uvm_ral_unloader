@@ -39,13 +39,4 @@ class csr_sm_zicntr_reg_block extends uvm_reg_block;
 
     lock_model();
   endfunction : build
-
-  function uvm_reg get_reg_by_addr( bit [31:0] addr );
-    case (addr)
-      32'h320: return mcountinhibit;
-      32'hB00: return mcycle;
-      32'hB02: return minstret;
-      default: return null;
-    endcase
-  endfunction : get_reg_by_addr
 endclass : csr_sm_zicntr_reg_block

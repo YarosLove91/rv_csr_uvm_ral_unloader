@@ -123,27 +123,4 @@ class csr_sm_base_reg_block extends uvm_reg_block;
 
     lock_model();
   endfunction : build
-
-  function uvm_reg get_reg_by_addr( bit [31:0] addr );
-    case (addr)
-      32'h300: return mstatus;
-      32'h301: return misa;
-      32'h302: return medeleg;
-      32'h303: return mideleg;
-      32'h304: return mie;
-      32'h305: return mtvec;
-      32'h306: return mcounteren;
-      32'h340: return mscratch;
-      32'h341: return mepc;
-      32'h342: return mcause;
-      32'h343: return mtval;
-      32'h344: return mip;
-      32'hF11: return mvendorid;
-      32'hF12: return marchid;
-      32'hF13: return mimpid;
-      32'hF14: return mhartid;
-      32'hF15: return mconfigptr;
-      default: return null;
-    endcase
-  endfunction : get_reg_by_addr
 endclass : csr_sm_base_reg_block

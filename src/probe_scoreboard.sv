@@ -4,8 +4,7 @@ class probe_scoreboard extends uvm_scoreboard;
   uvm_analysis_imp#(probe_transaction, probe_scoreboard) probe_imp;
 
   csr_top_reg_block reg_top_model;
-
-  logic [63:0] shadow [bit [11:0]];
+  csr_shadow_t shadow;
 
   function new(string name = "probe_scoreboard", uvm_component parent = null);
     super.new(name, parent);
@@ -24,7 +23,7 @@ class probe_scoreboard extends uvm_scoreboard;
   endfunction : check_config
 
   // Поиск регистра
-  protected function uvm_reg find_reg(bit [31:0] addr);
+  protected function uvm_reg find_reg(csr_addr_t addr);
     uvm_reg r;
     r = reg_top_model.get_reg_by_addr(addr);
     if (r == null)
@@ -50,12 +49,11 @@ class probe_scoreboard extends uvm_scoreboard;
   protected function void do_write(probe_transaction tx);
     uvm_reg r;
 
-    shadow[tx.addr[11:0]] = tx.value;
+    shadow[tx.addr] = tx.value;
 
     r = find_reg(tx.addr);
     if (r != null) begin
       r.predict(tx.value);
-
       `uvm_info(get_name(),
                 $sformatf("WR 0x%03h <- 0x%016h [%s]",
                           tx.addr, tx.value, r.get_name()),
@@ -65,11 +63,12 @@ class probe_scoreboard extends uvm_scoreboard;
                   $sformatf("WR 0x%03h <- 0x%016h : no reg_block",
                             tx.addr, tx.value))
     end
+
   endfunction : do_write
 
   protected function void do_read(probe_transaction tx);
-    uvm_reg        r;
-    logic [63:0]   actual;
+    uvm_reg    r;
+    csr_data_t actual;
 
     r = find_reg(tx.addr);
     if (r != null) begin
@@ -77,16 +76,17 @@ class probe_scoreboard extends uvm_scoreboard;
         tx.value = actual;
         `uvm_info(get_name(),
                   $sformatf("RD 0x%03h -> 0x%016h [%s] (RAL)",
-                            tx.addr, actual, r.get_name()), UVM_LOW)
+                            tx.addr, actual, r.get_name()), 
+                  UVM_LOW)
       end else begin
-        actual = shadow.exists(tx.addr[11:0]) ? shadow[tx.addr[11:0]] : 64'h0;
+        actual   = shadow.exists(tx.addr) ? shadow[tx.addr] : csr_data_t'(0);
         tx.value = actual;
         `uvm_warning(get_name(),
                     $sformatf("RD 0x%03h -> 0x%016h [%s] (shadow fallback)",
                               tx.addr, actual, r.get_name()))
       end
     end else begin
-      actual = shadow.exists(tx.addr[11:0]) ? shadow[tx.addr[11:0]] : 64'h0;
+      actual   = shadow.exists(tx.addr) ? shadow[tx.addr] : csr_data_t'(0);
       tx.value = actual;
       `uvm_warning(get_name(),
                   $sformatf("RD 0x%03h -> 0x%016h : no reg_block",
@@ -107,12 +107,9 @@ class probe_scoreboard extends uvm_scoreboard;
     return -1;
   endfunction : find_substr
 
-  // Извлечение значения из sprint() через парсинг
   protected function bit get_reg_value(uvm_reg r, output uvm_reg_data_t value);
     string s;
-    int    pos;
-    int    hpos;
-    int    matched;
+    int    pos, hpos, matched;
 
     s = r.sprint();
 
@@ -120,16 +117,10 @@ class probe_scoreboard extends uvm_scoreboard;
     if (pos < 0) pos = find_substr(s, "=32'h");
     if (pos < 0) return 0;
 
-    // pos — индекс '=', после него "64'h..."
-    // Найти "'h" после '='
     hpos = find_substr(s.substr(pos, s.len() - 1), "'h");
     if (hpos < 0) return 0;
-
-    // hpos — индекс "'h" в подстроке, начиная с '='
-    // Реальная позиция "'h" в s:
     hpos = pos + hpos;
 
-    // Передаём $sscanf строку ПОСЛЕ 'h
     matched = $sscanf(s.substr(hpos + 2, s.len() - 1), "%h", value);
     return (matched == 1);
   endfunction : get_reg_value
@@ -142,9 +133,9 @@ class probe_scoreboard extends uvm_scoreboard;
     int checked = 0;
 
     foreach (shadow[addr]) begin
-      uvm_reg        r;
-      uvm_reg_data_t ral_val;
-      uvm_reg_data_t shadow_val;
+      uvm_reg         r;
+      uvm_reg_data_t  ral_val;
+      csr_data_t      shadow_val;
 
       r = find_reg(addr);
       if (r == null) begin
