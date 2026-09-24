@@ -105,15 +105,6 @@ def gen_reg_block_extension(group, csrs):
     lines.append("    lock_model();")
     lines.append("  endfunction : build")
     lines.append("")
-    lines.append("  function uvm_reg get_reg_by_addr( bit [31:0] addr );")
-    lines.append("    case (addr)")
-    for csr in csrs:
-        n = csr["name"]
-        a = csr["address"]
-        lines.append(f"      32'h{a:03X}: return {n};")
-    lines.append("      default: return null;")
-    lines.append("    endcase")
-    lines.append("  endfunction : get_reg_by_addr")
     lines.append(f"endclass : {cls_name}")
     lines.append("")
 
@@ -129,11 +120,26 @@ def main():
     parser.add_argument("--reg-block", action="store_true", help="Генерировать сборку для csr_reg_block")
     parser.add_argument("--reg-block-out", help="Выходной .svh для сборки")
     parser.add_argument("--both", action="store_true", help="Генерировать и регистры, и сборку")
+    parser.add_argument("--list", action="store_true",
+                        help="Показать CSR группы (требует --group)")
 
     args = parser.parse_args()
 
     with open(MONOLITH) as f:
         monolith = yaml.safe_load(f)
+    
+    if args.list:
+        if not args.group:
+            print("ERROR: --list requires --group", file=sys.stderr)
+            sys.exit(1)
+        csrs = [c for c in monolith if c.get("_group") == args.group]
+        csrs.sort(key=lambda c: c["address"])
+        print(f"Group: {args.group}")
+        print(f"Total CSRs: {len(csrs)}")
+        for c in csrs:
+            nf = len(c.get("fields", {}))
+            print(f"  0x{c['address']:03x}  {c['name']:20s}  fields={nf}")
+        return
 
     if args.group:
         csrs = [c for c in monolith if c.get("_group") == args.group]

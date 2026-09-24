@@ -12,6 +12,7 @@ class csr_top_reg_block extends uvm_reg_block;
   //----------------------------------------------------------------------------
   rand csr_sm_base_reg_block   sm_base;
   rand csr_sm_zicntr_reg_block sm_zicntr;
+  rand csr_sm_misc_reg_block   sm_misc;
 
   //----------------------------------------------------------------------------
   // Root map
@@ -36,6 +37,7 @@ class csr_top_reg_block extends uvm_reg_block;
     // 2.
     build_sm_base();
     build_sm_zicntr();
+    build_sm_misc();
 
     // 3.
     lock_model();
@@ -62,6 +64,17 @@ class csr_top_reg_block extends uvm_reg_block;
 
     csr_map.add_submap( sm_zicntr.csr_map, 12'h000 );
   endfunction : build_sm_zicntr
+
+  //----------------------------------------------------------------------------
+  // Sm_misc
+  //----------------------------------------------------------------------------
+  protected function void build_sm_misc();
+    sm_misc = csr_sm_misc_reg_block::type_id::create("sm_misc");
+    sm_misc.configure( this );
+    sm_misc.build();
+
+    csr_map.add_submap( sm_misc.csr_map, 12'h000 );
+  endfunction : build_sm_misc
 
   //----------------------------------------------------------------------------
   // Unified search for the register by address
