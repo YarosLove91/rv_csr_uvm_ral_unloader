@@ -38,11 +38,12 @@ class probe_scoreboard extends uvm_scoreboard;
       return;
     end
 
-    if (tx.rd_or_wr == 1'b0) begin
-      do_write(tx);
-    end else begin
-      do_read(tx);
-    end
+    case (tx.rd_or_wr)
+      CSR_WRITE: do_write(tx);
+      CSR_READ : do_read (tx);
+      default  : `uvm_error(get_name(),
+                  $sformatf("unknown access: %s", tx.rd_or_wr.name()))
+    endcase
   endfunction : write
 
   // WRITE: обновляем shadow + predict в reg_block

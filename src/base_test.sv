@@ -33,7 +33,7 @@ class probe_base_test extends uvm_test;
     tx = probe_transaction::type_id::create("tx");
     tx.addr     = r.get_address();
     tx.value    = value;
-    tx.rd_or_wr = 1'b0;
+    tx.rd_or_wr = CSR_WRITE;
     tx.valid    = 1'b1;
     env_o.probe_ap.write(tx);
   endtask : write_reg
@@ -43,7 +43,7 @@ class probe_base_test extends uvm_test;
     tx = probe_transaction::type_id::create("tx");
     tx.addr     = r.get_address();
     tx.value    = 'x;
-    tx.rd_or_wr = 1'b1;
+    tx.rd_or_wr = CSR_READ;
     tx.valid    = 1'b1;
     env_o.probe_ap.write(tx);
     value = tx.value;
