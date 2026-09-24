@@ -67,9 +67,11 @@ make uvm_run TEST_NAME=probe_sm_zicntr_test
 | `probe_zihpm_test` | Zihpm | 29 |
 | `probe_zvl32b_test` | Zvl32b | 7 |
 | `probe_all_test` | все (по адресам) | 243 |
+| `probe_rv32_only_test` | rv32_only (xlen:32) | 113 |
 
 ```bash
 make uvm_run TEST_NAME=probe_all_test
+make uvm_run TEST_NAME=probe_rv32_only_test
 make uvm_run TEST_NAME=probe_sm_base_test
 make uvm_run TEST_NAME=probe_sm_zicntr_test
 make uvm_run TEST_NAME=probe_sm_misc_test
@@ -106,7 +108,7 @@ make uvm_run TEST_NAME=probe_zvl32b_test
 | H | 22 | F | 3 |
 | Zihpm | 29 | Zicntr | 3 |
 | Sdtrig | 7 | U / Sscofpmf / Sstc | 1 каждый |
-| rv32_only | 113 (не генерируется) | | |
+| rv32_only | 113 (выгружается отдельно, не в csr_pkg) | | |
 
 `Sm` большой, т.к. `mcycle`, `pmp*`, `mhpmcounter*` и др. в `definedBy` привязаны
 только к `Sm`.
@@ -116,6 +118,11 @@ make uvm_run TEST_NAME=probe_zvl32b_test
   `csr_<ext>_reg_block_extension.svh`) + `csr_top_reg_block.svh`.
   Старые `csr_sm_base_*`, `csr_sm_zicntr_*`, `csr_sm_misc_*` удалены.
 - `src/csr/csr_pkg.sv` подключает все 12 расширений и top.
+- `rv32_only` (113 регистров, `xlen:32`) выгружен отдельно:
+  `csr_rv32_only_extension.svh` + `csr_rv32_only_reg_block_extension.svh` +
+  пакет `csr_rv32_only_pkg.sv`; в `csr_pkg`/top не входит (шаг [6/6]
+  в `tools/generate.sh`). В `env.sv` создаётся `reg_rv32_only_model`,
+  scoreboard при записи в RV32-only регистр печатает `UVM_WARNING`.
 - Подблоки top: `Sm, S, H, U, F, Sdtrig, Sscofpmf, Ssstateen, Sstc, Zicntr, Zihpm, Zvl32b`.
 - Тесты (`src/tb/`, пакет `tests_pkg`):
   - `probe_base_test` — инфраструктура (env, objection, `write_reg/read_reg/read_check_reg`);
@@ -133,7 +140,9 @@ make uvm_run TEST_NAME=probe_zvl32b_test
   - `probe_zicntr_test` — `Zicntr` (у `time` член `time_f`);
   - `probe_zihpm_test` — `Zihpm`;
   - `probe_zvl32b_test` — `Zvl32b`;
-  - `probe_all_test` — перебор адресов 0x000..0xFFF, все 243 регистра.
+  - `probe_all_test` — перебор адресов 0x000..0xFFF, все 243 регистра;
+  - `probe_rv32_only_test` — RV32-only модель (113 регистров); запись в эти
+    регистры выдаёт `UVM_WARNING` в scoreboard.
   Все: `UVM_ERROR: 0`, `UVM_FATAL: 0`.
 - Итерация «1 расширение за проход»: сделаны все группы, кроме `Sm`:
   `S, H, U, F, Sdtrig, Sscofpmf, Ssstateen, Sstc, Zicntr, Zihpm, Zvl32b`.

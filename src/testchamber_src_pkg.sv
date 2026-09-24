@@ -3,6 +3,7 @@
 package testchamber_src_pkg;
   import uvm_pkg::*;
   import csr_pkg::*;
+  import csr_rv32_only_pkg::*;
   
   typedef logic [11:0] csr_addr_t;   //12 bit addr width
   typedef logic [63:0] csr_data_t;   //64 bit data width

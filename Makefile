@@ -41,7 +41,17 @@ BIN_DIR := bin_out
 # ============================================================
 TOP       := tb_top
 
-SV_FILES  := $(SRC_DIR)/csr/csr_pkg.sv $(SRC_DIR)/testchamber_src_pkg.sv $(SRC_DIR)/tb/tests_pkg.sv $(SRC_DIR)/TB_TOP.sv $(SRC_DIR)/uvm_wrapper.sv
+# Пакеты CSR
+SV_FILES  := $(SRC_DIR)/csr/csr_pkg.sv
+SV_FILES  += $(SRC_DIR)/csr/csr_rv32_only_pkg.sv
+
+# Пакеты тестового окружения
+SV_FILES  += $(SRC_DIR)/testchamber_src_pkg.sv
+SV_FILES  += $(SRC_DIR)/tb/tests_pkg.sv
+
+# Top и UVM-обвязка
+SV_FILES  += $(SRC_DIR)/TB_TOP.sv
+SV_FILES  += $(SRC_DIR)/uvm_wrapper.sv
 SVH_FILES :=
 UVM_PKG    := $(UVM_DIR)/src/uvm_pkg.sv
 UVM_BIN    := $(BIN_DIR)/V$(TOP)

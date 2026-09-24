@@ -61,8 +61,7 @@ class probe_base_test extends uvm_test;
       `uvm_error(get_name(),
                 $sformatf("%s mismatch: wrote=0x%016h read=0x%016h",
                           r.get_name(), expected, actual))
-    end
-    else begin
+    end else begin
       `uvm_info(get_name(),
                 $sformatf("%s = 0x%016h OK", r.get_name(), actual),
                 UVM_LOW)

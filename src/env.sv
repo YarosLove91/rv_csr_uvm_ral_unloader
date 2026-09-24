@@ -1,7 +1,8 @@
 class env extends uvm_env;
   `uvm_component_utils(env)
 
-  csr_top_reg_block reg_top_model;
+  csr_top_reg_block      reg_top_model;
+  csr_rv32_only_reg_block reg_rv32_only_model;
 
   probe_scoreboard                      probe_sb;
   uvm_analysis_port#(probe_transaction) probe_ap;
@@ -22,6 +23,17 @@ class env extends uvm_env;
 
     uvm_config_db#(csr_top_reg_block)::set( uvm_root::get(), "*",
                                             "reg_top_model", reg_top_model );
+
+    reg_rv32_only_model = csr_rv32_only_reg_block::type_id::create(
+                              "reg_rv32_only_model");
+    reg_rv32_only_model.build();
+    reg_rv32_only_model.lock_model();
+    reg_rv32_only_model.reset();
+    reg_rv32_only_model.print();
+
+    uvm_config_db#(csr_rv32_only_reg_block)::set( uvm_root::get(), "*",
+                                            "reg_rv32_only_model",
+                                            reg_rv32_only_model );
 
     probe_sb = probe_scoreboard::type_id::create("probe_sb", this);
   endfunction : build_phase

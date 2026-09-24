@@ -3,7 +3,8 @@ class probe_scoreboard extends uvm_scoreboard;
 
   uvm_analysis_imp#(probe_transaction, probe_scoreboard) probe_imp;
 
-  csr_top_reg_block reg_top_model;
+  csr_top_reg_block       reg_top_model;
+  csr_rv32_only_reg_block reg_rv32_only_model;
   csr_shadow_t shadow;
 
   function new(string name = "probe_scoreboard", uvm_component parent = null);
@@ -20,12 +21,17 @@ class probe_scoreboard extends uvm_scoreboard;
     if (!uvm_config_db#(csr_top_reg_block)::get(
             this, "", "reg_top_model", reg_top_model))
       `uvm_fatal(get_name(), "reg_top_model not found")
+    if (!uvm_config_db#(csr_rv32_only_reg_block)::get(
+            this, "", "reg_rv32_only_model", reg_rv32_only_model))
+      `uvm_fatal(get_name(), "reg_rv32_only_model not found")
   endfunction : check_config
 
-  // Поиск регистра
+  // Поиск регистра: сначала RV64-модель, затем RV32-only
   protected function uvm_reg find_reg(csr_addr_t addr);
     uvm_reg r;
     r = reg_top_model.get_reg_by_addr(addr);
+    if (r == null)
+      r = reg_rv32_only_model.csr_map.get_reg_by_offset(addr);
     if (r == null)
       `uvm_error (get_name(),
                   $sformatf("CSR 0x%03h not found", addr))
@@ -49,6 +55,11 @@ class probe_scoreboard extends uvm_scoreboard;
   // WRITE: обновляем shadow + predict в reg_block
   protected function void do_write(probe_transaction tx);
     uvm_reg r;
+
+    if (reg_rv32_only_model.csr_map.get_reg_by_offset(tx.addr) != null)
+      `uvm_warning(get_name(),
+                  $sformatf("WRITE to RV32-only CSR 0x%03h <- 0x%016h",
+                            tx.addr, tx.value))
 
     shadow[tx.addr] = tx.value;
 
