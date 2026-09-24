@@ -2,6 +2,7 @@
 import uvm_pkg::*;
 
 import testchamber_src_pkg::*;
+import tests_pkg::*;
 
 module tb_top;
 

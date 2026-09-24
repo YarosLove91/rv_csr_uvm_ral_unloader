@@ -14,10 +14,7 @@ package testchamber_src_pkg;
   } csr_access_e;
 
   `include "probe_transaction.sv"
-
   `include "probe_scoreboard.sv"
 
   `include "env.sv"
-  `include "base_test.sv"
-
 endpackage : testchamber_src_pkg
