@@ -40,14 +40,14 @@ class vxsat_reg extends uvm_reg;
   virtual function void build();
     vxsat_field = uvm_reg_field::type_id::create("vxsat_field");
     vxsat_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                           .size(64),
+                           .lsb_pos(0),
+                           .access("RW"),
+                           .volatile(0),
+                           .reset(64'h0),
+                           .has_reset(1),
+                           .is_rand(1),
+                           .individually_accessible(1) );
   endfunction : build
 endclass : vxsat_reg
 
@@ -67,14 +67,14 @@ class vxrm_reg extends uvm_reg;
   virtual function void build();
     vxrm_field = uvm_reg_field::type_id::create("vxrm_field");
     vxrm_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                          .size(64),
+                          .lsb_pos(0),
+                          .access("RW"),
+                          .volatile(0),
+                          .reset(64'h0),
+                          .has_reset(1),
+                          .is_rand(1),
+                          .individually_accessible(1) );
   endfunction : build
 endclass : vxrm_reg
 
@@ -94,14 +94,14 @@ class vcsr_reg extends uvm_reg;
   virtual function void build();
     vcsr_field = uvm_reg_field::type_id::create("vcsr_field");
     vcsr_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                          .size(64),
+                          .lsb_pos(0),
+                          .access("RW"),
+                          .volatile(0),
+                          .reset(64'h0),
+                          .has_reset(1),
+                          .is_rand(1),
+                          .individually_accessible(1) );
   endfunction : build
 endclass : vcsr_reg
 
@@ -121,14 +121,14 @@ class vl_reg extends uvm_reg;
   virtual function void build();
     vl_field = uvm_reg_field::type_id::create("vl_field");
     vl_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                        .size(64),
+                        .lsb_pos(0),
+                        .access("RW"),
+                        .volatile(0),
+                        .reset(64'h0),
+                        .has_reset(1),
+                        .is_rand(1),
+                        .individually_accessible(1) );
   endfunction : build
 endclass : vl_reg
 
@@ -148,14 +148,14 @@ class vtype_reg extends uvm_reg;
   virtual function void build();
     vtype_field = uvm_reg_field::type_id::create("vtype_field");
     vtype_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                           .size(64),
+                           .lsb_pos(0),
+                           .access("RW"),
+                           .volatile(0),
+                           .reset(64'h0),
+                           .has_reset(1),
+                           .is_rand(1),
+                           .individually_accessible(1) );
   endfunction : build
 endclass : vtype_reg
 
@@ -175,13 +175,13 @@ class vlenb_reg extends uvm_reg;
   virtual function void build();
     vlenb_field = uvm_reg_field::type_id::create("vlenb_field");
     vlenb_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                           .size(64),
+                           .lsb_pos(0),
+                           .access("RW"),
+                           .volatile(0),
+                           .reset(64'h0),
+                           .has_reset(1),
+                           .is_rand(1),
+                           .individually_accessible(1) );
   endfunction : build
 endclass : vlenb_reg

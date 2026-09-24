@@ -13,14 +13,14 @@ class vsstatus_reg extends uvm_reg;
   virtual function void build();
     vsstatus_field = uvm_reg_field::type_id::create("vsstatus_field");
     vsstatus_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                              .size(64),
+                              .lsb_pos(0),
+                              .access("RW"),
+                              .volatile(0),
+                              .reset(64'h0),
+                              .has_reset(1),
+                              .is_rand(1),
+                              .individually_accessible(1) );
   endfunction : build
 endclass : vsstatus_reg
 
@@ -67,14 +67,14 @@ class vsepc_reg extends uvm_reg;
   virtual function void build();
     vsepc_field = uvm_reg_field::type_id::create("vsepc_field");
     vsepc_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                           .size(64),
+                           .lsb_pos(0),
+                           .access("RW"),
+                           .volatile(0),
+                           .reset(64'h0),
+                           .has_reset(1),
+                           .is_rand(1),
+                           .individually_accessible(1) );
   endfunction : build
 endclass : vsepc_reg
 
@@ -94,14 +94,14 @@ class vscause_reg extends uvm_reg;
   virtual function void build();
     vscause_field = uvm_reg_field::type_id::create("vscause_field");
     vscause_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                             .size(64),
+                             .lsb_pos(0),
+                             .access("RW"),
+                             .volatile(0),
+                             .reset(64'h0),
+                             .has_reset(1),
+                             .is_rand(1),
+                             .individually_accessible(1) );
   endfunction : build
 endclass : vscause_reg
 
@@ -148,14 +148,14 @@ class vstimecmp_reg extends uvm_reg;
   virtual function void build();
     vstimecmp_field = uvm_reg_field::type_id::create("vstimecmp_field");
     vstimecmp_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                               .size(64),
+                               .lsb_pos(0),
+                               .access("RW"),
+                               .volatile(0),
+                               .reset(64'h0),
+                               .has_reset(1),
+                               .is_rand(1),
+                               .individually_accessible(1) );
   endfunction : build
 endclass : vstimecmp_reg
 
@@ -175,14 +175,14 @@ class vsctrctl_reg extends uvm_reg;
   virtual function void build();
     vsctrctl_field = uvm_reg_field::type_id::create("vsctrctl_field");
     vsctrctl_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                              .size(64),
+                              .lsb_pos(0),
+                              .access("RW"),
+                              .volatile(0),
+                              .reset(64'h0),
+                              .has_reset(1),
+                              .is_rand(1),
+                              .individually_accessible(1) );
   endfunction : build
 endclass : vsctrctl_reg
 
@@ -202,14 +202,14 @@ class vsatp_reg extends uvm_reg;
   virtual function void build();
     vsatp_field = uvm_reg_field::type_id::create("vsatp_field");
     vsatp_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                           .size(64),
+                           .lsb_pos(0),
+                           .access("RW"),
+                           .volatile(0),
+                           .reset(64'h0),
+                           .has_reset(1),
+                           .is_rand(1),
+                           .individually_accessible(1) );
   endfunction : build
 endclass : vsatp_reg
 
@@ -283,14 +283,14 @@ class hstatus_reg extends uvm_reg;
   virtual function void build();
     hstatus_field = uvm_reg_field::type_id::create("hstatus_field");
     hstatus_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                             .size(64),
+                             .lsb_pos(0),
+                             .access("RW"),
+                             .volatile(0),
+                             .reset(64'h0),
+                             .has_reset(1),
+                             .is_rand(1),
+                             .individually_accessible(1) );
   endfunction : build
 endclass : hstatus_reg
 
@@ -310,14 +310,14 @@ class hedeleg_reg extends uvm_reg;
   virtual function void build();
     hedeleg_field = uvm_reg_field::type_id::create("hedeleg_field");
     hedeleg_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                             .size(64),
+                             .lsb_pos(0),
+                             .access("RW"),
+                             .volatile(0),
+                             .reset(64'h0),
+                             .has_reset(1),
+                             .is_rand(1),
+                             .individually_accessible(1) );
   endfunction : build
 endclass : hedeleg_reg
 
@@ -337,14 +337,14 @@ class htimedelta_reg extends uvm_reg;
   virtual function void build();
     htimedelta_field = uvm_reg_field::type_id::create("htimedelta_field");
     htimedelta_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                                .size(64),
+                                .lsb_pos(0),
+                                .access("RW"),
+                                .volatile(0),
+                                .reset(64'h0),
+                                .has_reset(1),
+                                .is_rand(1),
+                                .individually_accessible(1) );
   endfunction : build
 endclass : htimedelta_reg
 
@@ -364,14 +364,14 @@ class hcounteren_reg extends uvm_reg;
   virtual function void build();
     hcounteren_field = uvm_reg_field::type_id::create("hcounteren_field");
     hcounteren_field.configure( .parent(this),
-                            .size(32),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                                .size(32),
+                                .lsb_pos(0),
+                                .access("RW"),
+                                .volatile(0),
+                                .reset(64'h0),
+                                .has_reset(1),
+                                .is_rand(1),
+                                .individually_accessible(1) );
   endfunction : build
 endclass : hcounteren_reg
 
@@ -391,14 +391,14 @@ class hstateen0_reg extends uvm_reg;
   virtual function void build();
     hstateen0_field = uvm_reg_field::type_id::create("hstateen0_field");
     hstateen0_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                               .size(64),
+                               .lsb_pos(0),
+                               .access("RW"),
+                               .volatile(0),
+                               .reset(64'h0),
+                               .has_reset(1),
+                               .is_rand(1),
+                               .individually_accessible(1) );
   endfunction : build
 endclass : hstateen0_reg
 
@@ -418,14 +418,14 @@ class hstateen1_reg extends uvm_reg;
   virtual function void build();
     hstateen1_field = uvm_reg_field::type_id::create("hstateen1_field");
     hstateen1_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                               .size(64),
+                               .lsb_pos(0),
+                               .access("RW"),
+                               .volatile(0),
+                               .reset(64'h0),
+                               .has_reset(1),
+                               .is_rand(1),
+                               .individually_accessible(1) );
   endfunction : build
 endclass : hstateen1_reg
 
@@ -445,14 +445,14 @@ class hstateen2_reg extends uvm_reg;
   virtual function void build();
     hstateen2_field = uvm_reg_field::type_id::create("hstateen2_field");
     hstateen2_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                               .size(64),
+                               .lsb_pos(0),
+                               .access("RW"),
+                               .volatile(0),
+                               .reset(64'h0),
+                               .has_reset(1),
+                               .is_rand(1),
+                               .individually_accessible(1) );
   endfunction : build
 endclass : hstateen2_reg
 
@@ -472,14 +472,14 @@ class hstateen3_reg extends uvm_reg;
   virtual function void build();
     hstateen3_field = uvm_reg_field::type_id::create("hstateen3_field");
     hstateen3_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                               .size(64),
+                               .lsb_pos(0),
+                               .access("RW"),
+                               .volatile(0),
+                               .reset(64'h0),
+                               .has_reset(1),
+                               .is_rand(1),
+                               .individually_accessible(1) );
   endfunction : build
 endclass : hstateen3_reg
 
@@ -499,14 +499,14 @@ class htval_reg extends uvm_reg;
   virtual function void build();
     htval_field = uvm_reg_field::type_id::create("htval_field");
     htval_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                           .size(64),
+                           .lsb_pos(0),
+                           .access("RW"),
+                           .volatile(0),
+                           .reset(64'h0),
+                           .has_reset(1),
+                           .is_rand(1),
+                           .individually_accessible(1) );
   endfunction : build
 endclass : htval_reg
 
@@ -553,14 +553,14 @@ class hgatp_reg extends uvm_reg;
   virtual function void build();
     hgatp_field = uvm_reg_field::type_id::create("hgatp_field");
     hgatp_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                           .size(64),
+                           .lsb_pos(0),
+                           .access("RW"),
+                           .volatile(0),
+                           .reset(64'h0),
+                           .has_reset(1),
+                           .is_rand(1),
+                           .individually_accessible(1) );
   endfunction : build
 endclass : hgatp_reg
 
@@ -580,13 +580,13 @@ class hcontext_reg extends uvm_reg;
   virtual function void build();
     hcontext_field = uvm_reg_field::type_id::create("hcontext_field");
     hcontext_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                              .size(64),
+                              .lsb_pos(0),
+                              .access("RW"),
+                              .volatile(0),
+                              .reset(64'h0),
+                              .has_reset(1),
+                              .is_rand(1),
+                              .individually_accessible(1) );
   endfunction : build
 endclass : hcontext_reg

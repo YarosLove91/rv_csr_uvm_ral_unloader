@@ -13,14 +13,14 @@ class tselect_reg extends uvm_reg;
   virtual function void build();
     tselect_field = uvm_reg_field::type_id::create("tselect_field");
     tselect_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                             .size(64),
+                             .lsb_pos(0),
+                             .access("RW"),
+                             .volatile(0),
+                             .reset(64'h0),
+                             .has_reset(1),
+                             .is_rand(1),
+                             .individually_accessible(1) );
   endfunction : build
 endclass : tselect_reg
 
@@ -121,14 +121,14 @@ class tinfo_reg extends uvm_reg;
   virtual function void build();
     tinfo_field = uvm_reg_field::type_id::create("tinfo_field");
     tinfo_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                           .size(64),
+                           .lsb_pos(0),
+                           .access("RW"),
+                           .volatile(0),
+                           .reset(64'h0),
+                           .has_reset(1),
+                           .is_rand(1),
+                           .individually_accessible(1) );
   endfunction : build
 endclass : tinfo_reg
 
@@ -148,14 +148,14 @@ class tcontrol_reg extends uvm_reg;
   virtual function void build();
     tcontrol_field = uvm_reg_field::type_id::create("tcontrol_field");
     tcontrol_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                              .size(64),
+                              .lsb_pos(0),
+                              .access("RW"),
+                              .volatile(0),
+                              .reset(64'h0),
+                              .has_reset(1),
+                              .is_rand(1),
+                              .individually_accessible(1) );
   endfunction : build
 endclass : tcontrol_reg
 
@@ -175,13 +175,13 @@ class mcontext_reg extends uvm_reg;
   virtual function void build();
     mcontext_field = uvm_reg_field::type_id::create("mcontext_field");
     mcontext_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                              .size(64),
+                              .lsb_pos(0),
+                              .access("RW"),
+                              .volatile(0),
+                              .reset(64'h0),
+                              .has_reset(1),
+                              .is_rand(1),
+                              .individually_accessible(1) );
   endfunction : build
 endclass : mcontext_reg

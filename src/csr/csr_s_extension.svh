@@ -13,14 +13,14 @@ class sstatus_reg extends uvm_reg;
   virtual function void build();
     sstatus_field = uvm_reg_field::type_id::create("sstatus_field");
     sstatus_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h200000000),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                             .size(64),
+                             .lsb_pos(0),
+                             .access("RW"),
+                             .volatile(0),
+                             .reset(64'h200000000),
+                             .has_reset(1),
+                             .is_rand(1),
+                             .individually_accessible(1) );
   endfunction : build
 endclass : sstatus_reg
 
@@ -40,14 +40,14 @@ class sie_reg extends uvm_reg;
   virtual function void build();
     sie_field = uvm_reg_field::type_id::create("sie_field");
     sie_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                         .size(64),
+                         .lsb_pos(0),
+                         .access("RW"),
+                         .volatile(0),
+                         .reset(64'h0),
+                         .has_reset(1),
+                         .is_rand(1),
+                         .individually_accessible(1) );
   endfunction : build
 endclass : sie_reg
 
@@ -67,14 +67,14 @@ class stvec_reg extends uvm_reg;
   virtual function void build();
     stvec_field = uvm_reg_field::type_id::create("stvec_field");
     stvec_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                           .size(64),
+                           .lsb_pos(0),
+                           .access("RW"),
+                           .volatile(0),
+                           .reset(64'h0),
+                           .has_reset(1),
+                           .is_rand(1),
+                           .individually_accessible(1) );
   endfunction : build
 endclass : stvec_reg
 
@@ -94,14 +94,14 @@ class scounteren_reg extends uvm_reg;
   virtual function void build();
     scounteren_field = uvm_reg_field::type_id::create("scounteren_field");
     scounteren_field.configure( .parent(this),
-                            .size(32),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                                .size(32),
+                                .lsb_pos(0),
+                                .access("RW"),
+                                .volatile(0),
+                                .reset(64'h0),
+                                .has_reset(1),
+                                .is_rand(1),
+                                .individually_accessible(1) );
   endfunction : build
 endclass : scounteren_reg
 
@@ -121,14 +121,14 @@ class senvcfg_reg extends uvm_reg;
   virtual function void build();
     senvcfg_field = uvm_reg_field::type_id::create("senvcfg_field");
     senvcfg_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                             .size(64),
+                             .lsb_pos(0),
+                             .access("RW"),
+                             .volatile(0),
+                             .reset(64'h0),
+                             .has_reset(1),
+                             .is_rand(1),
+                             .individually_accessible(1) );
   endfunction : build
 endclass : senvcfg_reg
 
@@ -148,14 +148,14 @@ class sscratch_reg extends uvm_reg;
   virtual function void build();
     sscratch_field = uvm_reg_field::type_id::create("sscratch_field");
     sscratch_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                              .size(64),
+                              .lsb_pos(0),
+                              .access("RW"),
+                              .volatile(0),
+                              .reset(64'h0),
+                              .has_reset(1),
+                              .is_rand(1),
+                              .individually_accessible(1) );
   endfunction : build
 endclass : sscratch_reg
 
@@ -175,14 +175,14 @@ class sepc_reg extends uvm_reg;
   virtual function void build();
     sepc_field = uvm_reg_field::type_id::create("sepc_field");
     sepc_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                          .size(64),
+                          .lsb_pos(0),
+                          .access("RW"),
+                          .volatile(0),
+                          .reset(64'h0),
+                          .has_reset(1),
+                          .is_rand(1),
+                          .individually_accessible(1) );
   endfunction : build
 endclass : sepc_reg
 
@@ -229,14 +229,14 @@ class stval_reg extends uvm_reg;
   virtual function void build();
     stval_field = uvm_reg_field::type_id::create("stval_field");
     stval_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                           .size(64),
+                           .lsb_pos(0),
+                           .access("RW"),
+                           .volatile(0),
+                           .reset(64'h0),
+                           .has_reset(1),
+                           .is_rand(1),
+                           .individually_accessible(1) );
   endfunction : build
 endclass : stval_reg
 
@@ -256,14 +256,14 @@ class sip_reg extends uvm_reg;
   virtual function void build();
     sip_field = uvm_reg_field::type_id::create("sip_field");
     sip_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                         .size(64),
+                         .lsb_pos(0),
+                         .access("RW"),
+                         .volatile(0),
+                         .reset(64'h0),
+                         .has_reset(1),
+                         .is_rand(1),
+                         .individually_accessible(1) );
   endfunction : build
 endclass : sip_reg
 
@@ -283,14 +283,14 @@ class satp_reg extends uvm_reg;
   virtual function void build();
     satp_field = uvm_reg_field::type_id::create("satp_field");
     satp_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                          .size(64),
+                          .lsb_pos(0),
+                          .access("RW"),
+                          .volatile(0),
+                          .reset(64'h0),
+                          .has_reset(1),
+                          .is_rand(1),
+                          .individually_accessible(1) );
   endfunction : build
 endclass : satp_reg
 
@@ -310,14 +310,14 @@ class medeleg_reg extends uvm_reg;
   virtual function void build();
     medeleg_field = uvm_reg_field::type_id::create("medeleg_field");
     medeleg_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                             .size(64),
+                             .lsb_pos(0),
+                             .access("RW"),
+                             .volatile(0),
+                             .reset(64'h0),
+                             .has_reset(1),
+                             .is_rand(1),
+                             .individually_accessible(1) );
   endfunction : build
 endclass : medeleg_reg
 
@@ -337,14 +337,14 @@ class scontext_reg extends uvm_reg;
   virtual function void build();
     scontext_field = uvm_reg_field::type_id::create("scontext_field");
     scontext_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                              .size(64),
+                              .lsb_pos(0),
+                              .access("RW"),
+                              .volatile(0),
+                              .reset(64'h0),
+                              .has_reset(1),
+                              .is_rand(1),
+                              .individually_accessible(1) );
   endfunction : build
 endclass : scontext_reg
 
@@ -364,13 +364,13 @@ class mscontext_reg extends uvm_reg;
   virtual function void build();
     mscontext_field = uvm_reg_field::type_id::create("mscontext_field");
     mscontext_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                               .size(64),
+                               .lsb_pos(0),
+                               .access("RW"),
+                               .volatile(0),
+                               .reset(64'h0),
+                               .has_reset(1),
+                               .is_rand(1),
+                               .individually_accessible(1) );
   endfunction : build
 endclass : mscontext_reg

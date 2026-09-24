@@ -13,14 +13,14 @@ class cycle_reg extends uvm_reg;
   virtual function void build();
     cycle_field = uvm_reg_field::type_id::create("cycle_field");
     cycle_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                           .size(64),
+                           .lsb_pos(0),
+                           .access("RW"),
+                           .volatile(0),
+                           .reset(64'h0),
+                           .has_reset(1),
+                           .is_rand(1),
+                           .individually_accessible(1) );
   endfunction : build
 endclass : cycle_reg
 
@@ -40,14 +40,14 @@ class time_reg extends uvm_reg;
   virtual function void build();
     time_field = uvm_reg_field::type_id::create("time_field");
     time_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                          .size(64),
+                          .lsb_pos(0),
+                          .access("RW"),
+                          .volatile(0),
+                          .reset(64'h0),
+                          .has_reset(1),
+                          .is_rand(1),
+                          .individually_accessible(1) );
   endfunction : build
 endclass : time_reg
 
@@ -67,13 +67,13 @@ class instret_reg extends uvm_reg;
   virtual function void build();
     instret_field = uvm_reg_field::type_id::create("instret_field");
     instret_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                             .size(64),
+                             .lsb_pos(0),
+                             .access("RW"),
+                             .volatile(0),
+                             .reset(64'h0),
+                             .has_reset(1),
+                             .is_rand(1),
+                             .individually_accessible(1) );
   endfunction : build
 endclass : instret_reg

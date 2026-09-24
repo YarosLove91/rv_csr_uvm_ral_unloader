@@ -13,14 +13,14 @@ class hpmcounter3_reg extends uvm_reg;
   virtual function void build();
     hpmcounter3_field = uvm_reg_field::type_id::create("hpmcounter3_field");
     hpmcounter3_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                                 .size(64),
+                                 .lsb_pos(0),
+                                 .access("RW"),
+                                 .volatile(0),
+                                 .reset(64'h0),
+                                 .has_reset(1),
+                                 .is_rand(1),
+                                 .individually_accessible(1) );
   endfunction : build
 endclass : hpmcounter3_reg
 
@@ -40,14 +40,14 @@ class hpmcounter4_reg extends uvm_reg;
   virtual function void build();
     hpmcounter4_field = uvm_reg_field::type_id::create("hpmcounter4_field");
     hpmcounter4_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                                 .size(64),
+                                 .lsb_pos(0),
+                                 .access("RW"),
+                                 .volatile(0),
+                                 .reset(64'h0),
+                                 .has_reset(1),
+                                 .is_rand(1),
+                                 .individually_accessible(1) );
   endfunction : build
 endclass : hpmcounter4_reg
 
@@ -67,14 +67,14 @@ class hpmcounter5_reg extends uvm_reg;
   virtual function void build();
     hpmcounter5_field = uvm_reg_field::type_id::create("hpmcounter5_field");
     hpmcounter5_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                                 .size(64),
+                                 .lsb_pos(0),
+                                 .access("RW"),
+                                 .volatile(0),
+                                 .reset(64'h0),
+                                 .has_reset(1),
+                                 .is_rand(1),
+                                 .individually_accessible(1) );
   endfunction : build
 endclass : hpmcounter5_reg
 
@@ -94,14 +94,14 @@ class hpmcounter6_reg extends uvm_reg;
   virtual function void build();
     hpmcounter6_field = uvm_reg_field::type_id::create("hpmcounter6_field");
     hpmcounter6_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                                 .size(64),
+                                 .lsb_pos(0),
+                                 .access("RW"),
+                                 .volatile(0),
+                                 .reset(64'h0),
+                                 .has_reset(1),
+                                 .is_rand(1),
+                                 .individually_accessible(1) );
   endfunction : build
 endclass : hpmcounter6_reg
 
@@ -121,14 +121,14 @@ class hpmcounter7_reg extends uvm_reg;
   virtual function void build();
     hpmcounter7_field = uvm_reg_field::type_id::create("hpmcounter7_field");
     hpmcounter7_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                                 .size(64),
+                                 .lsb_pos(0),
+                                 .access("RW"),
+                                 .volatile(0),
+                                 .reset(64'h0),
+                                 .has_reset(1),
+                                 .is_rand(1),
+                                 .individually_accessible(1) );
   endfunction : build
 endclass : hpmcounter7_reg
 
@@ -148,14 +148,14 @@ class hpmcounter8_reg extends uvm_reg;
   virtual function void build();
     hpmcounter8_field = uvm_reg_field::type_id::create("hpmcounter8_field");
     hpmcounter8_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                                 .size(64),
+                                 .lsb_pos(0),
+                                 .access("RW"),
+                                 .volatile(0),
+                                 .reset(64'h0),
+                                 .has_reset(1),
+                                 .is_rand(1),
+                                 .individually_accessible(1) );
   endfunction : build
 endclass : hpmcounter8_reg
 
@@ -175,14 +175,14 @@ class hpmcounter9_reg extends uvm_reg;
   virtual function void build();
     hpmcounter9_field = uvm_reg_field::type_id::create("hpmcounter9_field");
     hpmcounter9_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                                 .size(64),
+                                 .lsb_pos(0),
+                                 .access("RW"),
+                                 .volatile(0),
+                                 .reset(64'h0),
+                                 .has_reset(1),
+                                 .is_rand(1),
+                                 .individually_accessible(1) );
   endfunction : build
 endclass : hpmcounter9_reg
 
@@ -202,14 +202,14 @@ class hpmcounter10_reg extends uvm_reg;
   virtual function void build();
     hpmcounter10_field = uvm_reg_field::type_id::create("hpmcounter10_field");
     hpmcounter10_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                                  .size(64),
+                                  .lsb_pos(0),
+                                  .access("RW"),
+                                  .volatile(0),
+                                  .reset(64'h0),
+                                  .has_reset(1),
+                                  .is_rand(1),
+                                  .individually_accessible(1) );
   endfunction : build
 endclass : hpmcounter10_reg
 
@@ -229,14 +229,14 @@ class hpmcounter11_reg extends uvm_reg;
   virtual function void build();
     hpmcounter11_field = uvm_reg_field::type_id::create("hpmcounter11_field");
     hpmcounter11_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                                  .size(64),
+                                  .lsb_pos(0),
+                                  .access("RW"),
+                                  .volatile(0),
+                                  .reset(64'h0),
+                                  .has_reset(1),
+                                  .is_rand(1),
+                                  .individually_accessible(1) );
   endfunction : build
 endclass : hpmcounter11_reg
 
@@ -256,14 +256,14 @@ class hpmcounter12_reg extends uvm_reg;
   virtual function void build();
     hpmcounter12_field = uvm_reg_field::type_id::create("hpmcounter12_field");
     hpmcounter12_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                                  .size(64),
+                                  .lsb_pos(0),
+                                  .access("RW"),
+                                  .volatile(0),
+                                  .reset(64'h0),
+                                  .has_reset(1),
+                                  .is_rand(1),
+                                  .individually_accessible(1) );
   endfunction : build
 endclass : hpmcounter12_reg
 
@@ -283,14 +283,14 @@ class hpmcounter13_reg extends uvm_reg;
   virtual function void build();
     hpmcounter13_field = uvm_reg_field::type_id::create("hpmcounter13_field");
     hpmcounter13_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                                  .size(64),
+                                  .lsb_pos(0),
+                                  .access("RW"),
+                                  .volatile(0),
+                                  .reset(64'h0),
+                                  .has_reset(1),
+                                  .is_rand(1),
+                                  .individually_accessible(1) );
   endfunction : build
 endclass : hpmcounter13_reg
 
@@ -310,14 +310,14 @@ class hpmcounter14_reg extends uvm_reg;
   virtual function void build();
     hpmcounter14_field = uvm_reg_field::type_id::create("hpmcounter14_field");
     hpmcounter14_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                                  .size(64),
+                                  .lsb_pos(0),
+                                  .access("RW"),
+                                  .volatile(0),
+                                  .reset(64'h0),
+                                  .has_reset(1),
+                                  .is_rand(1),
+                                  .individually_accessible(1) );
   endfunction : build
 endclass : hpmcounter14_reg
 
@@ -337,14 +337,14 @@ class hpmcounter15_reg extends uvm_reg;
   virtual function void build();
     hpmcounter15_field = uvm_reg_field::type_id::create("hpmcounter15_field");
     hpmcounter15_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                                  .size(64),
+                                  .lsb_pos(0),
+                                  .access("RW"),
+                                  .volatile(0),
+                                  .reset(64'h0),
+                                  .has_reset(1),
+                                  .is_rand(1),
+                                  .individually_accessible(1) );
   endfunction : build
 endclass : hpmcounter15_reg
 
@@ -364,14 +364,14 @@ class hpmcounter16_reg extends uvm_reg;
   virtual function void build();
     hpmcounter16_field = uvm_reg_field::type_id::create("hpmcounter16_field");
     hpmcounter16_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                                  .size(64),
+                                  .lsb_pos(0),
+                                  .access("RW"),
+                                  .volatile(0),
+                                  .reset(64'h0),
+                                  .has_reset(1),
+                                  .is_rand(1),
+                                  .individually_accessible(1) );
   endfunction : build
 endclass : hpmcounter16_reg
 
@@ -391,14 +391,14 @@ class hpmcounter17_reg extends uvm_reg;
   virtual function void build();
     hpmcounter17_field = uvm_reg_field::type_id::create("hpmcounter17_field");
     hpmcounter17_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                                  .size(64),
+                                  .lsb_pos(0),
+                                  .access("RW"),
+                                  .volatile(0),
+                                  .reset(64'h0),
+                                  .has_reset(1),
+                                  .is_rand(1),
+                                  .individually_accessible(1) );
   endfunction : build
 endclass : hpmcounter17_reg
 
@@ -418,14 +418,14 @@ class hpmcounter18_reg extends uvm_reg;
   virtual function void build();
     hpmcounter18_field = uvm_reg_field::type_id::create("hpmcounter18_field");
     hpmcounter18_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                                  .size(64),
+                                  .lsb_pos(0),
+                                  .access("RW"),
+                                  .volatile(0),
+                                  .reset(64'h0),
+                                  .has_reset(1),
+                                  .is_rand(1),
+                                  .individually_accessible(1) );
   endfunction : build
 endclass : hpmcounter18_reg
 
@@ -445,14 +445,14 @@ class hpmcounter19_reg extends uvm_reg;
   virtual function void build();
     hpmcounter19_field = uvm_reg_field::type_id::create("hpmcounter19_field");
     hpmcounter19_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                                  .size(64),
+                                  .lsb_pos(0),
+                                  .access("RW"),
+                                  .volatile(0),
+                                  .reset(64'h0),
+                                  .has_reset(1),
+                                  .is_rand(1),
+                                  .individually_accessible(1) );
   endfunction : build
 endclass : hpmcounter19_reg
 
@@ -472,14 +472,14 @@ class hpmcounter20_reg extends uvm_reg;
   virtual function void build();
     hpmcounter20_field = uvm_reg_field::type_id::create("hpmcounter20_field");
     hpmcounter20_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                                  .size(64),
+                                  .lsb_pos(0),
+                                  .access("RW"),
+                                  .volatile(0),
+                                  .reset(64'h0),
+                                  .has_reset(1),
+                                  .is_rand(1),
+                                  .individually_accessible(1) );
   endfunction : build
 endclass : hpmcounter20_reg
 
@@ -499,14 +499,14 @@ class hpmcounter21_reg extends uvm_reg;
   virtual function void build();
     hpmcounter21_field = uvm_reg_field::type_id::create("hpmcounter21_field");
     hpmcounter21_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                                  .size(64),
+                                  .lsb_pos(0),
+                                  .access("RW"),
+                                  .volatile(0),
+                                  .reset(64'h0),
+                                  .has_reset(1),
+                                  .is_rand(1),
+                                  .individually_accessible(1) );
   endfunction : build
 endclass : hpmcounter21_reg
 
@@ -526,14 +526,14 @@ class hpmcounter22_reg extends uvm_reg;
   virtual function void build();
     hpmcounter22_field = uvm_reg_field::type_id::create("hpmcounter22_field");
     hpmcounter22_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                                  .size(64),
+                                  .lsb_pos(0),
+                                  .access("RW"),
+                                  .volatile(0),
+                                  .reset(64'h0),
+                                  .has_reset(1),
+                                  .is_rand(1),
+                                  .individually_accessible(1) );
   endfunction : build
 endclass : hpmcounter22_reg
 
@@ -553,14 +553,14 @@ class hpmcounter23_reg extends uvm_reg;
   virtual function void build();
     hpmcounter23_field = uvm_reg_field::type_id::create("hpmcounter23_field");
     hpmcounter23_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                                  .size(64),
+                                  .lsb_pos(0),
+                                  .access("RW"),
+                                  .volatile(0),
+                                  .reset(64'h0),
+                                  .has_reset(1),
+                                  .is_rand(1),
+                                  .individually_accessible(1) );
   endfunction : build
 endclass : hpmcounter23_reg
 
@@ -580,14 +580,14 @@ class hpmcounter24_reg extends uvm_reg;
   virtual function void build();
     hpmcounter24_field = uvm_reg_field::type_id::create("hpmcounter24_field");
     hpmcounter24_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                                  .size(64),
+                                  .lsb_pos(0),
+                                  .access("RW"),
+                                  .volatile(0),
+                                  .reset(64'h0),
+                                  .has_reset(1),
+                                  .is_rand(1),
+                                  .individually_accessible(1) );
   endfunction : build
 endclass : hpmcounter24_reg
 
@@ -607,14 +607,14 @@ class hpmcounter25_reg extends uvm_reg;
   virtual function void build();
     hpmcounter25_field = uvm_reg_field::type_id::create("hpmcounter25_field");
     hpmcounter25_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                                  .size(64),
+                                  .lsb_pos(0),
+                                  .access("RW"),
+                                  .volatile(0),
+                                  .reset(64'h0),
+                                  .has_reset(1),
+                                  .is_rand(1),
+                                  .individually_accessible(1) );
   endfunction : build
 endclass : hpmcounter25_reg
 
@@ -634,14 +634,14 @@ class hpmcounter26_reg extends uvm_reg;
   virtual function void build();
     hpmcounter26_field = uvm_reg_field::type_id::create("hpmcounter26_field");
     hpmcounter26_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                                  .size(64),
+                                  .lsb_pos(0),
+                                  .access("RW"),
+                                  .volatile(0),
+                                  .reset(64'h0),
+                                  .has_reset(1),
+                                  .is_rand(1),
+                                  .individually_accessible(1) );
   endfunction : build
 endclass : hpmcounter26_reg
 
@@ -661,14 +661,14 @@ class hpmcounter27_reg extends uvm_reg;
   virtual function void build();
     hpmcounter27_field = uvm_reg_field::type_id::create("hpmcounter27_field");
     hpmcounter27_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                                  .size(64),
+                                  .lsb_pos(0),
+                                  .access("RW"),
+                                  .volatile(0),
+                                  .reset(64'h0),
+                                  .has_reset(1),
+                                  .is_rand(1),
+                                  .individually_accessible(1) );
   endfunction : build
 endclass : hpmcounter27_reg
 
@@ -688,14 +688,14 @@ class hpmcounter28_reg extends uvm_reg;
   virtual function void build();
     hpmcounter28_field = uvm_reg_field::type_id::create("hpmcounter28_field");
     hpmcounter28_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                                  .size(64),
+                                  .lsb_pos(0),
+                                  .access("RW"),
+                                  .volatile(0),
+                                  .reset(64'h0),
+                                  .has_reset(1),
+                                  .is_rand(1),
+                                  .individually_accessible(1) );
   endfunction : build
 endclass : hpmcounter28_reg
 
@@ -715,14 +715,14 @@ class hpmcounter29_reg extends uvm_reg;
   virtual function void build();
     hpmcounter29_field = uvm_reg_field::type_id::create("hpmcounter29_field");
     hpmcounter29_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                                  .size(64),
+                                  .lsb_pos(0),
+                                  .access("RW"),
+                                  .volatile(0),
+                                  .reset(64'h0),
+                                  .has_reset(1),
+                                  .is_rand(1),
+                                  .individually_accessible(1) );
   endfunction : build
 endclass : hpmcounter29_reg
 
@@ -742,14 +742,14 @@ class hpmcounter30_reg extends uvm_reg;
   virtual function void build();
     hpmcounter30_field = uvm_reg_field::type_id::create("hpmcounter30_field");
     hpmcounter30_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                                  .size(64),
+                                  .lsb_pos(0),
+                                  .access("RW"),
+                                  .volatile(0),
+                                  .reset(64'h0),
+                                  .has_reset(1),
+                                  .is_rand(1),
+                                  .individually_accessible(1) );
   endfunction : build
 endclass : hpmcounter30_reg
 
@@ -769,13 +769,13 @@ class hpmcounter31_reg extends uvm_reg;
   virtual function void build();
     hpmcounter31_field = uvm_reg_field::type_id::create("hpmcounter31_field");
     hpmcounter31_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                                  .size(64),
+                                  .lsb_pos(0),
+                                  .access("RW"),
+                                  .volatile(0),
+                                  .reset(64'h0),
+                                  .has_reset(1),
+                                  .is_rand(1),
+                                  .individually_accessible(1) );
   endfunction : build
 endclass : hpmcounter31_reg

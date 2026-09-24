@@ -40,14 +40,14 @@ class frm_reg extends uvm_reg;
   virtual function void build();
     frm_field = uvm_reg_field::type_id::create("frm_field");
     frm_field.configure( .parent(this),
-                            .size(32),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                         .size(32),
+                         .lsb_pos(0),
+                         .access("RW"),
+                         .volatile(0),
+                         .reset(64'h0),
+                         .has_reset(1),
+                         .is_rand(1),
+                         .individually_accessible(1) );
   endfunction : build
 endclass : frm_reg
 
@@ -67,13 +67,13 @@ class fcsr_reg extends uvm_reg;
   virtual function void build();
     fcsr_field = uvm_reg_field::type_id::create("fcsr_field");
     fcsr_field.configure( .parent(this),
-                            .size(32),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                          .size(32),
+                          .lsb_pos(0),
+                          .access("RW"),
+                          .volatile(0),
+                          .reset(64'h0),
+                          .has_reset(1),
+                          .is_rand(1),
+                          .individually_accessible(1) );
   endfunction : build
 endclass : fcsr_reg

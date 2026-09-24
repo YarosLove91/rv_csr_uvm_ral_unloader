@@ -13,14 +13,14 @@ class sstateen0_reg extends uvm_reg;
   virtual function void build();
     sstateen0_field = uvm_reg_field::type_id::create("sstateen0_field");
     sstateen0_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                               .size(64),
+                               .lsb_pos(0),
+                               .access("RW"),
+                               .volatile(0),
+                               .reset(64'h0),
+                               .has_reset(1),
+                               .is_rand(1),
+                               .individually_accessible(1) );
   endfunction : build
 endclass : sstateen0_reg
 
@@ -40,14 +40,14 @@ class sstateen1_reg extends uvm_reg;
   virtual function void build();
     sstateen1_field = uvm_reg_field::type_id::create("sstateen1_field");
     sstateen1_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                               .size(64),
+                               .lsb_pos(0),
+                               .access("RW"),
+                               .volatile(0),
+                               .reset(64'h0),
+                               .has_reset(1),
+                               .is_rand(1),
+                               .individually_accessible(1) );
   endfunction : build
 endclass : sstateen1_reg
 
@@ -67,14 +67,14 @@ class sstateen2_reg extends uvm_reg;
   virtual function void build();
     sstateen2_field = uvm_reg_field::type_id::create("sstateen2_field");
     sstateen2_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                               .size(64),
+                               .lsb_pos(0),
+                               .access("RW"),
+                               .volatile(0),
+                               .reset(64'h0),
+                               .has_reset(1),
+                               .is_rand(1),
+                               .individually_accessible(1) );
   endfunction : build
 endclass : sstateen2_reg
 
@@ -94,13 +94,13 @@ class sstateen3_reg extends uvm_reg;
   virtual function void build();
     sstateen3_field = uvm_reg_field::type_id::create("sstateen3_field");
     sstateen3_field.configure( .parent(this),
-                            .size(64),
-                            .lsb_pos(0),
-                            .access("RW"),
-                            .volatile(0),
-                            .reset(64'h0),
-                            .has_reset(1),
-                            .is_rand(1),
-                            .individually_accessible(1) );
+                               .size(64),
+                               .lsb_pos(0),
+                               .access("RW"),
+                               .volatile(0),
+                               .reset(64'h0),
+                               .has_reset(1),
+                               .is_rand(1),
+                               .individually_accessible(1) );
   endfunction : build
 endclass : sstateen3_reg
