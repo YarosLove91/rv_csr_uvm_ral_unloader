@@ -39,22 +39,15 @@ def extract_extensions(defined_by):
             out.extend(extract_extensions(item))
         return out
     if isinstance(defined_by, dict):
+        # {extension: ...} — разворачиваем вложенный anyOf/allOf/name рекурсивно
         if "extension" in defined_by:
-            ext = defined_by["extension"]
-            if isinstance(ext, dict):
-                if "name" in ext:
-                    return [ext["name"]]
-                if "anyOf" in ext:
-                    out = []
-                    for e in ext["anyOf"]:
-                        if isinstance(e, dict) and "name" in e:
-                            out.append(e["name"])
-                    return out
-            return [str(ext)]
+            return extract_extensions(defined_by["extension"])
         if "anyOf" in defined_by:
             return extract_extensions(defined_by["anyOf"])
         if "allOf" in defined_by:
             return extract_extensions(defined_by["allOf"])
+        if "name" in defined_by:
+            return [defined_by["name"]]
         if "param" in defined_by:
             return []
         if "xlen" in defined_by:
@@ -188,24 +181,18 @@ def condition_matches(cond, mandatory, optional, allow_extra, xlen=64):
         if "xlen" in cond:
             return cond["xlen"] == xlen
 
-        # extension
+        # extension — рекурсивно (name / anyOf / allOf / вложенный extension)
         if "extension" in cond:
-            ext = cond["extension"]
-            if isinstance(ext, dict):
-                if "name" in ext:
-                    name = ext["name"]
-                    if name in EXCLUDE_EXTENSIONS:
-                        return False
-                    allowed = mandatory | (optional if allow_extra else set())
-                    return name in allowed
-                if "anyOf" in ext:
-                    allowed = mandatory | (optional if allow_extra else set())
-                    return any(
-                        e.get("name") in allowed
-                        and e.get("name") not in EXCLUDE_EXTENSIONS
-                        for e in ext["anyOf"]
-                    )
-            return False
+            return condition_matches(cond["extension"],
+                                     mandatory, optional, allow_extra, xlen)
+
+        # name — единственное расширение
+        if "name" in cond:
+            name = cond["name"]
+            if name in EXCLUDE_EXTENSIONS:
+                return False
+            allowed = mandatory | (optional if allow_extra else set())
+            return name in allowed
 
         # anyOf
         if "anyOf" in cond:
