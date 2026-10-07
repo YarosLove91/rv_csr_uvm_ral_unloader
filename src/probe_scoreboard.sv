@@ -84,19 +84,12 @@ class probe_scoreboard extends uvm_scoreboard;
 
     r = find_reg(tx.addr);
     if (r != null) begin
-      if (get_reg_value(r, actual)) begin
-        tx.value = actual;
-        `uvm_info(get_name(),
-                  $sformatf("RD 0x%03h -> 0x%016h [%s] (RAL)",
-                            tx.addr, actual, r.get_name()), 
-                  UVM_LOW)
-      end else begin
-        actual   = shadow.exists(tx.addr) ? shadow[tx.addr] : csr_data_t'(0);
-        tx.value = actual;
-        `uvm_warning(get_name(),
-                    $sformatf("RD 0x%03h -> 0x%016h [%s] (shadow fallback)",
-                              tx.addr, actual, r.get_name()))
-      end
+      get_reg_value(r, actual);
+      tx.value = actual;
+      `uvm_info(get_name(),
+                $sformatf("RD 0x%03h -> 0x%016h [%s] (RAL)",
+                          tx.addr, actual, r.get_name()),
+                UVM_LOW)
     end else begin
       actual   = shadow.exists(tx.addr) ? shadow[tx.addr] : csr_data_t'(0);
       tx.value = actual;
@@ -106,35 +99,14 @@ class probe_scoreboard extends uvm_scoreboard;
     end
   endfunction : do_read
 
-  // Ручной поиск подстроки в строке (Ограничение verilator)
-  protected function int find_substr(string s, string sub);
-    int len_s   = s.len();
-    int len_sub = sub.len();
-    if (len_sub == 0 || len_sub > len_s) return -1;
-
-    for (int i = 0; i <= len_s - len_sub; i++) begin
-      if (s.substr(i, i + len_sub - 1) == sub)
-        return i;
-    end
-    return -1;
-  endfunction : find_substr
+  // Чтение текущего значения из RAL-модели.
 
   protected function bit get_reg_value(uvm_reg r, output uvm_reg_data_t value);
-    string s;
-    int    pos, hpos, matched;
-
-    s = r.sprint();
-
-    pos = find_substr(s, "=64'h");
-    if (pos < 0) pos = find_substr(s, "=32'h");
-    if (pos < 0) return 0;
-
-    hpos = find_substr(s.substr(pos, s.len() - 1), "'h");
-    if (hpos < 0) return 0;
-    hpos = pos + hpos;
-
-    matched = $sscanf(s.substr(hpos + 2, s.len() - 1), "%h", value);
-    return (matched == 1);
+    if (r == null) begin
+      return 0;
+    end
+    value = r.get();
+    return 1;
   endfunction : get_reg_value
 
   //------------------------------------------------------------------------------
@@ -157,11 +129,10 @@ class probe_scoreboard extends uvm_scoreboard;
       end
 
       shadow_val = shadow[addr];
-      if (!get_reg_value(r, ral_val)) begin
-        `uvm_warning(get_name(),
-                    $sformatf("cannot read RAL[%s]", r.get_name()))
-        continue;
-      end
+      shadow_val = shadow_val & (r.get_n_bits() >= 64
+                              ? csr_data_t'('1)
+                              : ((csr_data_t'(1) << r.get_n_bits()) - 1));
+      ral_val = r.get();
 
       checked++;
       if (ral_val !== shadow_val) begin

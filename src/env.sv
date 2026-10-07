@@ -1,7 +1,7 @@
 class env extends uvm_env;
   `uvm_component_utils(env)
 
-  csr_top_reg_block      reg_top_model;
+  csr_top_reg_block       reg_top_model;
   csr_rv32_only_reg_block reg_rv32_only_model;
 
   probe_scoreboard                      probe_sb;

@@ -33,9 +33,9 @@ class probe_all_test extends probe_base_test;
               $sformatf("checked %0d registers", checked), UVM_LOW)
 
     if (checked != EXPECTED_REGS) begin
-      `uvm_error(get_name(),
-                 $sformatf("expected %0d registers, checked %0d",
-                           EXPECTED_REGS, checked))
+      `uvm_error (get_name(),
+                  $sformatf("expected %0d registers, checked %0d",
+                            EXPECTED_REGS, checked))
     end
 
     #10;
