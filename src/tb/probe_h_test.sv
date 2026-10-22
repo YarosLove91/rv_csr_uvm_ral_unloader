@@ -3,7 +3,8 @@
 //
 // Test for extension H (group H): vsstatus, vsie, vstvec, vsscratch, vsepc,
 // vscause, vstval, vsip, vstimecmp, vsctrctl, vsatp, mtinst, mtval2, hstatus,
-// hedeleg, htimedelta, hcounteren, hstateen0..3, htval, htinst, hgatp, hcontext.
+// hedeleg, hideleg, hie, htimedelta, hcounteren, hgeie, hip, hstateen0..3,
+// hvip, htval, htinst, hgatp, hcontext, hgeip.
 //------------------------------------------------------------------------------
 
 class probe_h_test extends probe_base_test;
@@ -35,16 +36,22 @@ class probe_h_test extends probe_base_test;
     read_check_reg(rb.mtval2,     64'h0000_0000_0000_010A);
     read_check_reg(rb.hstatus,    64'h0000_0000_0000_010B);
     read_check_reg(rb.hedeleg,    64'h0000_0000_0000_010C);
+    read_check_reg(rb.hideleg,    64'h0000_0000_0000_0119);
+    read_check_reg(rb.hie,        64'h0000_0000_0000_011A);
     read_check_reg(rb.htimedelta, 64'h0000_0000_0000_010D);
     read_check_reg(rb.hcounteren, 64'h0000_0000_0000_0007);
+    read_check_reg(rb.hgeie,      64'h0000_0000_0000_011B);
+    read_check_reg(rb.hip,        64'h0000_0000_0000_011C);
     read_check_reg(rb.hstateen0,  64'h0000_0000_0000_010E);
     read_check_reg(rb.hstateen1,  64'h0000_0000_0000_010F);
     read_check_reg(rb.hstateen2,  64'h0000_0000_0000_0110);
     read_check_reg(rb.hstateen3,  64'h0000_0000_0000_0111);
+    read_check_reg(rb.hvip,       64'h0000_0000_0000_011D);
     read_check_reg(rb.htval,      64'h0000_0000_0000_0112);
     read_check_reg(rb.htinst,     64'h0000_0000_0000_0113);
     read_check_reg(rb.hgatp,      64'h0000_0000_0000_0114);
     read_check_reg(rb.hcontext,   64'h0000_0000_0000_0115);
+    read_check_reg(rb.hgeip,      64'h0000_0000_0000_011E);
 
     #10;
     env_o.probe_sb.dump_all();

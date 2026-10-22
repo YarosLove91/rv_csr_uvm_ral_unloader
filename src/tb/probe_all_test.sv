@@ -3,14 +3,14 @@
 //
 // Проверка ВСЕХ регистров RAL: перебор адресов 0x000..0xFFF, для каждого
 // найденного в csr_top_reg_block регистра — read_check_reg (write -> read).
-// Ожидается 246 регистров (12 расширений профиля RVA23S64,
-// включая добавленные vsie/vsscratch/vsip в группе H).
+// Ожидается 252 регистра (12 расширений профиля RVA23S64, включая
+// добавленные vsie/vsscratch/vsip и hgeie/hgeip/hideleg/hie/hip/hvip в H).
 //------------------------------------------------------------------------------
 
 class probe_all_test extends probe_base_test;
   `uvm_component_utils(probe_all_test)
 
-  localparam int unsigned EXPECTED_REGS = 246;
+  localparam int unsigned EXPECTED_REGS = 252;
 
   function new(string name = "probe_all_test", uvm_component parent = null);
     super.new(name, parent);

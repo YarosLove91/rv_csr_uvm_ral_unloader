@@ -404,6 +404,60 @@ endclass : hedeleg_reg
 
 
 //------------------------------------------------------------------------------
+// hideleg (0x603) - hideleg
+//------------------------------------------------------------------------------
+class hideleg_reg extends uvm_reg;
+  `uvm_object_utils( hideleg_reg )
+
+  rand uvm_reg_field hideleg_field;
+
+  function new( string name = "hideleg_reg" );
+    super.new( .name(name), .n_bits(64), .has_coverage(UVM_NO_COVERAGE) );
+  endfunction : new
+
+  virtual function void build();
+    hideleg_field = uvm_reg_field::type_id::create("hideleg_field");
+    hideleg_field.configure( .parent(this),
+                             .size(64),
+                             .lsb_pos(0),
+                             .access("RW"),
+                             .volatile(0),
+                             .reset(64'h0),
+                             .has_reset(1),
+                             .is_rand(1),
+                             .individually_accessible(1) );
+  endfunction : build
+endclass : hideleg_reg
+
+
+//------------------------------------------------------------------------------
+// hie (0x604) - hie
+//------------------------------------------------------------------------------
+class hie_reg extends uvm_reg;
+  `uvm_object_utils( hie_reg )
+
+  rand uvm_reg_field hie_field;
+
+  function new( string name = "hie_reg" );
+    super.new( .name(name), .n_bits(64), .has_coverage(UVM_NO_COVERAGE) );
+  endfunction : new
+
+  virtual function void build();
+    hie_field = uvm_reg_field::type_id::create("hie_field");
+    hie_field.configure( .parent(this),
+                         .size(64),
+                         .lsb_pos(0),
+                         .access("RW"),
+                         .volatile(0),
+                         .reset(64'h0),
+                         .has_reset(1),
+                         .is_rand(1),
+                         .individually_accessible(1) );
+  endfunction : build
+endclass : hie_reg
+
+
+//------------------------------------------------------------------------------
 // htimedelta (0x605) - htimedelta
 //------------------------------------------------------------------------------
 class htimedelta_reg extends uvm_reg;
@@ -455,6 +509,60 @@ class hcounteren_reg extends uvm_reg;
                                 .individually_accessible(1) );
   endfunction : build
 endclass : hcounteren_reg
+
+
+//------------------------------------------------------------------------------
+// hgeie (0x607) - hgeie
+//------------------------------------------------------------------------------
+class hgeie_reg extends uvm_reg;
+  `uvm_object_utils( hgeie_reg )
+
+  rand uvm_reg_field hgeie_field;
+
+  function new( string name = "hgeie_reg" );
+    super.new( .name(name), .n_bits(64), .has_coverage(UVM_NO_COVERAGE) );
+  endfunction : new
+
+  virtual function void build();
+    hgeie_field = uvm_reg_field::type_id::create("hgeie_field");
+    hgeie_field.configure( .parent(this),
+                           .size(64),
+                           .lsb_pos(0),
+                           .access("RW"),
+                           .volatile(0),
+                           .reset(64'h0),
+                           .has_reset(1),
+                           .is_rand(1),
+                           .individually_accessible(1) );
+  endfunction : build
+endclass : hgeie_reg
+
+
+//------------------------------------------------------------------------------
+// hip (0x608) - hip
+//------------------------------------------------------------------------------
+class hip_reg extends uvm_reg;
+  `uvm_object_utils( hip_reg )
+
+  rand uvm_reg_field hip_field;
+
+  function new( string name = "hip_reg" );
+    super.new( .name(name), .n_bits(64), .has_coverage(UVM_NO_COVERAGE) );
+  endfunction : new
+
+  virtual function void build();
+    hip_field = uvm_reg_field::type_id::create("hip_field");
+    hip_field.configure( .parent(this),
+                         .size(64),
+                         .lsb_pos(0),
+                         .access("RW"),
+                         .volatile(0),
+                         .reset(64'h0),
+                         .has_reset(1),
+                         .is_rand(1),
+                         .individually_accessible(1) );
+  endfunction : build
+endclass : hip_reg
 
 
 //------------------------------------------------------------------------------
@@ -593,6 +701,33 @@ endclass : htval_reg
 
 
 //------------------------------------------------------------------------------
+// hvip (0x645) - hvip
+//------------------------------------------------------------------------------
+class hvip_reg extends uvm_reg;
+  `uvm_object_utils( hvip_reg )
+
+  rand uvm_reg_field hvip_field;
+
+  function new( string name = "hvip_reg" );
+    super.new( .name(name), .n_bits(64), .has_coverage(UVM_NO_COVERAGE) );
+  endfunction : new
+
+  virtual function void build();
+    hvip_field = uvm_reg_field::type_id::create("hvip_field");
+    hvip_field.configure( .parent(this),
+                          .size(64),
+                          .lsb_pos(0),
+                          .access("RW"),
+                          .volatile(0),
+                          .reset(64'h0),
+                          .has_reset(1),
+                          .is_rand(1),
+                          .individually_accessible(1) );
+  endfunction : build
+endclass : hvip_reg
+
+
+//------------------------------------------------------------------------------
 // htinst (0x64a) - htinst
 //------------------------------------------------------------------------------
 class htinst_reg extends uvm_reg;
@@ -671,3 +806,30 @@ class hcontext_reg extends uvm_reg;
                               .individually_accessible(1) );
   endfunction : build
 endclass : hcontext_reg
+
+
+//------------------------------------------------------------------------------
+// hgeip (0xe12) - hgeip
+//------------------------------------------------------------------------------
+class hgeip_reg extends uvm_reg;
+  `uvm_object_utils( hgeip_reg )
+
+  rand uvm_reg_field hgeip_field;
+
+  function new( string name = "hgeip_reg" );
+    super.new( .name(name), .n_bits(64), .has_coverage(UVM_NO_COVERAGE) );
+  endfunction : new
+
+  virtual function void build();
+    hgeip_field = uvm_reg_field::type_id::create("hgeip_field");
+    hgeip_field.configure( .parent(this),
+                           .size(64),
+                           .lsb_pos(0),
+                           .access("RW"),
+                           .volatile(0),
+                           .reset(64'h0),
+                           .has_reset(1),
+                           .is_rand(1),
+                           .individually_accessible(1) );
+  endfunction : build
+endclass : hgeip_reg

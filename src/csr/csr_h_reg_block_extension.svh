@@ -23,16 +23,22 @@ class csr_h_reg_block extends uvm_reg_block;
   rand mtval2_reg mtval2;
   rand hstatus_reg hstatus;
   rand hedeleg_reg hedeleg;
+  rand hideleg_reg hideleg;
+  rand hie_reg hie;
   rand htimedelta_reg htimedelta;
   rand hcounteren_reg hcounteren;
+  rand hgeie_reg hgeie;
+  rand hip_reg hip;
   rand hstateen0_reg hstateen0;
   rand hstateen1_reg hstateen1;
   rand hstateen2_reg hstateen2;
   rand hstateen3_reg hstateen3;
   rand htval_reg htval;
+  rand hvip_reg hvip;
   rand htinst_reg htinst;
   rand hgatp_reg hgatp;
   rand hcontext_reg hcontext;
+  rand hgeip_reg hgeip;
 
   uvm_reg_map csr_map;
 
@@ -101,6 +107,14 @@ class csr_h_reg_block extends uvm_reg_block;
     hedeleg.configure( .blk_parent(this) );
     hedeleg.build();
 
+    hideleg = hideleg_reg::type_id::create("hideleg");
+    hideleg.configure( .blk_parent(this) );
+    hideleg.build();
+
+    hie = hie_reg::type_id::create("hie");
+    hie.configure( .blk_parent(this) );
+    hie.build();
+
     htimedelta = htimedelta_reg::type_id::create("htimedelta");
     htimedelta.configure( .blk_parent(this) );
     htimedelta.build();
@@ -108,6 +122,14 @@ class csr_h_reg_block extends uvm_reg_block;
     hcounteren = hcounteren_reg::type_id::create("hcounteren");
     hcounteren.configure( .blk_parent(this) );
     hcounteren.build();
+
+    hgeie = hgeie_reg::type_id::create("hgeie");
+    hgeie.configure( .blk_parent(this) );
+    hgeie.build();
+
+    hip = hip_reg::type_id::create("hip");
+    hip.configure( .blk_parent(this) );
+    hip.build();
 
     hstateen0 = hstateen0_reg::type_id::create("hstateen0");
     hstateen0.configure( .blk_parent(this) );
@@ -129,6 +151,10 @@ class csr_h_reg_block extends uvm_reg_block;
     htval.configure( .blk_parent(this) );
     htval.build();
 
+    hvip = hvip_reg::type_id::create("hvip");
+    hvip.configure( .blk_parent(this) );
+    hvip.build();
+
     htinst = htinst_reg::type_id::create("htinst");
     htinst.configure( .blk_parent(this) );
     htinst.build();
@@ -140,6 +166,10 @@ class csr_h_reg_block extends uvm_reg_block;
     hcontext = hcontext_reg::type_id::create("hcontext");
     hcontext.configure( .blk_parent(this) );
     hcontext.build();
+
+    hgeip = hgeip_reg::type_id::create("hgeip");
+    hgeip.configure( .blk_parent(this) );
+    hgeip.build();
 
     csr_map = create_map("csr_map", 'h0, 8, UVM_LITTLE_ENDIAN, 1);
 
@@ -158,16 +188,22 @@ class csr_h_reg_block extends uvm_reg_block;
     csr_map.add_reg(mtval2, 12'h34b, "RW");
     csr_map.add_reg(hstatus, 12'h600, "RW");
     csr_map.add_reg(hedeleg, 12'h602, "RW");
+    csr_map.add_reg(hideleg, 12'h603, "RW");
+    csr_map.add_reg(hie, 12'h604, "RW");
     csr_map.add_reg(htimedelta, 12'h605, "RW");
     csr_map.add_reg(hcounteren, 12'h606, "RW");
+    csr_map.add_reg(hgeie, 12'h607, "RW");
+    csr_map.add_reg(hip, 12'h608, "RW");
     csr_map.add_reg(hstateen0, 12'h60c, "RW");
     csr_map.add_reg(hstateen1, 12'h60d, "RW");
     csr_map.add_reg(hstateen2, 12'h60e, "RW");
     csr_map.add_reg(hstateen3, 12'h60f, "RW");
     csr_map.add_reg(htval, 12'h643, "RW");
+    csr_map.add_reg(hvip, 12'h645, "RW");
     csr_map.add_reg(htinst, 12'h64a, "RW");
     csr_map.add_reg(hgatp, 12'h680, "RW");
     csr_map.add_reg(hcontext, 12'h6a8, "RW");
+    csr_map.add_reg(hgeip, 12'he12, "RW");
 
     lock_model();
   endfunction : build

@@ -5,10 +5,16 @@ csr_spec/csr/H/hcounteren.yaml
 csr_spec/csr/H/henvcfg.yaml
 csr_spec/csr/H/henvcfgh.yaml
 csr_spec/csr/H/hgatp.yaml
+csr_spec/csr/H/hgeie.yaml
+csr_spec/csr/H/hgeip.yaml
+csr_spec/csr/H/hideleg.yaml
+csr_spec/csr/H/hie.yaml
+csr_spec/csr/H/hip.yaml
 csr_spec/csr/H/htimedelta.yaml
 csr_spec/csr/H/htimedeltah.yaml
 csr_spec/csr/H/htinst.yaml
 csr_spec/csr/H/htval.yaml
+csr_spec/csr/H/hvip.yaml
 csr_spec/csr/H/mtinst.yaml
 csr_spec/csr/H/mtval2.yaml
 csr_spec/csr/H/vsatp.yaml

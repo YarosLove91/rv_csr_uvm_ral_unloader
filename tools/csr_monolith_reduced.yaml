@@ -4702,6 +4702,80 @@
       _size: 1
       type: RO
       reset_value: 0
+- name: hideleg
+  address: 1539
+  length: 64
+  priv_mode: S
+  _group: H
+  _source: H/hideleg.yaml
+  fields:
+    SSI:
+      _lsb: 1
+      _size: 1
+      type: RO
+      reset_value: 0
+    VSSI:
+      _lsb: 2
+      _size: 1
+      type: RW
+      reset_value: 0
+    STI:
+      _lsb: 5
+      _size: 1
+      type: RO
+      reset_value: 0
+    VSTI:
+      _lsb: 6
+      _size: 1
+      type: RW
+      reset_value: 0
+    SEI:
+      _lsb: 9
+      _size: 1
+      type: RO
+      reset_value: 0
+    VSEI:
+      _lsb: 10
+      _size: 1
+      type: RW
+      reset_value: 0
+    SGEI:
+      _lsb: 12
+      _size: 1
+      type: RO
+      reset_value: 0
+    LCOFI:
+      _lsb: 13
+      _size: 1
+      type: RW
+      reset_value: 0
+- name: hie
+  address: 1540
+  length: 64
+  priv_mode: S
+  _group: H
+  _source: H/hie.yaml
+  fields:
+    SGEIE:
+      _lsb: 12
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSEIE:
+      _lsb: 10
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSTIE:
+      _lsb: 6
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSSIE:
+      _lsb: 2
+      _size: 1
+      type: RW
+      reset_value: 0
 - name: htimedelta
   address: 1541
   length: 64
@@ -4880,6 +4954,45 @@
       _lsb: 31
       _size: 1
       type: RW
+      reset_value: 0
+- name: hgeie
+  address: 1543
+  length: 64
+  priv_mode: S
+  _group: H
+  _source: H/hgeie.yaml
+  fields:
+    GEI_ENABLE:
+      _lsb: 1
+      _size: 63
+      type: RW
+      reset_value: 0
+- name: hip
+  address: 1544
+  length: 64
+  priv_mode: S
+  _group: H
+  _source: H/hip.yaml
+  fields:
+    SGEIP:
+      _lsb: 12
+      _size: 1
+      type: RO
+      reset_value: 0
+    VSEIP:
+      _lsb: 10
+      _size: 1
+      type: RO
+      reset_value: 0
+    VSTIP:
+      _lsb: 6
+      _size: 1
+      type: RO
+      reset_value: 0
+    VSSIP:
+      _lsb: 2
+      _size: 1
+      type: RO
       reset_value: 0
 - name: henvcfg
   address: 1546
@@ -5110,6 +5223,28 @@
     VALUE:
       _lsb: 0
       _size: 64
+      type: RW
+      reset_value: 0
+- name: hvip
+  address: 1605
+  length: 64
+  priv_mode: S
+  _group: H
+  _source: H/hvip.yaml
+  fields:
+    VSEIP:
+      _lsb: 10
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSTIP:
+      _lsb: 6
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSSIP:
+      _lsb: 2
+      _size: 1
       type: RW
       reset_value: 0
 - name: htinst
@@ -8225,6 +8360,18 @@
       _lsb: 31
       _size: 1
       type: RW
+      reset_value: 0
+- name: hgeip
+  address: 3602
+  length: 64
+  priv_mode: S
+  _group: H
+  _source: H/hgeip.yaml
+  fields:
+    GEI_PENDING:
+      _lsb: 1
+      _size: 63
+      type: RO
       reset_value: 0
 - name: mvendorid
   address: 3857

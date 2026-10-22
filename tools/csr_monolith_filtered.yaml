@@ -24436,6 +24436,196 @@
   _group: H
 - $schema: csr_schema.json#
   kind: csr
+  name: hideleg
+  long_name: Hypervisor Interrupt Delegation Register
+  description: 'Register hideleg is an HSXLEN-bit read/write register. By default,
+    all traps at any privilege level are handled in M-mode, though M-mode usually
+    uses the medeleg and mideleg CSRs to delegate some traps to HS-mode.
+
+    The hedeleg and hideleg CSRs allow these traps to be further delegated to a VS-mode
+    guest; their layout is the same as medeleg and mideleg.
+
+    An interrupt that has been delegated to HS-mode (using mideleg) is further delegated
+    to VS-mode if the corresponding hideleg bit is set.
+
+    Among bits 15:0 of hideleg, bits 10, 6, and 2 (corresponding to the standard VS-level
+    interrupts) are writable, and bits 12, 9, 5, and 1 (corresponding to the standard
+    S-level interrupts) are read-only zeros.
+
+    '
+  address: 1539
+  writable: true
+  priv_mode: S
+  definedBy:
+    extension:
+      name: H
+  length: SXLEN
+  fields:
+    SSI:
+      location: 1
+      type: RO
+      reset_value: 0
+      long_name: Supervisor Software Interrupt
+      description: Supervisor Software Interrupt
+      _lsb: 1
+      _size: 1
+    VSSI:
+      location: 2
+      type: RW
+      reset_value: 0
+      long_name: Virtual Supervisor Software Interrupt
+      description: Virtual Supervisor Software Interrupt
+      sw_write(csr_value): "if (CSR[mideleg].VSSI == 0) {\n  return 0;\n}\nif (csr_value.VSSI\
+        \ == 0) {\n  CSR[vsip].SSIP = 0;\n  CSR[vsie].SSIE = 0;\n}\nreturn csr_value.VSSI;\n"
+      _lsb: 2
+      _size: 1
+    STI:
+      location: 5
+      type: RO
+      reset_value: 0
+      long_name: Supervisor Timer Interrupt
+      description: Supervisor Timer Interrupt
+      _lsb: 5
+      _size: 1
+    VSTI:
+      location: 6
+      type: RW
+      reset_value: 0
+      long_name: Virtual Supervisor Timer Interrupt
+      description: Virtual Supervisor Timer Interrupt
+      sw_write(csr_value): "if (CSR[mideleg].VSTI == 0) {\n  return 0;\n}\nif (csr_value.VSTI\
+        \ == 0) {\n  CSR[vsip].STIP = 0;\n  CSR[vsie].STIE = 0;\n}\nreturn csr_value.VSTI;\n"
+      _lsb: 6
+      _size: 1
+    SEI:
+      location: 9
+      type: RO
+      reset_value: 0
+      long_name: Supervisor External Interrupt
+      description: Supervisor External Interrupt
+      _lsb: 9
+      _size: 1
+    VSEI:
+      location: 10
+      type: RW
+      reset_value: 0
+      long_name: Virtual Supervisor External Interrupt
+      description: Virtual Supervisor External Interrupt
+      sw_write(csr_value): "if (CSR[mideleg].VSEI == 0) {\n  return 0;\n}\nif (csr_value.VSEI\
+        \ == 0) {\n  CSR[vsip].SEIP = 0;\n  CSR[vsie].SEIE = 0;\n}\nreturn csr_value.VSEI;\n"
+      _lsb: 10
+      _size: 1
+    SGEI:
+      location: 12
+      type: RO
+      reset_value: 0
+      long_name: Supervisor Guest External Interrupt
+      description: Supervisor Guest External Interrupt
+      _lsb: 12
+      _size: 1
+    LCOFI:
+      location: 13
+      definedBy:
+        extension:
+          name: Sscofpmf
+      type: RW
+      reset_value: 0
+      long_name: Local-Counter-Overfloat Interrupt
+      description: Local-Counter-Overfloat Interrupt
+      sw_write(csr_value): "if (CSR[mideleg].LCOFI == 0) {\n  return 0;\n}\nif (csr_value.LCOFI\
+        \ == 0) {\n  CSR[vsip].LCOFIP = 0;\n  CSR[vsie].LCOFIE = 0;\n}\nreturn csr_value.LCOFI;\n"
+      _lsb: 13
+      _size: 1
+  sw_read(): 'XReg mask = CSR[mideleg].VSSI | CSR[mideleg].VSTI | CSR[mideleg].VSEI
+    | CSR[mideleg].LCOFI;
+
+    return $bits(CSR[hideleg]) & mask;
+
+    '
+  _source: H/hideleg.yaml
+  _group: H
+- $schema: csr_schema.json#
+  kind: csr
+  name: hie
+  long_name: Hypervisor Interrupt Enable Register
+  description: 'The `hie` register is a read/write register in HS-mode that enables
+    interrupts.
+
+    It corresponds to the enable bits for VS-level and hypervisor-specific interrupts,
+    and supplements
+
+    the HS-level `sie` register.
+
+    '
+  address: 1540
+  writable: true
+  priv_mode: S
+  definedBy:
+    extension:
+      name: H
+  length: SXLEN
+  fields:
+    SGEIE:
+      location: 12
+      type: RW
+      reset_value: 0
+      description: 'Hypervisor guest external interrupt enable bit. When set, allows
+        external interrupts to be delivered
+
+        to VS-mode based on the `hgeie` setting.
+
+        '
+      sw_write(csr_value): "if (CSR[mideleg].SGEI == 0) {\n  return 0;\n}\nreturn\
+        \ csr_value.SGEIE;\n"
+      _lsb: 12
+      _size: 1
+    VSEIE:
+      location: 10
+      type: RW
+      reset_value: 0
+      description: 'VS-level external interrupt enable bit. When set, allows external
+        interrupts directed to VS-level
+
+        to be processed based on the configuration in `hvip` and other platform-specific
+        sources.
+
+        '
+      sw_write(csr_value): "if (CSR[mideleg].VSEI == 0) {\n  return 0;\n}\nreturn\
+        \ csr_value.VSEIE;\n"
+      _lsb: 10
+      _size: 1
+    VSTIE:
+      location: 6
+      type: RW
+      reset_value: 0
+      description: 'VS-level timer interrupt enable bit. When set, allows VS-level
+        timer interrupts to be processed
+
+        based on the `hvip` configuration and any platform-specific timer interrupts.
+
+        '
+      sw_write(csr_value): "if (CSR[mideleg].VSTI == 0) {\n  return 0;\n}\nreturn\
+        \ csr_value.VSTIE;\n"
+      _lsb: 6
+      _size: 1
+    VSSIE:
+      location: 2
+      type: RW
+      reset_value: 0
+      description: 'VS-level software interrupt enable bit. When set, allows software
+        interrupts directed to VS-level
+
+        to be processed, based on the configuration in `hvip`.
+
+        '
+      sw_write(csr_value): "if (CSR[mideleg].VSSI == 0) {\n  return 0;\n}\nreturn\
+        \ csr_value.VSSIE;\n"
+      _lsb: 2
+      _size: 1
+  _source: H/hie.yaml
+  _group: H
+- $schema: csr_schema.json#
+  kind: csr
   name: htimedelta
   long_name: Hypervisor time delta
   description: 'The `htimedelta` CSR is a 64-bit read/write register that contains
@@ -26200,6 +26390,151 @@
   _group: H
 - $schema: csr_schema.json#
   kind: csr
+  name: hgeie
+  long_name: Hypervisor Guest External Interrupt Enable Register
+  writable: true
+  description: 'The hgeie register is an HSXLEN-bit read/write register that contains
+    enable bits for the guest external interrupts at this hart. Guest external interrupt
+    number i corresponds with bit i in hgeie.
+
+
+    Guest external interrupts represent interrupts directed to individual virtual
+    machines at VS-level. If a RISC-V platform supports placing a physical device
+    under the direct control of a guest OS with minimal hypervisor intervention (known
+    as pass-through or direct assignment between a virtual machine and the physical
+    device), then, in such circumstance, interrupts from the device are intended for
+    a specific virtual machine.
+
+
+    [Note]
+
+    Support for guest external interrupts requires an interrupt controller that can
+    collect virtual-machine-directed interrupts separately from other interrupts.
+
+
+    The number of bits implemented in hgeie for guest external interrupts is UNSPECIFIED
+    and may be zero. This number is known as GEILEN. The least-significant bits are
+    implemented first, apart from bit 0. Hence, if GEILEN is nonzero, bits GEILEN:1
+    shall be writable in hgeie, and all other bit positions shall be read-only zeros.
+
+
+    Register hgeie selects the subset of guest external interrupts that cause a supervisor-level
+    (HS-level) guest external interrupt. The enable bits in hgeie do not affect the
+    VS-level external interrupt signal selected from hgeip by hstatus.VGEIN.
+
+    '
+  address: 1543
+  priv_mode: S
+  definedBy:
+    extension:
+      name: H
+  length: SXLEN
+  fields:
+    GEI_ENABLE:
+      long_name: Guest external interrupt enable bits
+      location_rv32: 31-1
+      location_rv64: 63-1
+      type(): 'return NUM_EXTERNAL_GUEST_INTERRUPTS > 0 ? CsrFieldType::RW : CsrFieldType::RO;
+
+        '
+      reset_value: 0
+      description: Enable bits; see description of hgeie
+      sw_write(csr_value): 'return ((MXLEN''1 << NUM_EXTERNAL_GUEST_INTERRUPTS) -
+        1) & csr_value.GEI_ENABLE;
+
+        '
+      type: RW
+      _lsb: 1
+      _size: 63
+  _source: H/hgeie.yaml
+  _group: H
+- $schema: csr_schema.json#
+  kind: csr
+  name: hip
+  long_name: Hypervisor Interrupt Pending Register
+  writable: true
+  description: 'The `hip` register is an HSXLEN-bit read/write register that indicates
+    pending interrupts at the hypervisor level.
+
+    It contains interrupt-pending bits for both VS-level and hypervisor-specific interrupts.
+
+    '
+  address: 1544
+  priv_mode: S
+  definedBy:
+    extension:
+      name: H
+  sw_read(): "XReg res = 0;\n\n# SGEIP: 1 iff bitwise AND of hgeip and hgeie is nonzero\n\
+    if (($bits(CSR[hgeie]) & $bits(CSR[hgeip])) != 0) {\n  res[12] = 1'b1;\n}\n\n\
+    # VSEIP: logical OR of hvip.VSEIP and platform-specific sources\nif (CSR[hvip].VSEIP\
+    \ == 1'b1) {\n  res[10] = 1'b1;\n}\n\n# VSTIP: logical OR of hvip.VSTIP and vstimecmp\
+    \ comparison (if Sstc)\nif (implemented?(ExtensionName::Sstc)) {\n  if ((CSR[hvip].VSTIP\
+    \ == 1'b1) || ((read_mtime() + CSR[htimedelta].DELTA) >= CSR[vstimecmp].TIME))\
+    \ {\n    res[6] = 1'b1;\n  }\n} else {\n  if (CSR[hvip].VSTIP == 1'b1) {\n   \
+    \ res[6] = 1'b1;\n  }\n}\n\n# VSSIP: alias of hvip.VSSIP\nif (CSR[hvip].VSSIP\
+    \ == 1'b1) {\n  res[2] = 1'b1;\n}\n\nreturn res;\n"
+  length: SXLEN
+  fields:
+    SGEIP:
+      location: 12
+      type: RO-H
+      reset_value: 0
+      description: 'Pending interrupt bit for supervisor guest external interrupts
+        (SGEI).
+
+        This bit is 1 if and only if the logical AND of `hgeip` and `hgeie` is nonzero.
+
+        '
+      _lsb: 12
+      _size: 1
+    VSEIP:
+      location: 10
+      type: RO-H
+      reset_value: 0
+      description: 'Pending interrupt bit for VS-level external interrupts (VSEI).
+
+        This bit is the logical OR of `vseip` from `hvip`, the interrupt from `hgeip`
+        selected by `hstatus.VGEIN`,
+
+        and any other external interrupt signal directed to VS-level.
+
+        '
+      _lsb: 10
+      _size: 1
+    VSTIP:
+      location: 6
+      type: RO-H
+      reset_value: 0
+      description: 'Pending interrupt bit for VS-level timer interrupts (VSTI).
+
+        This bit is the logical OR of `vstip` from `hvip` and any other timer interrupt
+        directed to VS-level.
+
+        '
+      _lsb: 6
+      _size: 1
+    VSSIP:
+      location: 2
+      type: RO-H
+      reset_value: 0
+      sw_write(csr_value): '# VSSIP in hip is an alias of VSSIP in hvip
+
+        CSR[hvip].VSSIP = csr_value.VSSIP;
+
+        return csr_value.VSSIP;
+
+        '
+      description: 'Pending interrupt bit for VS-level software interrupts (VSSI).
+
+        This bit is an alias of the `vssip` bit in `hvip`.
+
+        '
+      _lsb: 2
+      _size: 1
+  _source: H/hip.yaml
+  _group: H
+- $schema: csr_schema.json#
+  kind: csr
   name: henvcfg
   address: 1546
   writable: true
@@ -27639,6 +27974,69 @@
       _lsb: 0
       _size: 64
   _source: H/htval.yaml
+  _group: H
+- $schema: csr_schema.json#
+  kind: csr
+  name: hvip
+  long_name: Hypervisor Virtual Interrupt Pending Register
+  description: 'The `hvip` register is an HSXLEN-bit read/write register that a hypervisor
+    can write to indicate virtual interrupts intended for VS-mode.
+
+    It contains interrupt-pending bits for virtual interrupts such as VS-level external
+    interrupts, timer interrupts, and software interrupts.
+
+    '
+  address: 1605
+  writable: true
+  priv_mode: S
+  definedBy:
+    extension:
+      name: H
+  length: SXLEN
+  fields:
+    VSEIP:
+      location: 10
+      type: RW
+      reset_value: 0
+      description: 'Pending interrupt bit for VS-level external interrupts. This bit
+        is writable and
+
+        is set to 1 to assert a VS-level external interrupt.
+
+        TODO: assert the interrupt
+
+        '
+      _lsb: 10
+      _size: 1
+    VSTIP:
+      location: 6
+      type: RW
+      reset_value: 0
+      description: 'Pending interrupt bit for VS-level timer interrupts. This bit
+        is writable and
+
+        is set to 1 to assert a VS-level timer interrupt.
+
+        TODO: assert the interrupt
+
+        '
+      _lsb: 6
+      _size: 1
+    VSSIP:
+      location: 2
+      type: RW
+      reset_value: 0
+      description: 'Pending interrupt bit for VS-level software interrupts. This bit
+        is writable and
+
+        is set to 1 to assert a VS-level software interrupt.
+
+        TODO: assert the interrupt
+
+        '
+      _lsb: 2
+      _size: 1
+  _source: H/hvip.yaml
   _group: H
 - $schema: csr_schema.json#
   kind: csr
@@ -45091,6 +45489,55 @@
     \ << 31);\n\nreturn value & mask;\n"
   _source: Sscofpmf/scountovf.yaml
   _group: Sscofpmf
+- $schema: csr_schema.json#
+  kind: csr
+  name: hgeip
+  long_name: Hypervisor Guest External Interrupt Pending Register
+  writable: false
+  description: 'The hgeip register is an HSXLEN-bit read-only register, formatted
+    as that indicates pending guest external interrupts for this hart.
+
+
+    Guest external interrupts represent interrupts directed to individual virtual
+    machines at VS-level.
+
+    If a RISC-V platform supports placing a physical device under the direct control
+    of a guest OS with minimal hypervisor intervention (known as pass-through or direct
+    assignment between a virtual machine and the physical device), then, in such circumstance,
+    interrupts from the device are intended for a specific virtual machine.
+
+    Each bit of hgeip summarizes all pending interrupts directed to one virtual hart,
+    as collected and reported by an interrupt controller. To distinguish specific
+    pending interrupts from multiple devices, software must query the interrupt controller.
+
+
+    The number of bits implemented in hgeip and hgeie for guest external interrupts
+    is UNSPECIFIED and may be zero.
+
+    This number is known as GEILEN. The least-significant bits are implemented first,
+    apart from bit 0. Hence, if GEILEN is nonzero, bits GEILEN:1 shall be writable
+    in hgeie, and all other bit positions shall be read-only zeros in both hgeip and
+    hgeie
+
+    '
+  address: 3602
+  priv_mode: S
+  definedBy:
+    extension:
+      name: H
+  length: SXLEN
+  fields:
+    GEI_PENDING:
+      long_name: Guest external interrupt pending bits
+      location_rv32: 31-1
+      location_rv64: 63-1
+      type: RO-H
+      reset_value: 0
+      description: Pending bits; see description of hgeip
+      _lsb: 1
+      _size: 63
+  _source: H/hgeip.yaml
+  _group: H
 - $schema: csr_schema.json#
   kind: csr
   name: mvendorid
