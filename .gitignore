@@ -1,3 +1,4 @@
 bin_out/*
 vlib_uvm/*
 out/*
+uvm-verilator/

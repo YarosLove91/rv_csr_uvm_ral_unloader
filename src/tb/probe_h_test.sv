@@ -1,9 +1,9 @@
 //------------------------------------------------------------------------------
 // probe_h_test.sv
 //
-// Test for extension H (group H): vsstatus, vstvec, vsepc, vscause, vstval,
-// vstimecmp, vsctrctl, vsatp, mtinst, mtval2, hstatus, hedeleg, htimedelta,
-// hcounteren, hstateen0..3, htval, htinst, hgatp, hcontext.
+// Test for extension H (group H): vsstatus, vsie, vstvec, vsscratch, vsepc,
+// vscause, vstval, vsip, vstimecmp, vsctrctl, vsatp, mtinst, mtval2, hstatus,
+// hedeleg, htimedelta, hcounteren, hstateen0..3, htval, htinst, hgatp, hcontext.
 //------------------------------------------------------------------------------
 
 class probe_h_test extends probe_base_test;
@@ -21,10 +21,13 @@ class probe_h_test extends probe_base_test;
     rb = env_o.reg_top_model.H;
 
     read_check_reg(rb.vsstatus,   64'h0000_0000_0000_0101);
+    read_check_reg(rb.vsie,       64'h0000_0000_0000_0116);
     read_check_reg(rb.vstvec,     64'h0000_0000_0000_0102);
+    read_check_reg(rb.vsscratch,  64'h0000_0000_0000_0117);
     read_check_reg(rb.vsepc,      64'h0000_0000_0000_0103);
     read_check_reg(rb.vscause,    64'h0000_0000_0000_0104);
     read_check_reg(rb.vstval,     64'h0000_0000_0000_0105);
+    read_check_reg(rb.vsip,       64'h0000_0000_0000_0118);
     read_check_reg(rb.vstimecmp,  64'h0000_0000_0000_0106);
     read_check_reg(rb.vsctrctl,   64'h0000_0000_0000_0107);
     read_check_reg(rb.vsatp,      64'h0000_0000_0000_0108);
