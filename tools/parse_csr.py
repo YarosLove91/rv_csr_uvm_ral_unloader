@@ -39,22 +39,15 @@ def extract_extensions(defined_by):
             out.extend(extract_extensions(item))
         return out
     if isinstance(defined_by, dict):
+        # {extension: ...} — разворачиваем вложенный anyOf/allOf/name рекурсивно
         if "extension" in defined_by:
-            ext = defined_by["extension"]
-            if isinstance(ext, dict):
-                if "name" in ext:
-                    return [ext["name"]]
-                if "anyOf" in ext:
-                    out = []
-                    for e in ext["anyOf"]:
-                        if isinstance(e, dict) and "name" in e:
-                            out.append(e["name"])
-                    return out
-            return [str(ext)]
+            return extract_extensions(defined_by["extension"])
         if "anyOf" in defined_by:
             return extract_extensions(defined_by["anyOf"])
         if "allOf" in defined_by:
             return extract_extensions(defined_by["allOf"])
+        if "name" in defined_by:
+            return [defined_by["name"]]
         if "param" in defined_by:
             return []
         if "xlen" in defined_by:
@@ -64,51 +57,64 @@ def extract_extensions(defined_by):
 
 
 # ============================================================================
-# Группировка M-регистров
+# Группировка по расширениям (один CSR → одно расширение)
 # ============================================================================
-def get_group(csr, xlen=64):
-    """Определяет группу для генерации (только для M-регистров расширения Sm)."""
-    name = csr["name"]
-    priv = csr.get("priv_mode", "?")
+# Приоритет: сначала Sm/S/H/U/VS, затем — порядок расширений из профиля
+# (main дополняет список). Неизвестные идут последними, по алфавиту.
+EXT_PRIORITY = ["Sm", "S", "H", "U", "VS"]
 
-    # RV32-only (h-версии)
-    if (xlen == 64
-            and name.endswith("h")
-            and (name.startswith(("mhpmcounter", "mhpmevent"))
-                 or name in ("mcycleh", "minstreth", "mstatush"))):
+
+def _ext_rank(ext):
+    try:
+        return (0, EXT_PRIORITY.index(ext), "")
+    except ValueError:
+        return (1, 0, ext)
+
+
+def primary_extension(csr, xlen=64):
+    """Основное расширение CSR: rv32_only при xlen:32, иначе приоритетное."""
+    if is_rv32_only(csr, xlen):
         return "rv32_only"
 
-    # PMP
-    if name.startswith("pmp"):
-        return "Sm_pmp"
+    exts = []
+    for e in extract_extensions(csr.get("definedBy")):
+        if e not in exts:
+            exts.append(e)
+    if not exts:
+        return "<none>"
+    return min(exts, key=_ext_rank)
 
-    # Zihpm counters
-    if name.startswith(("mhpmcounter", "mhpmevent")):
-        return "Sm_zihpm"
 
-    # Zicntr
-    if name in ("mcycle", "mcycleh", "minstret", "minstreth", "mcountinhibit"):
-        return "Sm_zicntr"
+def has_xlen(defined_by, value):
+    """Рекурсивно ищет {'xlen': value} в definedBy (dict/list любой вложенности)."""
+    if isinstance(defined_by, dict):
+        if defined_by.get("xlen") == value:
+            return True
+        return any(has_xlen(v, value) for v in defined_by.values())
+    if isinstance(defined_by, list):
+        return any(has_xlen(v, value) for v in defined_by)
+    return False
 
-    # Базовая M
-    base_m = {
-        "mstatus", "misa", "medeleg", "mideleg", "mie", "mtvec",
-        "mcounteren", "mscratch", "mepc", "mcause", "mtval", "mip",
-        "mvendorid", "marchid", "mimpid", "mhartid", "mconfigptr",
-    }
-    if name in base_m:
-        return "Sm_base"
 
-    # Fallback по priv_mode
-    if priv == "M":
-        return "Sm_misc"
-    if priv == "S":
-        return "S_misc"
-    if priv == "U":
-        return "U_misc"
-    if priv == "VS":
-        return "VS_misc"
-    return "misc"
+def is_rv32_only(csr, xlen=64):
+    """CSR существует только в RV32: definedBy требует xlen:32 без xlen:64,
+    либо это h-половина известного RV64-регистра."""
+    if xlen != 64:
+        return False
+
+    db = csr.get("definedBy")
+    if has_xlen(db, 32) and not has_xlen(db, 64):
+        return True
+
+    name = csr["name"]
+    return (name.endswith("h")
+            and (name.startswith(("mhpmcounter", "mhpmevent"))
+                 or name in ("mcycleh", "minstreth", "mstatush")))
+
+
+def get_group(csr, xlen=64):
+    """Группа генерации = основное расширение CSR (или rv32_only/<none>)."""
+    return primary_extension(csr, xlen)
 
 
 # ============================================================================
@@ -188,24 +194,18 @@ def condition_matches(cond, mandatory, optional, allow_extra, xlen=64):
         if "xlen" in cond:
             return cond["xlen"] == xlen
 
-        # extension
+        # extension — рекурсивно (name / anyOf / allOf / вложенный extension)
         if "extension" in cond:
-            ext = cond["extension"]
-            if isinstance(ext, dict):
-                if "name" in ext:
-                    name = ext["name"]
-                    if name in EXCLUDE_EXTENSIONS:
-                        return False
-                    allowed = mandatory | (optional if allow_extra else set())
-                    return name in allowed
-                if "anyOf" in ext:
-                    allowed = mandatory | (optional if allow_extra else set())
-                    return any(
-                        e.get("name") in allowed
-                        and e.get("name") not in EXCLUDE_EXTENSIONS
-                        for e in ext["anyOf"]
-                    )
-            return False
+            return condition_matches(cond["extension"],
+                                     mandatory, optional, allow_extra, xlen)
+
+        # name — единственное расширение
+        if "name" in cond:
+            name = cond["name"]
+            if name in EXCLUDE_EXTENSIONS:
+                return False
+            allowed = mandatory | (optional if allow_extra else set())
+            return name in allowed
 
         # anyOf
         if "anyOf" in cond:
@@ -337,8 +337,13 @@ def main():
 
     mandatory, optional, allow_extra = set(), set(), True
     if args.profile:
+        global EXT_PRIORITY
         profile = load_profile(args.profile)
         mandatory, optional, allow_extra = profile_extensions(profile)
+        order = [e["name"] for e in profile.get("mandatory_extensions", [])]
+        order += [e["name"] for e in profile.get("non_mandatory_extensions", [])]
+        EXT_PRIORITY = ["Sm", "S", "H", "U", "VS"] + \
+                       [n for n in order if n not in ("Sm", "S", "H", "U", "VS")]
         print(f"Profile: {profile.get('name')}")
         print(f"  Mandatory: {len(mandatory)}")
         print(f"  Optional:  {len(optional)}")

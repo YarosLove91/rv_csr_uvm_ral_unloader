@@ -1,0 +1,8293 @@
+- name: fflags
+  address: 1
+  length: 32
+  priv_mode: U
+  _group: F
+  _source: F/fflags.yaml
+  fields:
+    NV:
+      _lsb: 4
+      _size: 1
+      type: RW
+      reset_value: 0
+    DZ:
+      _lsb: 3
+      _size: 1
+      type: RW
+      reset_value: 0
+    OF:
+      _lsb: 2
+      _size: 1
+      type: RW
+      reset_value: 0
+    UF:
+      _lsb: 1
+      _size: 1
+      type: RW
+      reset_value: 0
+    NX:
+      _lsb: 0
+      _size: 1
+      type: RW
+      reset_value: 0
+- name: frm
+  address: 2
+  length: 32
+  priv_mode: U
+  _group: F
+  _source: F/frm.yaml
+  fields:
+    ROUNDINGMODE:
+      _lsb: 0
+      _size: 3
+      type: RW
+      reset_value: 0
+- name: fcsr
+  address: 3
+  length: 32
+  priv_mode: U
+  _group: F
+  _source: F/fcsr.yaml
+  fields:
+    FRM:
+      _lsb: 5
+      _size: 3
+      type: RW
+      reset_value: 0
+    NV:
+      _lsb: 4
+      _size: 1
+      type: RW
+      reset_value: 0
+    DZ:
+      _lsb: 3
+      _size: 1
+      type: RW
+      reset_value: 0
+    OF:
+      _lsb: 2
+      _size: 1
+      type: RW
+      reset_value: 0
+    UF:
+      _lsb: 1
+      _size: 1
+      type: RW
+      reset_value: 0
+    NX:
+      _lsb: 0
+      _size: 1
+      type: RW
+      reset_value: 0
+- name: vstart
+  address: 8
+  length: 64
+  priv_mode: U
+  _group: Zvl32b
+  _source: V/vstart.yaml
+  fields:
+    VALUE:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: vxsat
+  address: 9
+  length: 64
+  priv_mode: U
+  _group: Zvl32b
+  _source: V/vxsat.yaml
+  fields:
+    VALUE:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: vxrm
+  address: 10
+  length: 64
+  priv_mode: U
+  _group: Zvl32b
+  _source: V/vxrm.yaml
+  fields:
+    VALUE:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: vcsr
+  address: 15
+  length: 64
+  priv_mode: U
+  _group: Zvl32b
+  _source: V/vcsr.yaml
+  fields:
+    VXRM:
+      _lsb: 1
+      _size: 2
+      type: RW
+      reset_value: 0
+    VXSAT:
+      _lsb: 0
+      _size: 1
+      type: RW
+      reset_value: 0
+- name: sstatus
+  address: 256
+  length: 64
+  priv_mode: S
+  _group: S
+  _source: sstatus.yaml
+  fields:
+    SD:
+      _lsb: 63
+      _size: 1
+      type: RO
+      reset_value: 0
+    UXL:
+      _lsb: 32
+      _size: 2
+      type: RO
+      reset_value: 2
+    MXR:
+      _lsb: 19
+      _size: 1
+      type: RW
+      reset_value: 0
+    SUM:
+      _lsb: 18
+      _size: 1
+      type: RW
+      reset_value: 0
+    XS:
+      _lsb: 15
+      _size: 2
+      type: RO
+      reset_value: 0
+    FS:
+      _lsb: 13
+      _size: 2
+      type: RW
+      reset_value: 0
+    VS:
+      _lsb: 9
+      _size: 2
+      type: RW
+      reset_value: 0
+    SPP:
+      _lsb: 8
+      _size: 1
+      type: RW
+      reset_value: 0
+    UBE:
+      _lsb: 6
+      _size: 1
+      type: RO
+      reset_value: 0
+    SPIE:
+      _lsb: 5
+      _size: 1
+      type: RW
+      reset_value: 0
+    SIE:
+      _lsb: 1
+      _size: 1
+      type: RW
+      reset_value: 0
+- name: sie
+  address: 260
+  length: 64
+  priv_mode: S
+  _group: S
+  _source: sie.yaml
+  fields:
+    SSIE:
+      _lsb: 1
+      _size: 1
+      type: RW
+      reset_value: 0
+    STIE:
+      _lsb: 5
+      _size: 1
+      type: RW
+      reset_value: 0
+    SEIE:
+      _lsb: 9
+      _size: 1
+      type: RW
+      reset_value: 0
+    LCOFIE:
+      _lsb: 13
+      _size: 1
+      type: RW
+      reset_value: 0
+- name: stvec
+  address: 261
+  length: 64
+  priv_mode: S
+  _group: S
+  _source: stvec.yaml
+  fields:
+    BASE:
+      _lsb: 2
+      _size: 62
+      type: RW
+      reset_value: 0
+    MODE:
+      _lsb: 0
+      _size: 2
+      type: RW
+      reset_value: 0
+- name: scounteren
+  address: 262
+  length: 32
+  priv_mode: S
+  _group: S
+  _source: S/scounteren.yaml
+  fields:
+    CY:
+      _lsb: 0
+      _size: 1
+      type: RW
+      reset_value: 0
+    TM:
+      _lsb: 1
+      _size: 1
+      type: RW
+      reset_value: 0
+    IR:
+      _lsb: 2
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM3:
+      _lsb: 3
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM4:
+      _lsb: 4
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM5:
+      _lsb: 5
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM6:
+      _lsb: 6
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM7:
+      _lsb: 7
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM8:
+      _lsb: 8
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM9:
+      _lsb: 9
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM10:
+      _lsb: 10
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM11:
+      _lsb: 11
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM12:
+      _lsb: 12
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM13:
+      _lsb: 13
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM14:
+      _lsb: 14
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM15:
+      _lsb: 15
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM16:
+      _lsb: 16
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM17:
+      _lsb: 17
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM18:
+      _lsb: 18
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM19:
+      _lsb: 19
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM20:
+      _lsb: 20
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM21:
+      _lsb: 21
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM22:
+      _lsb: 22
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM23:
+      _lsb: 23
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM24:
+      _lsb: 24
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM25:
+      _lsb: 25
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM26:
+      _lsb: 26
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM27:
+      _lsb: 27
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM28:
+      _lsb: 28
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM29:
+      _lsb: 29
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM30:
+      _lsb: 30
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM31:
+      _lsb: 31
+      _size: 1
+      type: RW
+      reset_value: 0
+- name: senvcfg
+  address: 266
+  length: 64
+  priv_mode: S
+  _group: S
+  _source: senvcfg.yaml
+  fields:
+    CBZE:
+      _lsb: 7
+      _size: 1
+      type: RW
+      reset_value: 0
+    CBCFE:
+      _lsb: 6
+      _size: 1
+      type: RW
+      reset_value: 0
+    CBIE:
+      _lsb: 4
+      _size: 2
+      type: RW
+      reset_value: 0
+    FIOM:
+      _lsb: 0
+      _size: 1
+      type: RW
+      reset_value: 0
+- name: sstateen0
+  address: 268
+  length: 64
+  priv_mode: S
+  _group: Ssstateen
+  _source: sstateen0.yaml
+  fields:
+    FCSR:
+      _lsb: 1
+      _size: 1
+      type: RW
+      reset_value: 0
+    C:
+      _lsb: 0
+      _size: 1
+      type: RW
+      reset_value: 0
+- name: sstateen1
+  address: 269
+  length: 64
+  priv_mode: S
+  _group: Ssstateen
+  _source: sstateen1.yaml
+  fields:
+    DATA:
+      _lsb: 0
+      _size: 32
+      type: RW
+      reset_value: 0
+- name: sstateen2
+  address: 270
+  length: 64
+  priv_mode: S
+  _group: Ssstateen
+  _source: sstateen2.yaml
+  fields:
+    DATA:
+      _lsb: 0
+      _size: 32
+      type: RW
+      reset_value: 0
+- name: sstateen3
+  address: 271
+  length: 64
+  priv_mode: S
+  _group: Ssstateen
+  _source: sstateen3.yaml
+  fields:
+    DATA:
+      _lsb: 0
+      _size: 32
+      type: RW
+      reset_value: 0
+- name: sscratch
+  address: 320
+  length: 64
+  priv_mode: S
+  _group: S
+  _source: sscratch.yaml
+  fields:
+    SCRATCH:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: sepc
+  address: 321
+  length: 64
+  priv_mode: S
+  _group: S
+  _source: sepc.yaml
+  fields:
+    PC:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: scause
+  address: 322
+  length: 64
+  priv_mode: S
+  _group: S
+  _source: scause.yaml
+  fields:
+    INT:
+      _lsb: 63
+      _size: 1
+      type: RW
+      reset_value: 0
+    CODE:
+      _lsb: 0
+      _size: 63
+      type: RW
+      reset_value: 0
+- name: stval
+  address: 323
+  length: 64
+  priv_mode: S
+  _group: S
+  _source: stval.yaml
+  fields:
+    VALUE:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: sip
+  address: 324
+  length: 64
+  priv_mode: S
+  _group: S
+  _source: sip.yaml
+  fields:
+    SSIP:
+      _lsb: 1
+      _size: 1
+      type: RW
+      reset_value: 0
+    STIP:
+      _lsb: 5
+      _size: 1
+      type: RO
+      reset_value: 0
+    SEIP:
+      _lsb: 9
+      _size: 1
+      type: RO
+      reset_value: 0
+    LCOFIP:
+      _lsb: 13
+      _size: 1
+      type: RW
+      reset_value: 0
+- name: stimecmp
+  address: 333
+  length: 64
+  priv_mode: S
+  _group: Sstc
+  _source: Sstc/stimecmp.yaml
+  fields:
+    TIME:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: stimecmph
+  address: 349
+  length: 32
+  priv_mode: S
+  _group: rv32_only
+  _source: Sstc/stimecmph.yaml
+  fields:
+    TIME:
+      _lsb: 0
+      _size: 32
+      type: RW
+      reset_value: 0
+- name: satp
+  address: 384
+  length: 64
+  priv_mode: S
+  _group: S
+  _source: satp.yaml
+  fields:
+    MODE:
+      _lsb: 60
+      _size: 4
+      type: RW
+      reset_value: 0
+    ASID:
+      _lsb: 44
+      _size: 16
+      type: RW
+      reset_value: 0
+    PPN:
+      _lsb: 0
+      _size: 44
+      type: RW
+      reset_value: 0
+- name: vsstatus
+  address: 512
+  length: 64
+  priv_mode: VS
+  _group: H
+  _source: vsstatus.yaml
+  fields:
+    SD:
+      _lsb: 63
+      _size: 1
+      type: RO
+      reset_value: 0
+    UXL:
+      _lsb: 32
+      _size: 2
+      type: RW
+      reset_value: 0
+    MXR:
+      _lsb: 19
+      _size: 1
+      type: RW
+      reset_value: 0
+    SUM:
+      _lsb: 18
+      _size: 1
+      type: RW
+      reset_value: 0
+    XS:
+      _lsb: 15
+      _size: 2
+      type: RO
+      reset_value: 0
+    FS:
+      _lsb: 13
+      _size: 2
+      type: RW
+      reset_value: 0
+    VS:
+      _lsb: 9
+      _size: 2
+      type: RW
+      reset_value: 0
+    SPP:
+      _lsb: 8
+      _size: 1
+      type: RW
+      reset_value: 0
+    UBE:
+      _lsb: 6
+      _size: 1
+      type: RW
+      reset_value: 0
+    SPIE:
+      _lsb: 5
+      _size: 1
+      type: RW
+      reset_value: 0
+    SIE:
+      _lsb: 1
+      _size: 1
+      type: RW
+      reset_value: 0
+- name: vsie
+  address: 516
+  length: 64
+  priv_mode: VS
+  _group: H
+  _source: H/vsie.yaml
+  fields:
+    SSIE:
+      _lsb: 1
+      _size: 1
+      type: RW
+      reset_value: 0
+    STIE:
+      _lsb: 5
+      _size: 1
+      type: RW
+      reset_value: 0
+    SEIE:
+      _lsb: 9
+      _size: 1
+      type: RW
+      reset_value: 0
+    LCOFIE:
+      _lsb: 13
+      _size: 1
+      type: RW
+      reset_value: 0
+- name: vstvec
+  address: 517
+  length: 64
+  priv_mode: VS
+  _group: H
+  _source: vstvec.yaml
+  fields:
+    BASE:
+      _lsb: 2
+      _size: 62
+      type: RW
+      reset_value: 0
+    MODE:
+      _lsb: 0
+      _size: 2
+      type: RW
+      reset_value: 0
+- name: vsscratch
+  address: 576
+  length: 64
+  priv_mode: VS
+  _group: H
+  _source: H/vsscratch.yaml
+  fields:
+    SCRATCH:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: vsepc
+  address: 577
+  length: 64
+  priv_mode: VS
+  _group: H
+  _source: vsepc.yaml
+  fields:
+    PC:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: vscause
+  address: 578
+  length: 64
+  priv_mode: VS
+  _group: H
+  _source: vscause.yaml
+  fields:
+    INT:
+      _lsb: 63
+      _size: 1
+      type: RW
+      reset_value: 0
+    CODE:
+      _lsb: 0
+      _size: 63
+      type: RW
+      reset_value: 0
+- name: vstval
+  address: 579
+  length: 64
+  priv_mode: VS
+  _group: H
+  _source: vstval.yaml
+  fields:
+    VALUE:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: vsip
+  address: 580
+  length: 64
+  priv_mode: VS
+  _group: H
+  _source: H/vsip.yaml
+  fields:
+    SSIP:
+      _lsb: 1
+      _size: 1
+      type: RW
+      reset_value: 0
+    STIP:
+      _lsb: 5
+      _size: 1
+      type: RW
+      reset_value: 0
+    SEIP:
+      _lsb: 9
+      _size: 1
+      type: RW
+      reset_value: 0
+    LCOFIP:
+      _lsb: 13
+      _size: 1
+      type: RW
+      reset_value: 0
+- name: vstimecmp
+  address: 589
+  length: 64
+  priv_mode: VS
+  _group: H
+  _source: Sstc/vstimecmp.yaml
+  fields:
+    TIME:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: vsctrctl
+  address: 590
+  length: 64
+  priv_mode: VS
+  _group: H
+  _source: Smctr/vsctrctl.yaml
+  fields:
+    U:
+      _lsb: 0
+      _size: 1
+      type: RW
+      reset_value: 0
+    S:
+      _lsb: 1
+      _size: 1
+      type: RW
+      reset_value: 0
+    RASEMU:
+      _lsb: 7
+      _size: 1
+      type: RW
+      reset_value: 0
+    STE:
+      _lsb: 8
+      _size: 1
+      type: RW
+      reset_value: 0
+    BPFRZ:
+      _lsb: 11
+      _size: 1
+      type: RW
+      reset_value: 0
+    LCOFIFRZ:
+      _lsb: 12
+      _size: 1
+      type: RW
+      reset_value: 0
+    EXCINH:
+      _lsb: 33
+      _size: 1
+      type: RW
+      reset_value: 0
+    INTRINH:
+      _lsb: 34
+      _size: 1
+      type: RW
+      reset_value: 0
+    TRETINH:
+      _lsb: 35
+      _size: 1
+      type: RW
+      reset_value: 0
+    NTBREN:
+      _lsb: 36
+      _size: 1
+      type: RW
+      reset_value: 0
+    TKBRINH:
+      _lsb: 37
+      _size: 1
+      type: RW
+      reset_value: 0
+    INDCALLINH:
+      _lsb: 40
+      _size: 1
+      type: RW
+      reset_value: 0
+    DIRCALLINH:
+      _lsb: 41
+      _size: 1
+      type: RW
+      reset_value: 0
+    INDJMPINH:
+      _lsb: 42
+      _size: 1
+      type: RW
+      reset_value: 0
+    DIRJMPINH:
+      _lsb: 43
+      _size: 1
+      type: RW
+      reset_value: 0
+    CORSWAPINH:
+      _lsb: 44
+      _size: 1
+      type: RW
+      reset_value: 0
+    RETINH:
+      _lsb: 45
+      _size: 1
+      type: RW
+      reset_value: 0
+    INDLJMPINH:
+      _lsb: 46
+      _size: 1
+      type: RW
+      reset_value: 0
+    DIRLJMPINH:
+      _lsb: 47
+      _size: 1
+      type: RW
+      reset_value: 0
+    CUSTOM:
+      _lsb: 60
+      _size: 4
+      type: RW
+      reset_value: 0
+- name: vstimecmph
+  address: 605
+  length: 32
+  priv_mode: VS
+  _group: rv32_only
+  _source: Sstc/vstimecmph.yaml
+  fields:
+    TIME:
+      _lsb: 0
+      _size: 32
+      type: RW
+      reset_value: 0
+- name: vsatp
+  address: 640
+  length: 64
+  priv_mode: VS
+  _group: H
+  _source: H/vsatp.yaml
+  fields:
+    MODE:
+      _lsb: 60
+      _size: 4
+      type: RW
+      reset_value: 0
+    ASID:
+      _lsb: 44
+      _size: 16
+      type: RW
+      reset_value: 0
+    PPN:
+      _lsb: 0
+      _size: 44
+      type: RW
+      reset_value: 0
+- name: mstatus
+  address: 768
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: mstatus.yaml
+  fields:
+    SD:
+      _lsb: 63
+      _size: 1
+      type: RW
+      reset_value: 0
+    MPV:
+      _lsb: 39
+      _size: 1
+      type: RW
+      reset_value: 0
+    GVA:
+      _lsb: 38
+      _size: 1
+      type: RW
+      reset_value: 0
+    MBE:
+      _lsb: 37
+      _size: 1
+      type: RW
+      reset_value: 0
+    SBE:
+      _lsb: 36
+      _size: 1
+      type: RW
+      reset_value: 0
+    SXL:
+      _lsb: 34
+      _size: 2
+      type: RW
+      reset_value: 0
+    UXL:
+      _lsb: 32
+      _size: 2
+      type: RW
+      reset_value: 0
+    TSR:
+      _lsb: 22
+      _size: 1
+      type: RW
+      reset_value: 0
+    TW:
+      _lsb: 21
+      _size: 1
+      type: RW
+      reset_value: 0
+    TVM:
+      _lsb: 20
+      _size: 1
+      type: RW
+      reset_value: 0
+    MXR:
+      _lsb: 19
+      _size: 1
+      type: RW
+      reset_value: 0
+    SUM:
+      _lsb: 18
+      _size: 1
+      type: RW
+      reset_value: 0
+    MPRV:
+      _lsb: 17
+      _size: 1
+      type: RW
+      reset_value: 0
+    XS:
+      _lsb: 15
+      _size: 2
+      type: RO
+      reset_value: 0
+    FS:
+      _lsb: 13
+      _size: 2
+      type: RW
+      reset_value: 0
+    MPP:
+      _lsb: 11
+      _size: 2
+      type: RW
+      reset_value: 0
+    VS:
+      _lsb: 9
+      _size: 2
+      type: RW
+      reset_value: 0
+    SPP:
+      _lsb: 8
+      _size: 1
+      type: RW
+      reset_value: 0
+    MPIE:
+      _lsb: 7
+      _size: 1
+      type: RW
+      reset_value: 0
+    UBE:
+      _lsb: 6
+      _size: 1
+      type: RW
+      reset_value: 0
+    SPIE:
+      _lsb: 5
+      _size: 1
+      type: RW
+      reset_value: 0
+    MIE:
+      _lsb: 3
+      _size: 1
+      type: RW
+      reset_value: 0
+    SIE:
+      _lsb: 1
+      _size: 1
+      type: RW
+      reset_value: 0
+- name: misa
+  address: 769
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: misa.yaml
+  fields:
+    MXL:
+      _lsb: 62
+      _size: 2
+      type: RO
+      reset_value: 0
+    A:
+      _lsb: 0
+      _size: 1
+      type: RW
+      reset_value: 0
+    B:
+      _lsb: 1
+      _size: 1
+      type: RW
+      reset_value: 0
+    C:
+      _lsb: 2
+      _size: 1
+      type: RW
+      reset_value: 0
+    D:
+      _lsb: 3
+      _size: 1
+      type: RW
+      reset_value: 0
+    F:
+      _lsb: 5
+      _size: 1
+      type: RW
+      reset_value: 0
+    G:
+      _lsb: 6
+      _size: 1
+      type: RW
+      reset_value: 0
+    H:
+      _lsb: 7
+      _size: 1
+      type: RW
+      reset_value: 0
+    I:
+      _lsb: 8
+      _size: 1
+      type: RO
+      reset_value: 1
+    M:
+      _lsb: 12
+      _size: 1
+      type: RW
+      reset_value: 0
+    S:
+      _lsb: 18
+      _size: 1
+      type: RW
+      reset_value: 0
+    U:
+      _lsb: 20
+      _size: 1
+      type: RW
+      reset_value: 0
+    V:
+      _lsb: 21
+      _size: 1
+      type: RW
+      reset_value: 0
+- name: medeleg
+  address: 770
+  length: 64
+  priv_mode: M
+  _group: S
+  _source: medeleg.yaml
+  fields:
+    IAM:
+      _lsb: 0
+      _size: 1
+      type: RW
+      reset_value: 0
+    IAF:
+      _lsb: 1
+      _size: 1
+      type: RW
+      reset_value: 0
+    II:
+      _lsb: 2
+      _size: 1
+      type: RW
+      reset_value: 0
+    B:
+      _lsb: 3
+      _size: 1
+      type: RW
+      reset_value: 0
+    LAM:
+      _lsb: 4
+      _size: 1
+      type: RW
+      reset_value: 0
+    LAF:
+      _lsb: 5
+      _size: 1
+      type: RW
+      reset_value: 0
+    SAM:
+      _lsb: 6
+      _size: 1
+      type: RW
+      reset_value: 0
+    SAF:
+      _lsb: 7
+      _size: 1
+      type: RW
+      reset_value: 0
+    EU:
+      _lsb: 8
+      _size: 1
+      type: RW
+      reset_value: 0
+    ES:
+      _lsb: 9
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVS:
+      _lsb: 10
+      _size: 1
+      type: RW
+      reset_value: 0
+    EM:
+      _lsb: 11
+      _size: 1
+      type: RO
+      reset_value: 0
+    IPF:
+      _lsb: 12
+      _size: 1
+      type: RW
+      reset_value: 0
+    LPF:
+      _lsb: 13
+      _size: 1
+      type: RW
+      reset_value: 0
+    SPF:
+      _lsb: 15
+      _size: 1
+      type: RW
+      reset_value: 0
+    IGPF:
+      _lsb: 20
+      _size: 1
+      type: RW
+      reset_value: 0
+    LGPF:
+      _lsb: 21
+      _size: 1
+      type: RW
+      reset_value: 0
+    VI:
+      _lsb: 22
+      _size: 1
+      type: RW
+      reset_value: 0
+    SGPF:
+      _lsb: 23
+      _size: 1
+      type: RW
+      reset_value: 0
+- name: mideleg
+  address: 771
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: mideleg.yaml
+  fields:
+    SSI:
+      _lsb: 1
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSSI:
+      _lsb: 2
+      _size: 1
+      type: RO
+      reset_value: 1
+    MSI:
+      _lsb: 3
+      _size: 1
+      type: RW
+      reset_value: 0
+    STI:
+      _lsb: 5
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSTI:
+      _lsb: 6
+      _size: 1
+      type: RO
+      reset_value: 1
+    MTI:
+      _lsb: 7
+      _size: 1
+      type: RW
+      reset_value: 0
+    SEI:
+      _lsb: 9
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSEI:
+      _lsb: 10
+      _size: 1
+      type: RO
+      reset_value: 1
+    MEI:
+      _lsb: 11
+      _size: 1
+      type: RW
+      reset_value: 0
+    SGEI:
+      _lsb: 12
+      _size: 1
+      type: RO
+      reset_value: 1
+    LCOFI:
+      _lsb: 13
+      _size: 1
+      type: RW
+      reset_value: 0
+- name: mie
+  address: 772
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: mie.yaml
+  fields:
+    SSIE:
+      _lsb: 1
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSSIE:
+      _lsb: 2
+      _size: 1
+      type: RW
+      reset_value: 0
+    MSIE:
+      _lsb: 3
+      _size: 1
+      type: RW
+      reset_value: 0
+    STIE:
+      _lsb: 5
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSTIE:
+      _lsb: 6
+      _size: 1
+      type: RW
+      reset_value: 0
+    MTIE:
+      _lsb: 7
+      _size: 1
+      type: RW
+      reset_value: 0
+    SEIE:
+      _lsb: 9
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSEIE:
+      _lsb: 10
+      _size: 1
+      type: RW
+      reset_value: 0
+    MEIE:
+      _lsb: 11
+      _size: 1
+      type: RW
+      reset_value: 0
+    SGEIE:
+      _lsb: 12
+      _size: 1
+      type: RW
+      reset_value: 0
+    LCOFIE:
+      _lsb: 13
+      _size: 1
+      type: RW
+      reset_value: 0
+- name: mtvec
+  address: 773
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: mtvec.yaml
+  fields:
+    BASE:
+      _lsb: 2
+      _size: 62
+      type: RW
+      reset_value: 0
+    MODE:
+      _lsb: 0
+      _size: 2
+      type: RW
+      reset_value: 0
+- name: mcounteren
+  address: 774
+  length: 32
+  priv_mode: M
+  _group: U
+  _source: I/mcounteren.yaml
+  fields:
+    CY:
+      _lsb: 0
+      _size: 1
+      type: RW
+      reset_value: 0
+    TM:
+      _lsb: 1
+      _size: 1
+      type: RO
+      reset_value: 0
+    IR:
+      _lsb: 2
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM3:
+      _lsb: 3
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM4:
+      _lsb: 4
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM5:
+      _lsb: 5
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM6:
+      _lsb: 6
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM7:
+      _lsb: 7
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM8:
+      _lsb: 8
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM9:
+      _lsb: 9
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM10:
+      _lsb: 10
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM11:
+      _lsb: 11
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM12:
+      _lsb: 12
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM13:
+      _lsb: 13
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM14:
+      _lsb: 14
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM15:
+      _lsb: 15
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM16:
+      _lsb: 16
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM17:
+      _lsb: 17
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM18:
+      _lsb: 18
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM19:
+      _lsb: 19
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM20:
+      _lsb: 20
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM21:
+      _lsb: 21
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM22:
+      _lsb: 22
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM23:
+      _lsb: 23
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM24:
+      _lsb: 24
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM25:
+      _lsb: 25
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM26:
+      _lsb: 26
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM27:
+      _lsb: 27
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM28:
+      _lsb: 28
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM29:
+      _lsb: 29
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM30:
+      _lsb: 30
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM31:
+      _lsb: 31
+      _size: 1
+      type: RW
+      reset_value: 0
+- name: menvcfg
+  address: 778
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: menvcfg.yaml
+  fields:
+    STCE:
+      _lsb: 63
+      _size: 1
+      type: RW
+      reset_value: 0
+    PBMTE:
+      _lsb: 62
+      _size: 1
+      type: RW
+      reset_value: 0
+    ADUE:
+      _lsb: 61
+      _size: 1
+      type: RW
+      reset_value: 0
+    CBZE:
+      _lsb: 7
+      _size: 1
+      type: RW
+      reset_value: 0
+    CBCFE:
+      _lsb: 6
+      _size: 1
+      type: RW
+      reset_value: 0
+    CBIE:
+      _lsb: 4
+      _size: 2
+      type: RW
+      reset_value: 0
+    FIOM:
+      _lsb: 0
+      _size: 1
+      type: RW
+      reset_value: 0
+- name: mstatush
+  address: 784
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: mstatush.yaml
+  fields:
+    MPV:
+      _lsb: 7
+      _size: 1
+      type: RW
+      reset_value: 0
+    GVA:
+      _lsb: 6
+      _size: 1
+      type: RW
+      reset_value: 0
+    MBE:
+      _lsb: 5
+      _size: 1
+      type: RW
+      reset_value: 0
+    SBE:
+      _lsb: 4
+      _size: 1
+      type: RW
+      reset_value: 0
+- name: medelegh
+  address: 786
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: medelegh.yaml
+  fields: {}
+- name: menvcfgh
+  address: 794
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: menvcfgh.yaml
+  fields:
+    STCE:
+      _lsb: 31
+      _size: 1
+      type: RW
+      reset_value: 0
+    PBMTE:
+      _lsb: 30
+      _size: 1
+      type: RW
+      reset_value: 0
+    ADUE:
+      _lsb: 29
+      _size: 1
+      type: RW
+      reset_value: 0
+- name: mcountinhibit
+  address: 800
+  length: 32
+  priv_mode: M
+  _group: Sm
+  _source: Zicntr/mcountinhibit.yaml
+  fields:
+    CY:
+      _lsb: 0
+      _size: 1
+      type: RW
+      reset_value: 0
+    IR:
+      _lsb: 2
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM3:
+      _lsb: 3
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM4:
+      _lsb: 4
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM5:
+      _lsb: 5
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM6:
+      _lsb: 6
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM7:
+      _lsb: 7
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM8:
+      _lsb: 8
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM9:
+      _lsb: 9
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM10:
+      _lsb: 10
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM11:
+      _lsb: 11
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM12:
+      _lsb: 12
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM13:
+      _lsb: 13
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM14:
+      _lsb: 14
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM15:
+      _lsb: 15
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM16:
+      _lsb: 16
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM17:
+      _lsb: 17
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM18:
+      _lsb: 18
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM19:
+      _lsb: 19
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM20:
+      _lsb: 20
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM21:
+      _lsb: 21
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM22:
+      _lsb: 22
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM23:
+      _lsb: 23
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM24:
+      _lsb: 24
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM25:
+      _lsb: 25
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM26:
+      _lsb: 26
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM27:
+      _lsb: 27
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM28:
+      _lsb: 28
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM29:
+      _lsb: 29
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM30:
+      _lsb: 30
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM31:
+      _lsb: 31
+      _size: 1
+      type: RW
+      reset_value: 0
+- name: mhpmevent3
+  address: 803
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmevent3.yaml
+  fields:
+    OF:
+      _lsb: 63
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 62
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 61
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 60
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 59
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 58
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 58
+      type: RW
+      reset_value: 0
+- name: mhpmevent4
+  address: 804
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmevent4.yaml
+  fields:
+    OF:
+      _lsb: 63
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 62
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 61
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 60
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 59
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 58
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 58
+      type: RW
+      reset_value: 0
+- name: mhpmevent5
+  address: 805
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmevent5.yaml
+  fields:
+    OF:
+      _lsb: 63
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 62
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 61
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 60
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 59
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 58
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 58
+      type: RW
+      reset_value: 0
+- name: mhpmevent6
+  address: 806
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmevent6.yaml
+  fields:
+    OF:
+      _lsb: 63
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 62
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 61
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 60
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 59
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 58
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 58
+      type: RW
+      reset_value: 0
+- name: mhpmevent7
+  address: 807
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmevent7.yaml
+  fields:
+    OF:
+      _lsb: 63
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 62
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 61
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 60
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 59
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 58
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 58
+      type: RW
+      reset_value: 0
+- name: mhpmevent8
+  address: 808
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmevent8.yaml
+  fields:
+    OF:
+      _lsb: 63
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 62
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 61
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 60
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 59
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 58
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 58
+      type: RW
+      reset_value: 0
+- name: mhpmevent9
+  address: 809
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmevent9.yaml
+  fields:
+    OF:
+      _lsb: 63
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 62
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 61
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 60
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 59
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 58
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 58
+      type: RW
+      reset_value: 0
+- name: mhpmevent10
+  address: 810
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmevent10.yaml
+  fields:
+    OF:
+      _lsb: 63
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 62
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 61
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 60
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 59
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 58
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 58
+      type: RW
+      reset_value: 0
+- name: mhpmevent11
+  address: 811
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmevent11.yaml
+  fields:
+    OF:
+      _lsb: 63
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 62
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 61
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 60
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 59
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 58
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 58
+      type: RW
+      reset_value: 0
+- name: mhpmevent12
+  address: 812
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmevent12.yaml
+  fields:
+    OF:
+      _lsb: 63
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 62
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 61
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 60
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 59
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 58
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 58
+      type: RW
+      reset_value: 0
+- name: mhpmevent13
+  address: 813
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmevent13.yaml
+  fields:
+    OF:
+      _lsb: 63
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 62
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 61
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 60
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 59
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 58
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 58
+      type: RW
+      reset_value: 0
+- name: mhpmevent14
+  address: 814
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmevent14.yaml
+  fields:
+    OF:
+      _lsb: 63
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 62
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 61
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 60
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 59
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 58
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 58
+      type: RW
+      reset_value: 0
+- name: mhpmevent15
+  address: 815
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmevent15.yaml
+  fields:
+    OF:
+      _lsb: 63
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 62
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 61
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 60
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 59
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 58
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 58
+      type: RW
+      reset_value: 0
+- name: mhpmevent16
+  address: 816
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmevent16.yaml
+  fields:
+    OF:
+      _lsb: 63
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 62
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 61
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 60
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 59
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 58
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 58
+      type: RW
+      reset_value: 0
+- name: mhpmevent17
+  address: 817
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmevent17.yaml
+  fields:
+    OF:
+      _lsb: 63
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 62
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 61
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 60
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 59
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 58
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 58
+      type: RW
+      reset_value: 0
+- name: mhpmevent18
+  address: 818
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmevent18.yaml
+  fields:
+    OF:
+      _lsb: 63
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 62
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 61
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 60
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 59
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 58
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 58
+      type: RW
+      reset_value: 0
+- name: mhpmevent19
+  address: 819
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmevent19.yaml
+  fields:
+    OF:
+      _lsb: 63
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 62
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 61
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 60
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 59
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 58
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 58
+      type: RW
+      reset_value: 0
+- name: mhpmevent20
+  address: 820
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmevent20.yaml
+  fields:
+    OF:
+      _lsb: 63
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 62
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 61
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 60
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 59
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 58
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 58
+      type: RW
+      reset_value: 0
+- name: mhpmevent21
+  address: 821
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmevent21.yaml
+  fields:
+    OF:
+      _lsb: 63
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 62
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 61
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 60
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 59
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 58
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 58
+      type: RW
+      reset_value: 0
+- name: mhpmevent22
+  address: 822
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmevent22.yaml
+  fields:
+    OF:
+      _lsb: 63
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 62
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 61
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 60
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 59
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 58
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 58
+      type: RW
+      reset_value: 0
+- name: mhpmevent23
+  address: 823
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmevent23.yaml
+  fields:
+    OF:
+      _lsb: 63
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 62
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 61
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 60
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 59
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 58
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 58
+      type: RW
+      reset_value: 0
+- name: mhpmevent24
+  address: 824
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmevent24.yaml
+  fields:
+    OF:
+      _lsb: 63
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 62
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 61
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 60
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 59
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 58
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 58
+      type: RW
+      reset_value: 0
+- name: mhpmevent25
+  address: 825
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmevent25.yaml
+  fields:
+    OF:
+      _lsb: 63
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 62
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 61
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 60
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 59
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 58
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 58
+      type: RW
+      reset_value: 0
+- name: mhpmevent26
+  address: 826
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmevent26.yaml
+  fields:
+    OF:
+      _lsb: 63
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 62
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 61
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 60
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 59
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 58
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 58
+      type: RW
+      reset_value: 0
+- name: mhpmevent27
+  address: 827
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmevent27.yaml
+  fields:
+    OF:
+      _lsb: 63
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 62
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 61
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 60
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 59
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 58
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 58
+      type: RW
+      reset_value: 0
+- name: mhpmevent28
+  address: 828
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmevent28.yaml
+  fields:
+    OF:
+      _lsb: 63
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 62
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 61
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 60
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 59
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 58
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 58
+      type: RW
+      reset_value: 0
+- name: mhpmevent29
+  address: 829
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmevent29.yaml
+  fields:
+    OF:
+      _lsb: 63
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 62
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 61
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 60
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 59
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 58
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 58
+      type: RW
+      reset_value: 0
+- name: mhpmevent30
+  address: 830
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmevent30.yaml
+  fields:
+    OF:
+      _lsb: 63
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 62
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 61
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 60
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 59
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 58
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 58
+      type: RW
+      reset_value: 0
+- name: mhpmevent31
+  address: 831
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmevent31.yaml
+  fields:
+    OF:
+      _lsb: 63
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 62
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 61
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 60
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 59
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 58
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 58
+      type: RW
+      reset_value: 0
+- name: mscratch
+  address: 832
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: mscratch.yaml
+  fields:
+    SCRATCH:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: mepc
+  address: 833
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: mepc.yaml
+  fields:
+    PC:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: mcause
+  address: 834
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: mcause.yaml
+  fields:
+    INT:
+      _lsb: 63
+      _size: 1
+      type: RW
+      reset_value: 0
+    CODE:
+      _lsb: 0
+      _size: 63
+      type: RW
+      reset_value: 0
+- name: mtval
+  address: 835
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: mtval.yaml
+  fields:
+    VALUE:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: mip
+  address: 836
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: mip.yaml
+  fields:
+    SSIP:
+      _lsb: 1
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSSIP:
+      _lsb: 2
+      _size: 1
+      type: RW
+      reset_value: 0
+    MSIP:
+      _lsb: 3
+      _size: 1
+      type: RW
+      reset_value: 0
+    STIP:
+      _lsb: 5
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSTIP:
+      _lsb: 6
+      _size: 1
+      type: RW
+      reset_value: 0
+    MTIP:
+      _lsb: 7
+      _size: 1
+      type: RW
+      reset_value: 0
+    SEIP:
+      _lsb: 9
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSEIP:
+      _lsb: 10
+      _size: 1
+      type: RW
+      reset_value: 0
+    MEIP:
+      _lsb: 11
+      _size: 1
+      type: RW
+      reset_value: 0
+    SGEIP:
+      _lsb: 12
+      _size: 1
+      type: RO
+      reset_value: 0
+    LCOFIP:
+      _lsb: 13
+      _size: 1
+      type: RW
+      reset_value: 0
+- name: mtinst
+  address: 842
+  length: 64
+  priv_mode: M
+  _group: H
+  _source: H/mtinst.yaml
+  fields:
+    VALUE:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: mtval2
+  address: 843
+  length: 64
+  priv_mode: M
+  _group: H
+  _source: H/mtval2.yaml
+  fields:
+    VALUE:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpcfg0
+  address: 928
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpcfg0.yaml
+  fields:
+    pmp0cfg:
+      _lsb: 0
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp1cfg:
+      _lsb: 8
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp2cfg:
+      _lsb: 16
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp3cfg:
+      _lsb: 24
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp4cfg:
+      _lsb: 32
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp5cfg:
+      _lsb: 40
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp6cfg:
+      _lsb: 48
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp7cfg:
+      _lsb: 56
+      _size: 8
+      type: RW
+      reset_value: 0
+- name: pmpcfg1
+  address: 929
+  length: 64
+  priv_mode: M
+  _group: rv32_only
+  _source: I/pmpcfg1.yaml
+  fields:
+    pmp4cfg:
+      _lsb: 0
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp5cfg:
+      _lsb: 8
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp6cfg:
+      _lsb: 16
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp7cfg:
+      _lsb: 24
+      _size: 8
+      type: RW
+      reset_value: 0
+- name: pmpcfg2
+  address: 930
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpcfg2.yaml
+  fields:
+    pmp8cfg:
+      _lsb: 0
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp9cfg:
+      _lsb: 8
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp10cfg:
+      _lsb: 16
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp11cfg:
+      _lsb: 24
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp12cfg:
+      _lsb: 32
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp13cfg:
+      _lsb: 40
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp14cfg:
+      _lsb: 48
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp15cfg:
+      _lsb: 56
+      _size: 8
+      type: RW
+      reset_value: 0
+- name: pmpcfg3
+  address: 931
+  length: 64
+  priv_mode: M
+  _group: rv32_only
+  _source: I/pmpcfg3.yaml
+  fields:
+    pmp12cfg:
+      _lsb: 0
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp13cfg:
+      _lsb: 8
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp14cfg:
+      _lsb: 16
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp15cfg:
+      _lsb: 24
+      _size: 8
+      type: RW
+      reset_value: 0
+- name: pmpcfg4
+  address: 932
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpcfg4.yaml
+  fields:
+    pmp16cfg:
+      _lsb: 0
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp17cfg:
+      _lsb: 8
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp18cfg:
+      _lsb: 16
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp19cfg:
+      _lsb: 24
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp20cfg:
+      _lsb: 32
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp21cfg:
+      _lsb: 40
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp22cfg:
+      _lsb: 48
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp23cfg:
+      _lsb: 56
+      _size: 8
+      type: RW
+      reset_value: 0
+- name: pmpcfg5
+  address: 933
+  length: 64
+  priv_mode: M
+  _group: rv32_only
+  _source: I/pmpcfg5.yaml
+  fields:
+    pmp20cfg:
+      _lsb: 0
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp21cfg:
+      _lsb: 8
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp22cfg:
+      _lsb: 16
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp23cfg:
+      _lsb: 24
+      _size: 8
+      type: RW
+      reset_value: 0
+- name: pmpcfg6
+  address: 934
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpcfg6.yaml
+  fields:
+    pmp24cfg:
+      _lsb: 0
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp25cfg:
+      _lsb: 8
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp26cfg:
+      _lsb: 16
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp27cfg:
+      _lsb: 24
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp28cfg:
+      _lsb: 32
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp29cfg:
+      _lsb: 40
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp30cfg:
+      _lsb: 48
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp31cfg:
+      _lsb: 56
+      _size: 8
+      type: RW
+      reset_value: 0
+- name: pmpcfg7
+  address: 935
+  length: 64
+  priv_mode: M
+  _group: rv32_only
+  _source: I/pmpcfg7.yaml
+  fields:
+    pmp28cfg:
+      _lsb: 0
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp29cfg:
+      _lsb: 8
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp30cfg:
+      _lsb: 16
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp31cfg:
+      _lsb: 24
+      _size: 8
+      type: RW
+      reset_value: 0
+- name: pmpcfg8
+  address: 936
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpcfg8.yaml
+  fields:
+    pmp32cfg:
+      _lsb: 0
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp33cfg:
+      _lsb: 8
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp34cfg:
+      _lsb: 16
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp35cfg:
+      _lsb: 24
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp36cfg:
+      _lsb: 32
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp37cfg:
+      _lsb: 40
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp38cfg:
+      _lsb: 48
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp39cfg:
+      _lsb: 56
+      _size: 8
+      type: RW
+      reset_value: 0
+- name: pmpcfg9
+  address: 937
+  length: 64
+  priv_mode: M
+  _group: rv32_only
+  _source: I/pmpcfg9.yaml
+  fields:
+    pmp36cfg:
+      _lsb: 0
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp37cfg:
+      _lsb: 8
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp38cfg:
+      _lsb: 16
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp39cfg:
+      _lsb: 24
+      _size: 8
+      type: RW
+      reset_value: 0
+- name: pmpcfg10
+  address: 938
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpcfg10.yaml
+  fields:
+    pmp40cfg:
+      _lsb: 0
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp41cfg:
+      _lsb: 8
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp42cfg:
+      _lsb: 16
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp43cfg:
+      _lsb: 24
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp44cfg:
+      _lsb: 32
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp45cfg:
+      _lsb: 40
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp46cfg:
+      _lsb: 48
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp47cfg:
+      _lsb: 56
+      _size: 8
+      type: RW
+      reset_value: 0
+- name: pmpcfg11
+  address: 939
+  length: 64
+  priv_mode: M
+  _group: rv32_only
+  _source: I/pmpcfg11.yaml
+  fields:
+    pmp44cfg:
+      _lsb: 0
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp45cfg:
+      _lsb: 8
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp46cfg:
+      _lsb: 16
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp47cfg:
+      _lsb: 24
+      _size: 8
+      type: RW
+      reset_value: 0
+- name: pmpcfg12
+  address: 940
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpcfg12.yaml
+  fields:
+    pmp48cfg:
+      _lsb: 0
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp49cfg:
+      _lsb: 8
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp50cfg:
+      _lsb: 16
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp51cfg:
+      _lsb: 24
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp52cfg:
+      _lsb: 32
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp53cfg:
+      _lsb: 40
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp54cfg:
+      _lsb: 48
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp55cfg:
+      _lsb: 56
+      _size: 8
+      type: RW
+      reset_value: 0
+- name: pmpcfg13
+  address: 941
+  length: 64
+  priv_mode: M
+  _group: rv32_only
+  _source: I/pmpcfg13.yaml
+  fields:
+    pmp52cfg:
+      _lsb: 0
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp53cfg:
+      _lsb: 8
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp54cfg:
+      _lsb: 16
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp55cfg:
+      _lsb: 24
+      _size: 8
+      type: RW
+      reset_value: 0
+- name: pmpcfg14
+  address: 942
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpcfg14.yaml
+  fields:
+    pmp56cfg:
+      _lsb: 0
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp57cfg:
+      _lsb: 8
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp58cfg:
+      _lsb: 16
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp59cfg:
+      _lsb: 24
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp60cfg:
+      _lsb: 32
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp61cfg:
+      _lsb: 40
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp62cfg:
+      _lsb: 48
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp63cfg:
+      _lsb: 56
+      _size: 8
+      type: RW
+      reset_value: 0
+- name: pmpcfg15
+  address: 943
+  length: 64
+  priv_mode: M
+  _group: rv32_only
+  _source: I/pmpcfg15.yaml
+  fields:
+    pmp60cfg:
+      _lsb: 0
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp61cfg:
+      _lsb: 8
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp62cfg:
+      _lsb: 16
+      _size: 8
+      type: RW
+      reset_value: 0
+    pmp63cfg:
+      _lsb: 24
+      _size: 8
+      type: RW
+      reset_value: 0
+- name: pmpaddr0
+  address: 944
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr0.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr1
+  address: 945
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr1.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr2
+  address: 946
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr2.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr3
+  address: 947
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr3.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr4
+  address: 948
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr4.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr5
+  address: 949
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr5.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr6
+  address: 950
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr6.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr7
+  address: 951
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr7.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr8
+  address: 952
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr8.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr9
+  address: 953
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr9.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr10
+  address: 954
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr10.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr11
+  address: 955
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr11.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr12
+  address: 956
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr12.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr13
+  address: 957
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr13.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr14
+  address: 958
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr14.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr15
+  address: 959
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr15.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr16
+  address: 960
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr16.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr17
+  address: 961
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr17.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr18
+  address: 962
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr18.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr19
+  address: 963
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr19.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr20
+  address: 964
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr20.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr21
+  address: 965
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr21.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr22
+  address: 966
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr22.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr23
+  address: 967
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr23.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr24
+  address: 968
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr24.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr25
+  address: 969
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr25.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr26
+  address: 970
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr26.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr27
+  address: 971
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr27.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr28
+  address: 972
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr28.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr29
+  address: 973
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr29.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr30
+  address: 974
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr30.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr31
+  address: 975
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr31.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr32
+  address: 976
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr32.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr33
+  address: 977
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr33.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr34
+  address: 978
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr34.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr35
+  address: 979
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr35.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr36
+  address: 980
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr36.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr37
+  address: 981
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr37.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr38
+  address: 982
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr38.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr39
+  address: 983
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr39.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr40
+  address: 984
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr40.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr41
+  address: 985
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr41.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr42
+  address: 986
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr42.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr43
+  address: 987
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr43.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr44
+  address: 988
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr44.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr45
+  address: 989
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr45.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr46
+  address: 990
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr46.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr47
+  address: 991
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr47.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr48
+  address: 992
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr48.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr49
+  address: 993
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr49.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr50
+  address: 994
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr50.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr51
+  address: 995
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr51.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr52
+  address: 996
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr52.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr53
+  address: 997
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr53.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr54
+  address: 998
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr54.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr55
+  address: 999
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr55.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr56
+  address: 1000
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr56.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr57
+  address: 1001
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr57.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr58
+  address: 1002
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr58.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr59
+  address: 1003
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr59.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr60
+  address: 1004
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr60.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr61
+  address: 1005
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr61.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr62
+  address: 1006
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr62.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: pmpaddr63
+  address: 1007
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: I/pmpaddr63.yaml
+  fields:
+    ADDR:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: scontext
+  address: 1448
+  length: 64
+  priv_mode: S
+  _group: S
+  _source: scontext.yaml
+  fields:
+    DATA:
+      _lsb: 0
+      _size: 32
+      type: RW
+      reset_value: 0
+- name: hstatus
+  address: 1536
+  length: 64
+  priv_mode: S
+  _group: H
+  _source: hstatus.yaml
+  fields:
+    VSXL:
+      _lsb: 32
+      _size: 2
+      type: RW
+      reset_value: 0
+    VTSR:
+      _lsb: 22
+      _size: 1
+      type: RW
+      reset_value: 0
+    VTW:
+      _lsb: 21
+      _size: 1
+      type: RW
+      reset_value: 0
+    VTVM:
+      _lsb: 20
+      _size: 1
+      type: RW
+      reset_value: 0
+    VGEIN:
+      _lsb: 12
+      _size: 6
+      type: RW
+      reset_value: 0
+    HU:
+      _lsb: 9
+      _size: 1
+      type: RW
+      reset_value: 0
+    SPVP:
+      _lsb: 8
+      _size: 1
+      type: RW
+      reset_value: 0
+    SPV:
+      _lsb: 7
+      _size: 1
+      type: RW
+      reset_value: 0
+    GVA:
+      _lsb: 6
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSBE:
+      _lsb: 5
+      _size: 1
+      type: RW
+      reset_value: 0
+- name: hedeleg
+  address: 1538
+  length: 64
+  priv_mode: S
+  _group: H
+  _source: hedeleg.yaml
+  fields:
+    IAM:
+      _lsb: 0
+      _size: 1
+      type: RW
+      reset_value: 0
+    IAF:
+      _lsb: 1
+      _size: 1
+      type: RW
+      reset_value: 0
+    II:
+      _lsb: 2
+      _size: 1
+      type: RW
+      reset_value: 0
+    B:
+      _lsb: 3
+      _size: 1
+      type: RW
+      reset_value: 0
+    LAM:
+      _lsb: 4
+      _size: 1
+      type: RW
+      reset_value: 0
+    LAF:
+      _lsb: 5
+      _size: 1
+      type: RW
+      reset_value: 0
+    SAM:
+      _lsb: 6
+      _size: 1
+      type: RW
+      reset_value: 0
+    SAF:
+      _lsb: 7
+      _size: 1
+      type: RW
+      reset_value: 0
+    EU:
+      _lsb: 8
+      _size: 1
+      type: RW
+      reset_value: 0
+    ES:
+      _lsb: 9
+      _size: 1
+      type: RO
+      reset_value: 0
+    EVS:
+      _lsb: 10
+      _size: 1
+      type: RO
+      reset_value: 0
+    EM:
+      _lsb: 11
+      _size: 1
+      type: RO
+      reset_value: 0
+    IPF:
+      _lsb: 12
+      _size: 1
+      type: RW
+      reset_value: 0
+    LPF:
+      _lsb: 13
+      _size: 1
+      type: RW
+      reset_value: 0
+    SPF:
+      _lsb: 15
+      _size: 1
+      type: RW
+      reset_value: 0
+    IGPF:
+      _lsb: 20
+      _size: 1
+      type: RO
+      reset_value: 0
+    LGPF:
+      _lsb: 21
+      _size: 1
+      type: RO
+      reset_value: 0
+    VI:
+      _lsb: 22
+      _size: 1
+      type: RO
+      reset_value: 0
+    SGPF:
+      _lsb: 23
+      _size: 1
+      type: RO
+      reset_value: 0
+- name: htimedelta
+  address: 1541
+  length: 64
+  priv_mode: S
+  _group: H
+  _source: H/htimedelta.yaml
+  fields:
+    DELTA:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: hcounteren
+  address: 1542
+  length: 32
+  priv_mode: S
+  _group: H
+  _source: H/hcounteren.yaml
+  fields:
+    CY:
+      _lsb: 0
+      _size: 1
+      type: RW
+      reset_value: 0
+    TM:
+      _lsb: 1
+      _size: 1
+      type: RW
+      reset_value: 0
+    IR:
+      _lsb: 2
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM3:
+      _lsb: 3
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM4:
+      _lsb: 4
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM5:
+      _lsb: 5
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM6:
+      _lsb: 6
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM7:
+      _lsb: 7
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM8:
+      _lsb: 8
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM9:
+      _lsb: 9
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM10:
+      _lsb: 10
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM11:
+      _lsb: 11
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM12:
+      _lsb: 12
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM13:
+      _lsb: 13
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM14:
+      _lsb: 14
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM15:
+      _lsb: 15
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM16:
+      _lsb: 16
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM17:
+      _lsb: 17
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM18:
+      _lsb: 18
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM19:
+      _lsb: 19
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM20:
+      _lsb: 20
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM21:
+      _lsb: 21
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM22:
+      _lsb: 22
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM23:
+      _lsb: 23
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM24:
+      _lsb: 24
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM25:
+      _lsb: 25
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM26:
+      _lsb: 26
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM27:
+      _lsb: 27
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM28:
+      _lsb: 28
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM29:
+      _lsb: 29
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM30:
+      _lsb: 30
+      _size: 1
+      type: RW
+      reset_value: 0
+    HPM31:
+      _lsb: 31
+      _size: 1
+      type: RW
+      reset_value: 0
+- name: henvcfg
+  address: 1546
+  length: 64
+  priv_mode: S
+  _group: Sm
+  _source: H/henvcfg.yaml
+  fields:
+    STCE:
+      _lsb: 63
+      _size: 1
+      type: RW
+      reset_value: 0
+    PBMTE:
+      _lsb: 62
+      _size: 1
+      type: RW
+      reset_value: 0
+    ADUE:
+      _lsb: 61
+      _size: 1
+      type: RW
+      reset_value: 0
+    CBZE:
+      _lsb: 7
+      _size: 1
+      type: RW
+      reset_value: 0
+    CBCFE:
+      _lsb: 6
+      _size: 1
+      type: RW
+      reset_value: 0
+    CBIE:
+      _lsb: 4
+      _size: 2
+      type: RW
+      reset_value: 0
+    FIOM:
+      _lsb: 0
+      _size: 1
+      type: RW
+      reset_value: 0
+- name: hstateen0
+  address: 1548
+  length: 64
+  priv_mode: S
+  _group: H
+  _source: hstateen0.yaml
+  fields:
+    SE0:
+      _lsb: 63
+      _size: 1
+      type: RW
+      reset_value: 0
+    ENVCFG:
+      _lsb: 62
+      _size: 1
+      type: RW
+      reset_value: 0
+    CONTEXT:
+      _lsb: 57
+      _size: 1
+      type: RW
+      reset_value: 0
+    CTR:
+      _lsb: 54
+      _size: 1
+      type: RW
+      reset_value: 0
+    FCSR:
+      _lsb: 1
+      _size: 1
+      type: RW
+      reset_value: 0
+    C:
+      _lsb: 0
+      _size: 1
+      type: RW
+      reset_value: 0
+- name: hstateen1
+  address: 1549
+  length: 64
+  priv_mode: S
+  _group: H
+  _source: hstateen1.yaml
+  fields:
+    SE0:
+      _lsb: 63
+      _size: 1
+      type: RW
+      reset_value: 0
+- name: hstateen2
+  address: 1550
+  length: 64
+  priv_mode: S
+  _group: H
+  _source: hstateen2.yaml
+  fields:
+    SE0:
+      _lsb: 63
+      _size: 1
+      type: RW
+      reset_value: 0
+- name: hstateen3
+  address: 1551
+  length: 64
+  priv_mode: S
+  _group: H
+  _source: hstateen3.yaml
+  fields:
+    SE0:
+      _lsb: 63
+      _size: 1
+      type: RW
+      reset_value: 0
+- name: hedelegh
+  address: 1554
+  length: 32
+  priv_mode: S
+  _group: rv32_only
+  _source: hedelegh.yaml
+  fields: {}
+- name: htimedeltah
+  address: 1557
+  length: 32
+  priv_mode: S
+  _group: rv32_only
+  _source: H/htimedeltah.yaml
+  fields:
+    DELTA:
+      _lsb: 0
+      _size: 32
+      type: RW
+      reset_value: 0
+- name: henvcfgh
+  address: 1562
+  length: 32
+  priv_mode: S
+  _group: rv32_only
+  _source: H/henvcfgh.yaml
+  fields:
+    STCE:
+      _lsb: 31
+      _size: 1
+      type: RW
+      reset_value: 0
+    PBMTE:
+      _lsb: 30
+      _size: 1
+      type: RW
+      reset_value: 0
+    ADUE:
+      _lsb: 29
+      _size: 1
+      type: RW
+      reset_value: 0
+- name: hstateen0h
+  address: 1564
+  length: 32
+  priv_mode: S
+  _group: rv32_only
+  _source: hstateen0h.yaml
+  fields:
+    SE0:
+      _lsb: 31
+      _size: 1
+      type: RW
+      reset_value: 0
+    ENVCFG:
+      _lsb: 30
+      _size: 1
+      type: RW
+      reset_value: 0
+    CONTEXT:
+      _lsb: 25
+      _size: 1
+      type: RW
+      reset_value: 0
+    CTR:
+      _lsb: 22
+      _size: 1
+      type: RW
+      reset_value: 0
+- name: hstateen1h
+  address: 1565
+  length: 32
+  priv_mode: S
+  _group: rv32_only
+  _source: hstateen1h.yaml
+  fields:
+    SE0:
+      _lsb: 31
+      _size: 1
+      type: RW
+      reset_value: 0
+- name: hstateen2h
+  address: 1566
+  length: 32
+  priv_mode: S
+  _group: rv32_only
+  _source: hstateen2h.yaml
+  fields:
+    SE0:
+      _lsb: 31
+      _size: 1
+      type: RW
+      reset_value: 0
+- name: hstateen3h
+  address: 1567
+  length: 32
+  priv_mode: S
+  _group: rv32_only
+  _source: hstateen3h.yaml
+  fields:
+    SE0:
+      _lsb: 31
+      _size: 1
+      type: RW
+      reset_value: 0
+- name: htval
+  address: 1603
+  length: 64
+  priv_mode: S
+  _group: H
+  _source: H/htval.yaml
+  fields:
+    VALUE:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: htinst
+  address: 1610
+  length: 64
+  priv_mode: S
+  _group: H
+  _source: H/htinst.yaml
+  fields:
+    VALUE:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: hgatp
+  address: 1664
+  length: 64
+  priv_mode: S
+  _group: H
+  _source: H/hgatp.yaml
+  fields:
+    MODE:
+      _lsb: 60
+      _size: 4
+      type: RW
+      reset_value: 0
+    VMID:
+      _lsb: 44
+      _size: 14
+      type: RW
+      reset_value: 0
+    PPN:
+      _lsb: 0
+      _size: 44
+      type: RW
+      reset_value: 0
+- name: hcontext
+  address: 1704
+  length: 64
+  priv_mode: S
+  _group: H
+  _source: hcontext.yaml
+  fields:
+    HCONTEXT:
+      _lsb: 0
+      _size: 14
+      type: RW
+      reset_value: 0
+- name: mhpmevent3h
+  address: 1827
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmevent3h.yaml
+  fields:
+    OF:
+      _lsb: 31
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 30
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 29
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 28
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 27
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 26
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 26
+      type: RW
+      reset_value: 0
+- name: mhpmevent4h
+  address: 1828
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmevent4h.yaml
+  fields:
+    OF:
+      _lsb: 31
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 30
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 29
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 28
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 27
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 26
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 26
+      type: RW
+      reset_value: 0
+- name: mhpmevent5h
+  address: 1829
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmevent5h.yaml
+  fields:
+    OF:
+      _lsb: 31
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 30
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 29
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 28
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 27
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 26
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 26
+      type: RW
+      reset_value: 0
+- name: mhpmevent6h
+  address: 1830
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmevent6h.yaml
+  fields:
+    OF:
+      _lsb: 31
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 30
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 29
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 28
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 27
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 26
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 26
+      type: RW
+      reset_value: 0
+- name: mhpmevent7h
+  address: 1831
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmevent7h.yaml
+  fields:
+    OF:
+      _lsb: 31
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 30
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 29
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 28
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 27
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 26
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 26
+      type: RW
+      reset_value: 0
+- name: mhpmevent8h
+  address: 1832
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmevent8h.yaml
+  fields:
+    OF:
+      _lsb: 31
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 30
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 29
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 28
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 27
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 26
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 26
+      type: RW
+      reset_value: 0
+- name: mhpmevent9h
+  address: 1833
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmevent9h.yaml
+  fields:
+    OF:
+      _lsb: 31
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 30
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 29
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 28
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 27
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 26
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 26
+      type: RW
+      reset_value: 0
+- name: mhpmevent10h
+  address: 1834
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmevent10h.yaml
+  fields:
+    OF:
+      _lsb: 31
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 30
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 29
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 28
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 27
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 26
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 26
+      type: RW
+      reset_value: 0
+- name: mhpmevent11h
+  address: 1835
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmevent11h.yaml
+  fields:
+    OF:
+      _lsb: 31
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 30
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 29
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 28
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 27
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 26
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 26
+      type: RW
+      reset_value: 0
+- name: mhpmevent12h
+  address: 1836
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmevent12h.yaml
+  fields:
+    OF:
+      _lsb: 31
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 30
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 29
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 28
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 27
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 26
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 26
+      type: RW
+      reset_value: 0
+- name: mhpmevent13h
+  address: 1837
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmevent13h.yaml
+  fields:
+    OF:
+      _lsb: 31
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 30
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 29
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 28
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 27
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 26
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 26
+      type: RW
+      reset_value: 0
+- name: mhpmevent14h
+  address: 1838
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmevent14h.yaml
+  fields:
+    OF:
+      _lsb: 31
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 30
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 29
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 28
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 27
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 26
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 26
+      type: RW
+      reset_value: 0
+- name: mhpmevent15h
+  address: 1839
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmevent15h.yaml
+  fields:
+    OF:
+      _lsb: 31
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 30
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 29
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 28
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 27
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 26
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 26
+      type: RW
+      reset_value: 0
+- name: mhpmevent16h
+  address: 1840
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmevent16h.yaml
+  fields:
+    OF:
+      _lsb: 31
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 30
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 29
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 28
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 27
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 26
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 26
+      type: RW
+      reset_value: 0
+- name: mhpmevent17h
+  address: 1841
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmevent17h.yaml
+  fields:
+    OF:
+      _lsb: 31
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 30
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 29
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 28
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 27
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 26
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 26
+      type: RW
+      reset_value: 0
+- name: mhpmevent18h
+  address: 1842
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmevent18h.yaml
+  fields:
+    OF:
+      _lsb: 31
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 30
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 29
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 28
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 27
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 26
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 26
+      type: RW
+      reset_value: 0
+- name: mhpmevent19h
+  address: 1843
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmevent19h.yaml
+  fields:
+    OF:
+      _lsb: 31
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 30
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 29
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 28
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 27
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 26
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 26
+      type: RW
+      reset_value: 0
+- name: mhpmevent20h
+  address: 1844
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmevent20h.yaml
+  fields:
+    OF:
+      _lsb: 31
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 30
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 29
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 28
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 27
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 26
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 26
+      type: RW
+      reset_value: 0
+- name: mhpmevent21h
+  address: 1845
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmevent21h.yaml
+  fields:
+    OF:
+      _lsb: 31
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 30
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 29
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 28
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 27
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 26
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 26
+      type: RW
+      reset_value: 0
+- name: mhpmevent22h
+  address: 1846
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmevent22h.yaml
+  fields:
+    OF:
+      _lsb: 31
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 30
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 29
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 28
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 27
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 26
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 26
+      type: RW
+      reset_value: 0
+- name: mhpmevent23h
+  address: 1847
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmevent23h.yaml
+  fields:
+    OF:
+      _lsb: 31
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 30
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 29
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 28
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 27
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 26
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 26
+      type: RW
+      reset_value: 0
+- name: mhpmevent24h
+  address: 1848
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmevent24h.yaml
+  fields:
+    OF:
+      _lsb: 31
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 30
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 29
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 28
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 27
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 26
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 26
+      type: RW
+      reset_value: 0
+- name: mhpmevent25h
+  address: 1849
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmevent25h.yaml
+  fields:
+    OF:
+      _lsb: 31
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 30
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 29
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 28
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 27
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 26
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 26
+      type: RW
+      reset_value: 0
+- name: mhpmevent26h
+  address: 1850
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmevent26h.yaml
+  fields:
+    OF:
+      _lsb: 31
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 30
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 29
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 28
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 27
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 26
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 26
+      type: RW
+      reset_value: 0
+- name: mhpmevent27h
+  address: 1851
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmevent27h.yaml
+  fields:
+    OF:
+      _lsb: 31
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 30
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 29
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 28
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 27
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 26
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 26
+      type: RW
+      reset_value: 0
+- name: mhpmevent28h
+  address: 1852
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmevent28h.yaml
+  fields:
+    OF:
+      _lsb: 31
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 30
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 29
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 28
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 27
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 26
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 26
+      type: RW
+      reset_value: 0
+- name: mhpmevent29h
+  address: 1853
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmevent29h.yaml
+  fields:
+    OF:
+      _lsb: 31
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 30
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 29
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 28
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 27
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 26
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 26
+      type: RW
+      reset_value: 0
+- name: mhpmevent30h
+  address: 1854
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmevent30h.yaml
+  fields:
+    OF:
+      _lsb: 31
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 30
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 29
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 28
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 27
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 26
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 26
+      type: RW
+      reset_value: 0
+- name: mhpmevent31h
+  address: 1855
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmevent31h.yaml
+  fields:
+    OF:
+      _lsb: 31
+      _size: 1
+      type: RW
+      reset_value: 0
+    MINH:
+      _lsb: 30
+      _size: 1
+      type: RW
+      reset_value: 0
+    SINH:
+      _lsb: 29
+      _size: 1
+      type: RW
+      reset_value: 0
+    UINH:
+      _lsb: 28
+      _size: 1
+      type: RW
+      reset_value: 0
+    VSINH:
+      _lsb: 27
+      _size: 1
+      type: RW
+      reset_value: 0
+    VUINH:
+      _lsb: 26
+      _size: 1
+      type: RW
+      reset_value: 0
+    EVENT:
+      _lsb: 0
+      _size: 26
+      type: RW
+      reset_value: 0
+- name: mseccfg
+  address: 1863
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: mseccfg.yaml
+  fields: {}
+- name: mseccfgh
+  address: 1879
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: mseccfgh.yaml
+  fields: {}
+- name: tselect
+  address: 1952
+  length: 64
+  priv_mode: M
+  _group: Sdtrig
+  _source: tselect.yaml
+  fields:
+    INDEX:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: tdata1
+  address: 1953
+  length: 64
+  priv_mode: M
+  _group: Sdtrig
+  _source: tdata1.yaml
+  fields:
+    TYPE:
+      _lsb: 60
+      _size: 4
+      type: RW
+      reset_value: 0
+    DMODE:
+      _lsb: 59
+      _size: 1
+      type: RW
+      reset_value: 0
+    DATA:
+      _lsb: 0
+      _size: 59
+      type: RW
+      reset_value: 0
+- name: tdata2
+  address: 1954
+  length: 64
+  priv_mode: M
+  _group: Sdtrig
+  _source: tdata2.yaml
+  fields:
+    DATA:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: tdata3
+  address: 1955
+  length: 64
+  priv_mode: M
+  _group: Sdtrig
+  _source: tdata3.yaml
+  fields:
+    DATA:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: tinfo
+  address: 1956
+  length: 64
+  priv_mode: M
+  _group: Sdtrig
+  _source: tinfo.yaml
+  fields:
+    VERSION:
+      _lsb: 24
+      _size: 8
+      type: RO
+      reset_value: 0
+    TYPES:
+      _lsb: 0
+      _size: 16
+      type: RO
+      reset_value: 0
+- name: tcontrol
+  address: 1957
+  length: 64
+  priv_mode: M
+  _group: Sdtrig
+  _source: tcontrol.yaml
+  fields:
+    MPTE:
+      _lsb: 7
+      _size: 1
+      type: RW
+      reset_value: 0
+    MTE:
+      _lsb: 3
+      _size: 1
+      type: RW
+      reset_value: 0
+- name: mcontext
+  address: 1960
+  length: 64
+  priv_mode: M
+  _group: Sdtrig
+  _source: mcontext.yaml
+  fields:
+    HCONTEXT:
+      _lsb: 0
+      _size: 14
+      type: RW
+      reset_value: 0
+- name: mscontext
+  address: 1962
+  length: 64
+  priv_mode: S
+  _group: S
+  _source: mscontext.yaml
+  fields:
+    DATA:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: mcycle
+  address: 2816
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: mcycle.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: minstret
+  address: 2818
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: minstret.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: mhpmcounter3
+  address: 2819
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmcounter3.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: mhpmcounter4
+  address: 2820
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmcounter4.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: mhpmcounter5
+  address: 2821
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmcounter5.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: mhpmcounter6
+  address: 2822
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmcounter6.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: mhpmcounter7
+  address: 2823
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmcounter7.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: mhpmcounter8
+  address: 2824
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmcounter8.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: mhpmcounter9
+  address: 2825
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmcounter9.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: mhpmcounter10
+  address: 2826
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmcounter10.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: mhpmcounter11
+  address: 2827
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmcounter11.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: mhpmcounter12
+  address: 2828
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmcounter12.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: mhpmcounter13
+  address: 2829
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmcounter13.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: mhpmcounter14
+  address: 2830
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmcounter14.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: mhpmcounter15
+  address: 2831
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmcounter15.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: mhpmcounter16
+  address: 2832
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmcounter16.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: mhpmcounter17
+  address: 2833
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmcounter17.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: mhpmcounter18
+  address: 2834
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmcounter18.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: mhpmcounter19
+  address: 2835
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmcounter19.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: mhpmcounter20
+  address: 2836
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmcounter20.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: mhpmcounter21
+  address: 2837
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmcounter21.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: mhpmcounter22
+  address: 2838
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmcounter22.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: mhpmcounter23
+  address: 2839
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmcounter23.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: mhpmcounter24
+  address: 2840
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmcounter24.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: mhpmcounter25
+  address: 2841
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmcounter25.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: mhpmcounter26
+  address: 2842
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmcounter26.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: mhpmcounter27
+  address: 2843
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmcounter27.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: mhpmcounter28
+  address: 2844
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmcounter28.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: mhpmcounter29
+  address: 2845
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmcounter29.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: mhpmcounter30
+  address: 2846
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmcounter30.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: mhpmcounter31
+  address: 2847
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: Zihpm/mhpmcounter31.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: mcycleh
+  address: 2944
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: mcycleh.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RW
+      reset_value: 0
+- name: minstreth
+  address: 2946
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: minstreth.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RW
+      reset_value: 0
+- name: mhpmcounter3h
+  address: 2947
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmcounter3h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RW
+      reset_value: 0
+- name: mhpmcounter4h
+  address: 2948
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmcounter4h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RW
+      reset_value: 0
+- name: mhpmcounter5h
+  address: 2949
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmcounter5h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RW
+      reset_value: 0
+- name: mhpmcounter6h
+  address: 2950
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmcounter6h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RW
+      reset_value: 0
+- name: mhpmcounter7h
+  address: 2951
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmcounter7h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RW
+      reset_value: 0
+- name: mhpmcounter8h
+  address: 2952
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmcounter8h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RW
+      reset_value: 0
+- name: mhpmcounter9h
+  address: 2953
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmcounter9h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RW
+      reset_value: 0
+- name: mhpmcounter10h
+  address: 2954
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmcounter10h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RW
+      reset_value: 0
+- name: mhpmcounter11h
+  address: 2955
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmcounter11h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RW
+      reset_value: 0
+- name: mhpmcounter12h
+  address: 2956
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmcounter12h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RW
+      reset_value: 0
+- name: mhpmcounter13h
+  address: 2957
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmcounter13h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RW
+      reset_value: 0
+- name: mhpmcounter14h
+  address: 2958
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmcounter14h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RW
+      reset_value: 0
+- name: mhpmcounter15h
+  address: 2959
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmcounter15h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RW
+      reset_value: 0
+- name: mhpmcounter16h
+  address: 2960
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmcounter16h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RW
+      reset_value: 0
+- name: mhpmcounter17h
+  address: 2961
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmcounter17h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RW
+      reset_value: 0
+- name: mhpmcounter18h
+  address: 2962
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmcounter18h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RW
+      reset_value: 0
+- name: mhpmcounter19h
+  address: 2963
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmcounter19h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RW
+      reset_value: 0
+- name: mhpmcounter20h
+  address: 2964
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmcounter20h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RW
+      reset_value: 0
+- name: mhpmcounter21h
+  address: 2965
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmcounter21h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RW
+      reset_value: 0
+- name: mhpmcounter22h
+  address: 2966
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmcounter22h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RW
+      reset_value: 0
+- name: mhpmcounter23h
+  address: 2967
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmcounter23h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RW
+      reset_value: 0
+- name: mhpmcounter24h
+  address: 2968
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmcounter24h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RW
+      reset_value: 0
+- name: mhpmcounter25h
+  address: 2969
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmcounter25h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RW
+      reset_value: 0
+- name: mhpmcounter26h
+  address: 2970
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmcounter26h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RW
+      reset_value: 0
+- name: mhpmcounter27h
+  address: 2971
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmcounter27h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RW
+      reset_value: 0
+- name: mhpmcounter28h
+  address: 2972
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmcounter28h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RW
+      reset_value: 0
+- name: mhpmcounter29h
+  address: 2973
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmcounter29h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RW
+      reset_value: 0
+- name: mhpmcounter30h
+  address: 2974
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmcounter30h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RW
+      reset_value: 0
+- name: mhpmcounter31h
+  address: 2975
+  length: 32
+  priv_mode: M
+  _group: rv32_only
+  _source: Zihpm/mhpmcounter31h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RW
+      reset_value: 0
+- name: cycle
+  address: 3072
+  length: 64
+  priv_mode: U
+  _group: Zicntr
+  _source: cycle.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RO
+      reset_value: 0
+- name: time
+  address: 3073
+  length: 64
+  priv_mode: U
+  _group: Zicntr
+  _source: time.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RO
+      reset_value: 0
+- name: instret
+  address: 3074
+  length: 64
+  priv_mode: U
+  _group: Zicntr
+  _source: instret.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RO
+      reset_value: 0
+- name: hpmcounter3
+  address: 3075
+  length: 64
+  priv_mode: U
+  _group: Zihpm
+  _source: Zihpm/hpmcounter3.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RO
+      reset_value: 0
+- name: hpmcounter4
+  address: 3076
+  length: 64
+  priv_mode: U
+  _group: Zihpm
+  _source: Zihpm/hpmcounter4.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RO
+      reset_value: 0
+- name: hpmcounter5
+  address: 3077
+  length: 64
+  priv_mode: U
+  _group: Zihpm
+  _source: Zihpm/hpmcounter5.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RO
+      reset_value: 0
+- name: hpmcounter6
+  address: 3078
+  length: 64
+  priv_mode: U
+  _group: Zihpm
+  _source: Zihpm/hpmcounter6.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RO
+      reset_value: 0
+- name: hpmcounter7
+  address: 3079
+  length: 64
+  priv_mode: U
+  _group: Zihpm
+  _source: Zihpm/hpmcounter7.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RO
+      reset_value: 0
+- name: hpmcounter8
+  address: 3080
+  length: 64
+  priv_mode: U
+  _group: Zihpm
+  _source: Zihpm/hpmcounter8.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RO
+      reset_value: 0
+- name: hpmcounter9
+  address: 3081
+  length: 64
+  priv_mode: U
+  _group: Zihpm
+  _source: Zihpm/hpmcounter9.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RO
+      reset_value: 0
+- name: hpmcounter10
+  address: 3082
+  length: 64
+  priv_mode: U
+  _group: Zihpm
+  _source: Zihpm/hpmcounter10.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RO
+      reset_value: 0
+- name: hpmcounter11
+  address: 3083
+  length: 64
+  priv_mode: U
+  _group: Zihpm
+  _source: Zihpm/hpmcounter11.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RO
+      reset_value: 0
+- name: hpmcounter12
+  address: 3084
+  length: 64
+  priv_mode: U
+  _group: Zihpm
+  _source: Zihpm/hpmcounter12.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RO
+      reset_value: 0
+- name: hpmcounter13
+  address: 3085
+  length: 64
+  priv_mode: U
+  _group: Zihpm
+  _source: Zihpm/hpmcounter13.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RO
+      reset_value: 0
+- name: hpmcounter14
+  address: 3086
+  length: 64
+  priv_mode: U
+  _group: Zihpm
+  _source: Zihpm/hpmcounter14.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RO
+      reset_value: 0
+- name: hpmcounter15
+  address: 3087
+  length: 64
+  priv_mode: U
+  _group: Zihpm
+  _source: Zihpm/hpmcounter15.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RO
+      reset_value: 0
+- name: hpmcounter16
+  address: 3088
+  length: 64
+  priv_mode: U
+  _group: Zihpm
+  _source: Zihpm/hpmcounter16.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RO
+      reset_value: 0
+- name: hpmcounter17
+  address: 3089
+  length: 64
+  priv_mode: U
+  _group: Zihpm
+  _source: Zihpm/hpmcounter17.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RO
+      reset_value: 0
+- name: hpmcounter18
+  address: 3090
+  length: 64
+  priv_mode: U
+  _group: Zihpm
+  _source: Zihpm/hpmcounter18.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RO
+      reset_value: 0
+- name: hpmcounter19
+  address: 3091
+  length: 64
+  priv_mode: U
+  _group: Zihpm
+  _source: Zihpm/hpmcounter19.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RO
+      reset_value: 0
+- name: hpmcounter20
+  address: 3092
+  length: 64
+  priv_mode: U
+  _group: Zihpm
+  _source: Zihpm/hpmcounter20.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RO
+      reset_value: 0
+- name: hpmcounter21
+  address: 3093
+  length: 64
+  priv_mode: U
+  _group: Zihpm
+  _source: Zihpm/hpmcounter21.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RO
+      reset_value: 0
+- name: hpmcounter22
+  address: 3094
+  length: 64
+  priv_mode: U
+  _group: Zihpm
+  _source: Zihpm/hpmcounter22.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RO
+      reset_value: 0
+- name: hpmcounter23
+  address: 3095
+  length: 64
+  priv_mode: U
+  _group: Zihpm
+  _source: Zihpm/hpmcounter23.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RO
+      reset_value: 0
+- name: hpmcounter24
+  address: 3096
+  length: 64
+  priv_mode: U
+  _group: Zihpm
+  _source: Zihpm/hpmcounter24.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RO
+      reset_value: 0
+- name: hpmcounter25
+  address: 3097
+  length: 64
+  priv_mode: U
+  _group: Zihpm
+  _source: Zihpm/hpmcounter25.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RO
+      reset_value: 0
+- name: hpmcounter26
+  address: 3098
+  length: 64
+  priv_mode: U
+  _group: Zihpm
+  _source: Zihpm/hpmcounter26.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RO
+      reset_value: 0
+- name: hpmcounter27
+  address: 3099
+  length: 64
+  priv_mode: U
+  _group: Zihpm
+  _source: Zihpm/hpmcounter27.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RO
+      reset_value: 0
+- name: hpmcounter28
+  address: 3100
+  length: 64
+  priv_mode: U
+  _group: Zihpm
+  _source: Zihpm/hpmcounter28.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RO
+      reset_value: 0
+- name: hpmcounter29
+  address: 3101
+  length: 64
+  priv_mode: U
+  _group: Zihpm
+  _source: Zihpm/hpmcounter29.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RO
+      reset_value: 0
+- name: hpmcounter30
+  address: 3102
+  length: 64
+  priv_mode: U
+  _group: Zihpm
+  _source: Zihpm/hpmcounter30.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RO
+      reset_value: 0
+- name: hpmcounter31
+  address: 3103
+  length: 64
+  priv_mode: U
+  _group: Zihpm
+  _source: Zihpm/hpmcounter31.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 64
+      type: RO
+      reset_value: 0
+- name: vl
+  address: 3104
+  length: 64
+  priv_mode: U
+  _group: Zvl32b
+  _source: V/vl.yaml
+  fields:
+    VALUE:
+      _lsb: 0
+      _size: 64
+      type: RO
+      reset_value: 0
+- name: vtype
+  address: 3105
+  length: 64
+  priv_mode: U
+  _group: Zvl32b
+  _source: V/vtype.yaml
+  fields:
+    VILL:
+      _lsb: 63
+      _size: 1
+      type: RO
+      reset_value: 0
+    VMA:
+      _lsb: 7
+      _size: 1
+      type: RO
+      reset_value: 0
+    VTA:
+      _lsb: 6
+      _size: 1
+      type: RO
+      reset_value: 0
+    VSEW:
+      _lsb: 3
+      _size: 3
+      type: RO
+      reset_value: 0
+    VLMUL:
+      _lsb: 0
+      _size: 3
+      type: RO
+      reset_value: 0
+- name: vlenb
+  address: 3106
+  length: 64
+  priv_mode: U
+  _group: Zvl32b
+  _source: V/vlenb.yaml
+  fields:
+    VALUE:
+      _lsb: 0
+      _size: 64
+      type: RO
+      reset_value: 0
+- name: cycleh
+  address: 3200
+  length: 32
+  priv_mode: U
+  _group: rv32_only
+  _source: cycleh.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RO
+      reset_value: 0
+- name: timeh
+  address: 3201
+  length: 32
+  priv_mode: U
+  _group: rv32_only
+  _source: timeh.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RO
+      reset_value: 0
+- name: instreth
+  address: 3202
+  length: 32
+  priv_mode: U
+  _group: rv32_only
+  _source: instreth.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RO
+      reset_value: 0
+- name: hpmcounter3h
+  address: 3203
+  length: 32
+  priv_mode: U
+  _group: rv32_only
+  _source: Zihpm/hpmcounter3h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RO
+      reset_value: 0
+- name: hpmcounter4h
+  address: 3204
+  length: 32
+  priv_mode: U
+  _group: rv32_only
+  _source: Zihpm/hpmcounter4h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RO
+      reset_value: 0
+- name: hpmcounter5h
+  address: 3205
+  length: 32
+  priv_mode: U
+  _group: rv32_only
+  _source: Zihpm/hpmcounter5h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RO
+      reset_value: 0
+- name: hpmcounter6h
+  address: 3206
+  length: 32
+  priv_mode: U
+  _group: rv32_only
+  _source: Zihpm/hpmcounter6h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RO
+      reset_value: 0
+- name: hpmcounter7h
+  address: 3207
+  length: 32
+  priv_mode: U
+  _group: rv32_only
+  _source: Zihpm/hpmcounter7h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RO
+      reset_value: 0
+- name: hpmcounter8h
+  address: 3208
+  length: 32
+  priv_mode: U
+  _group: rv32_only
+  _source: Zihpm/hpmcounter8h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RO
+      reset_value: 0
+- name: hpmcounter9h
+  address: 3209
+  length: 32
+  priv_mode: U
+  _group: rv32_only
+  _source: Zihpm/hpmcounter9h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RO
+      reset_value: 0
+- name: hpmcounter10h
+  address: 3210
+  length: 32
+  priv_mode: U
+  _group: rv32_only
+  _source: Zihpm/hpmcounter10h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RO
+      reset_value: 0
+- name: hpmcounter11h
+  address: 3211
+  length: 32
+  priv_mode: U
+  _group: rv32_only
+  _source: Zihpm/hpmcounter11h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RO
+      reset_value: 0
+- name: hpmcounter12h
+  address: 3212
+  length: 32
+  priv_mode: U
+  _group: rv32_only
+  _source: Zihpm/hpmcounter12h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RO
+      reset_value: 0
+- name: hpmcounter13h
+  address: 3213
+  length: 32
+  priv_mode: U
+  _group: rv32_only
+  _source: Zihpm/hpmcounter13h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RO
+      reset_value: 0
+- name: hpmcounter14h
+  address: 3214
+  length: 32
+  priv_mode: U
+  _group: rv32_only
+  _source: Zihpm/hpmcounter14h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RO
+      reset_value: 0
+- name: hpmcounter15h
+  address: 3215
+  length: 32
+  priv_mode: U
+  _group: rv32_only
+  _source: Zihpm/hpmcounter15h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RO
+      reset_value: 0
+- name: hpmcounter16h
+  address: 3216
+  length: 32
+  priv_mode: U
+  _group: rv32_only
+  _source: Zihpm/hpmcounter16h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RO
+      reset_value: 0
+- name: hpmcounter17h
+  address: 3217
+  length: 32
+  priv_mode: U
+  _group: rv32_only
+  _source: Zihpm/hpmcounter17h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RO
+      reset_value: 0
+- name: hpmcounter18h
+  address: 3218
+  length: 32
+  priv_mode: U
+  _group: rv32_only
+  _source: Zihpm/hpmcounter18h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RO
+      reset_value: 0
+- name: hpmcounter19h
+  address: 3219
+  length: 32
+  priv_mode: U
+  _group: rv32_only
+  _source: Zihpm/hpmcounter19h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RO
+      reset_value: 0
+- name: hpmcounter20h
+  address: 3220
+  length: 32
+  priv_mode: U
+  _group: rv32_only
+  _source: Zihpm/hpmcounter20h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RO
+      reset_value: 0
+- name: hpmcounter21h
+  address: 3221
+  length: 32
+  priv_mode: U
+  _group: rv32_only
+  _source: Zihpm/hpmcounter21h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RO
+      reset_value: 0
+- name: hpmcounter22h
+  address: 3222
+  length: 32
+  priv_mode: U
+  _group: rv32_only
+  _source: Zihpm/hpmcounter22h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RO
+      reset_value: 0
+- name: hpmcounter23h
+  address: 3223
+  length: 32
+  priv_mode: U
+  _group: rv32_only
+  _source: Zihpm/hpmcounter23h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RO
+      reset_value: 0
+- name: hpmcounter24h
+  address: 3224
+  length: 32
+  priv_mode: U
+  _group: rv32_only
+  _source: Zihpm/hpmcounter24h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RO
+      reset_value: 0
+- name: hpmcounter25h
+  address: 3225
+  length: 32
+  priv_mode: U
+  _group: rv32_only
+  _source: Zihpm/hpmcounter25h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RO
+      reset_value: 0
+- name: hpmcounter26h
+  address: 3226
+  length: 32
+  priv_mode: U
+  _group: rv32_only
+  _source: Zihpm/hpmcounter26h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RO
+      reset_value: 0
+- name: hpmcounter27h
+  address: 3227
+  length: 32
+  priv_mode: U
+  _group: rv32_only
+  _source: Zihpm/hpmcounter27h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RO
+      reset_value: 0
+- name: hpmcounter28h
+  address: 3228
+  length: 32
+  priv_mode: U
+  _group: rv32_only
+  _source: Zihpm/hpmcounter28h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RO
+      reset_value: 0
+- name: hpmcounter29h
+  address: 3229
+  length: 32
+  priv_mode: U
+  _group: rv32_only
+  _source: Zihpm/hpmcounter29h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RO
+      reset_value: 0
+- name: hpmcounter30h
+  address: 3230
+  length: 32
+  priv_mode: U
+  _group: rv32_only
+  _source: Zihpm/hpmcounter30h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RO
+      reset_value: 0
+- name: hpmcounter31h
+  address: 3231
+  length: 32
+  priv_mode: U
+  _group: rv32_only
+  _source: Zihpm/hpmcounter31h.yaml
+  fields:
+    COUNT:
+      _lsb: 0
+      _size: 32
+      type: RO
+      reset_value: 0
+- name: scountovf
+  address: 3488
+  length: 32
+  priv_mode: S
+  _group: Sscofpmf
+  _source: Sscofpmf/scountovf.yaml
+  fields:
+    OF3:
+      _lsb: 3
+      _size: 1
+      type: RW
+      reset_value: 0
+    OF4:
+      _lsb: 4
+      _size: 1
+      type: RW
+      reset_value: 0
+    OF5:
+      _lsb: 5
+      _size: 1
+      type: RW
+      reset_value: 0
+    OF6:
+      _lsb: 6
+      _size: 1
+      type: RW
+      reset_value: 0
+    OF7:
+      _lsb: 7
+      _size: 1
+      type: RW
+      reset_value: 0
+    OF8:
+      _lsb: 8
+      _size: 1
+      type: RW
+      reset_value: 0
+    OF9:
+      _lsb: 9
+      _size: 1
+      type: RW
+      reset_value: 0
+    OF10:
+      _lsb: 10
+      _size: 1
+      type: RW
+      reset_value: 0
+    OF11:
+      _lsb: 11
+      _size: 1
+      type: RW
+      reset_value: 0
+    OF12:
+      _lsb: 12
+      _size: 1
+      type: RW
+      reset_value: 0
+    OF13:
+      _lsb: 13
+      _size: 1
+      type: RW
+      reset_value: 0
+    OF14:
+      _lsb: 14
+      _size: 1
+      type: RW
+      reset_value: 0
+    OF15:
+      _lsb: 15
+      _size: 1
+      type: RW
+      reset_value: 0
+    OF16:
+      _lsb: 16
+      _size: 1
+      type: RW
+      reset_value: 0
+    OF17:
+      _lsb: 17
+      _size: 1
+      type: RW
+      reset_value: 0
+    OF18:
+      _lsb: 18
+      _size: 1
+      type: RW
+      reset_value: 0
+    OF19:
+      _lsb: 19
+      _size: 1
+      type: RW
+      reset_value: 0
+    OF20:
+      _lsb: 20
+      _size: 1
+      type: RW
+      reset_value: 0
+    OF21:
+      _lsb: 21
+      _size: 1
+      type: RW
+      reset_value: 0
+    OF22:
+      _lsb: 22
+      _size: 1
+      type: RW
+      reset_value: 0
+    OF23:
+      _lsb: 23
+      _size: 1
+      type: RW
+      reset_value: 0
+    OF24:
+      _lsb: 24
+      _size: 1
+      type: RW
+      reset_value: 0
+    OF25:
+      _lsb: 25
+      _size: 1
+      type: RW
+      reset_value: 0
+    OF26:
+      _lsb: 26
+      _size: 1
+      type: RW
+      reset_value: 0
+    OF27:
+      _lsb: 27
+      _size: 1
+      type: RW
+      reset_value: 0
+    OF28:
+      _lsb: 28
+      _size: 1
+      type: RW
+      reset_value: 0
+    OF29:
+      _lsb: 29
+      _size: 1
+      type: RW
+      reset_value: 0
+    OF30:
+      _lsb: 30
+      _size: 1
+      type: RW
+      reset_value: 0
+    OF31:
+      _lsb: 31
+      _size: 1
+      type: RW
+      reset_value: 0
+- name: mvendorid
+  address: 3857
+  length: 32
+  priv_mode: M
+  _group: Sm
+  _source: mvendorid.yaml
+  fields:
+    Bank:
+      _lsb: 7
+      _size: 25
+      type: RO
+      reset_value: 0
+    Offset:
+      _lsb: 0
+      _size: 7
+      type: RO
+      reset_value: 0
+- name: marchid
+  address: 3858
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: marchid.yaml
+  fields:
+    Architecture:
+      _lsb: 0
+      _size: 64
+      type: RO
+      reset_value: 0
+- name: mimpid
+  address: 3859
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: mimpid.yaml
+  fields:
+    Implementation:
+      _lsb: 0
+      _size: 64
+      type: RO
+      reset_value: 0
+- name: mhartid
+  address: 3860
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: mhartid.yaml
+  fields:
+    ID:
+      _lsb: 0
+      _size: 64
+      type: RO
+      reset_value: 0
+- name: mconfigptr
+  address: 3861
+  length: 64
+  priv_mode: M
+  _group: Sm
+  _source: mconfigptr.yaml
+  fields:
+    ADDRESS:
+      _lsb: 0
+      _size: 64
+      type: RO
+      reset_value: 0

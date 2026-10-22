@@ -1,0 +1,21 @@
+# Группы CSR профиля RVA23S64 для генерации RAL (по расширениям).
+# Один CSR -> одно расширение; rv32_only — регистры xlen:32.
+# Источник: tools/csr_monolith_reduced.yaml
+profile: RVA23S64
+source: tools/csr_monolith_reduced.yaml
+total: 356
+
+groups:
+  Sm: { count: 151, generate: true }
+  S: { count: 14, generate: true }
+  H: { count: 22, generate: true }
+  U: { count: 1, generate: true }
+  F: { count: 3, generate: true }
+  Sdtrig: { count: 7, generate: true }
+  Sscofpmf: { count: 1, generate: true }
+  Ssstateen: { count: 4, generate: true }
+  Sstc: { count: 1, generate: true }
+  Zicntr: { count: 3, generate: true }
+  Zihpm: { count: 29, generate: true }
+  Zvl32b: { count: 7, generate: true }
+  rv32_only: { count: 113, generate: false }

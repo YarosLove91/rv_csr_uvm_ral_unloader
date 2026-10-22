@@ -3,7 +3,8 @@ class probe_scoreboard extends uvm_scoreboard;
 
   uvm_analysis_imp#(probe_transaction, probe_scoreboard) probe_imp;
 
-  csr_top_reg_block reg_top_model;
+  csr_top_reg_block       reg_top_model;
+  csr_rv32_only_reg_block reg_rv32_only_model;
   csr_shadow_t shadow;
 
   function new(string name = "probe_scoreboard", uvm_component parent = null);
@@ -20,12 +21,17 @@ class probe_scoreboard extends uvm_scoreboard;
     if (!uvm_config_db#(csr_top_reg_block)::get(
             this, "", "reg_top_model", reg_top_model))
       `uvm_fatal(get_name(), "reg_top_model not found")
+    if (!uvm_config_db#(csr_rv32_only_reg_block)::get(
+            this, "", "reg_rv32_only_model", reg_rv32_only_model))
+      `uvm_fatal(get_name(), "reg_rv32_only_model not found")
   endfunction : check_config
 
-  // Поиск регистра
+  // Поиск регистра: сначала RV64-модель, затем RV32-only
   protected function uvm_reg find_reg(csr_addr_t addr);
     uvm_reg r;
     r = reg_top_model.get_reg_by_addr(addr);
+    if (r == null)
+      r = reg_rv32_only_model.csr_map.get_reg_by_offset(addr);
     if (r == null)
       `uvm_error (get_name(),
                   $sformatf("CSR 0x%03h not found", addr))
@@ -50,6 +56,11 @@ class probe_scoreboard extends uvm_scoreboard;
   protected function void do_write(probe_transaction tx);
     uvm_reg r;
 
+    if (reg_rv32_only_model.csr_map.get_reg_by_offset(tx.addr) != null)
+      `uvm_warning(get_name(),
+                  $sformatf("WRITE to RV32-only CSR 0x%03h <- 0x%016h",
+                            tx.addr, tx.value))
+
     shadow[tx.addr] = tx.value;
 
     r = find_reg(tx.addr);
@@ -73,19 +84,12 @@ class probe_scoreboard extends uvm_scoreboard;
 
     r = find_reg(tx.addr);
     if (r != null) begin
-      if (get_reg_value(r, actual)) begin
-        tx.value = actual;
-        `uvm_info(get_name(),
-                  $sformatf("RD 0x%03h -> 0x%016h [%s] (RAL)",
-                            tx.addr, actual, r.get_name()), 
-                  UVM_LOW)
-      end else begin
-        actual   = shadow.exists(tx.addr) ? shadow[tx.addr] : csr_data_t'(0);
-        tx.value = actual;
-        `uvm_warning(get_name(),
-                    $sformatf("RD 0x%03h -> 0x%016h [%s] (shadow fallback)",
-                              tx.addr, actual, r.get_name()))
-      end
+      get_reg_value(r, actual);
+      tx.value = actual;
+      `uvm_info(get_name(),
+                $sformatf("RD 0x%03h -> 0x%016h [%s] (RAL)",
+                          tx.addr, actual, r.get_name()),
+                UVM_LOW)
     end else begin
       actual   = shadow.exists(tx.addr) ? shadow[tx.addr] : csr_data_t'(0);
       tx.value = actual;
@@ -95,35 +99,14 @@ class probe_scoreboard extends uvm_scoreboard;
     end
   endfunction : do_read
 
-  // Ручной поиск подстроки в строке (Ограничение verilator)
-  protected function int find_substr(string s, string sub);
-    int len_s   = s.len();
-    int len_sub = sub.len();
-    if (len_sub == 0 || len_sub > len_s) return -1;
-
-    for (int i = 0; i <= len_s - len_sub; i++) begin
-      if (s.substr(i, i + len_sub - 1) == sub)
-        return i;
-    end
-    return -1;
-  endfunction : find_substr
+  // Чтение текущего значения из RAL-модели.
 
   protected function bit get_reg_value(uvm_reg r, output uvm_reg_data_t value);
-    string s;
-    int    pos, hpos, matched;
-
-    s = r.sprint();
-
-    pos = find_substr(s, "=64'h");
-    if (pos < 0) pos = find_substr(s, "=32'h");
-    if (pos < 0) return 0;
-
-    hpos = find_substr(s.substr(pos, s.len() - 1), "'h");
-    if (hpos < 0) return 0;
-    hpos = pos + hpos;
-
-    matched = $sscanf(s.substr(hpos + 2, s.len() - 1), "%h", value);
-    return (matched == 1);
+    if (r == null) begin
+      return 0;
+    end
+    value = r.get();
+    return 1;
   endfunction : get_reg_value
 
   //------------------------------------------------------------------------------
@@ -146,11 +129,10 @@ class probe_scoreboard extends uvm_scoreboard;
       end
 
       shadow_val = shadow[addr];
-      if (!get_reg_value(r, ral_val)) begin
-        `uvm_warning(get_name(),
-                    $sformatf("cannot read RAL[%s]", r.get_name()))
-        continue;
-      end
+      shadow_val = shadow_val & (r.get_n_bits() >= 64
+                              ? csr_data_t'('1)
+                              : ((csr_data_t'(1) << r.get_n_bits()) - 1));
+      ral_val = r.get();
 
       checked++;
       if (ral_val !== shadow_val) begin
