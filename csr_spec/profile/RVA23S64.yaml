@@ -171,6 +171,8 @@ mandatory_extensions:
 - name: Zvl64b
   version: "~> 1.0.0"
 non_mandatory_extensions:
+- name: Smcsrind
+  version: "~> 1.0"
 - name: Sdtrig
   version: "~> 1.0"
 - name: Sspm

@@ -14,6 +14,7 @@ package tests_pkg;
   `include "probe_u_test.sv"
   `include "probe_f_test.sv"
   `include "probe_sdtrig_test.sv"
+  `include "probe_smcsrind_test.sv"
   `include "probe_sscofpmf_test.sv"
   `include "probe_ssstateen_test.sv"
   `include "probe_sstc_test.sv"

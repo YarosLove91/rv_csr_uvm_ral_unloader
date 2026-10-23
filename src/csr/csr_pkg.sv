@@ -31,6 +31,10 @@ package csr_pkg;
   `include "csr_sdtrig_extension.svh"
   `include "csr_sdtrig_reg_block_extension.svh"
 
+  // Smcsrind
+  `include "csr_smcsrind_extension.svh"
+  `include "csr_smcsrind_reg_block_extension.svh"
+
   // Sscofpmf
   `include "csr_sscofpmf_extension.svh"
   `include "csr_sscofpmf_reg_block_extension.svh"

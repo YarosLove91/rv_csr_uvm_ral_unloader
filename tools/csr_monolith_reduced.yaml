@@ -916,6 +916,90 @@
       _size: 4
       type: RW
       reset_value: 0
+- name: vsiselect
+  address: 592
+  length: 64
+  priv_mode: VS
+  _group: Smcsrind
+  _source: Smcsrind/vsiselect.yaml
+  fields:
+    VALUE:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: vsireg
+  address: 593
+  length: 64
+  priv_mode: VS
+  _group: Smcsrind
+  _source: Smcsrind/vsireg.yaml
+  fields:
+    VALUE:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: vsireg2
+  address: 594
+  length: 64
+  priv_mode: VS
+  _group: Smcsrind
+  _source: Smcsrind/vsireg2.yaml
+  fields:
+    VALUE:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: vsireg3
+  address: 595
+  length: 64
+  priv_mode: VS
+  _group: Smcsrind
+  _source: Smcsrind/vsireg3.yaml
+  fields:
+    VALUE:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: vsireg4
+  address: 597
+  length: 64
+  priv_mode: VS
+  _group: Smcsrind
+  _source: Smcsrind/vsireg4.yaml
+  fields:
+    VALUE:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: vsireg5
+  address: 598
+  length: 64
+  priv_mode: VS
+  _group: Smcsrind
+  _source: Smcsrind/vsireg5.yaml
+  fields:
+    VALUE:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: vsireg6
+  address: 599
+  length: 64
+  priv_mode: VS
+  _group: Smcsrind
+  _source: Smcsrind/vsireg6.yaml
+  fields:
+    VALUE:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
 - name: vstimecmph
   address: 605
   length: 32
@@ -3165,6 +3249,90 @@
   priv_mode: M
   _group: H
   _source: H/mtval2.yaml
+  fields:
+    VALUE:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: miselect
+  address: 848
+  length: 64
+  priv_mode: M
+  _group: Smcsrind
+  _source: Smcsrind/miselect.yaml
+  fields:
+    VALUE:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: mireg
+  address: 849
+  length: 64
+  priv_mode: M
+  _group: Smcsrind
+  _source: Smcsrind/mireg.yaml
+  fields:
+    VALUE:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: mireg2
+  address: 850
+  length: 64
+  priv_mode: M
+  _group: Smcsrind
+  _source: Smcsrind/mireg2.yaml
+  fields:
+    VALUE:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: mireg3
+  address: 851
+  length: 64
+  priv_mode: M
+  _group: Smcsrind
+  _source: Smcsrind/mireg3.yaml
+  fields:
+    VALUE:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: mireg4
+  address: 853
+  length: 64
+  priv_mode: M
+  _group: Smcsrind
+  _source: Smcsrind/mireg4.yaml
+  fields:
+    VALUE:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: mireg5
+  address: 854
+  length: 64
+  priv_mode: M
+  _group: Smcsrind
+  _source: Smcsrind/mireg5.yaml
+  fields:
+    VALUE:
+      _lsb: 0
+      _size: 64
+      type: RW
+      reset_value: 0
+- name: mireg6
+  address: 855
+  length: 64
+  priv_mode: M
+  _group: Smcsrind
+  _source: Smcsrind/mireg6.yaml
   fields:
     VALUE:
       _lsb: 0

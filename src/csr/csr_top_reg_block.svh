@@ -19,6 +19,7 @@ class csr_top_reg_block extends uvm_reg_block;
   rand csr_u_reg_block U;
   rand csr_f_reg_block F;
   rand csr_sdtrig_reg_block Sdtrig;
+  rand csr_smcsrind_reg_block Smcsrind;
   rand csr_sscofpmf_reg_block Sscofpmf;
   rand csr_ssstateen_reg_block Ssstateen;
   rand csr_sstc_reg_block Sstc;
@@ -50,6 +51,7 @@ class csr_top_reg_block extends uvm_reg_block;
     build_u();
     build_f();
     build_sdtrig();
+    build_smcsrind();
     build_sscofpmf();
     build_ssstateen();
     build_sstc();
@@ -125,6 +127,17 @@ class csr_top_reg_block extends uvm_reg_block;
 
     csr_map.add_submap( Sdtrig.csr_map, 12'h000 );
   endfunction : build_sdtrig
+
+  //--------------------------------------------------------------------------
+  // Smcsrind
+  //--------------------------------------------------------------------------
+  protected function void build_smcsrind();
+    Smcsrind = csr_smcsrind_reg_block::type_id::create("Smcsrind");
+    Smcsrind.configure( this );
+    Smcsrind.build();
+
+    csr_map.add_submap( Smcsrind.csr_map, 12'h000 );
+  endfunction : build_smcsrind
 
   //--------------------------------------------------------------------------
   // Sscofpmf

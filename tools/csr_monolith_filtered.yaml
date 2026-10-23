@@ -4532,6 +4532,493 @@
   _group: H
 - $schema: csr_schema.json#
   kind: csr
+  name: vsiselect
+  long_name: Virtual Supervisor Indirect Register Select
+  address: 592
+  virtual_address: 592
+  writable: true
+  priv_mode: VS
+  length: VSXLEN
+  definedBy:
+    extension:
+      name: Smcsrind
+  description: 'The `vsiselect` register will support the value range 0..0xFFF at
+    a minimum.
+
+    A future extension may define a value range outside of this minimum range.
+
+    Only if such an extension is implemented will `vsiselect` be required to support
+    larger values.
+
+
+    Requiring a range of 0-0xFFF for `vsiselect`, even though most or all of the space
+    may be reserved
+
+    or inaccessible, permits a hypervisor to emulate indirectly accessed registers
+    in this implemented
+
+    range, including registers that may be standardized in the future.
+
+
+    It is recommended that `vsiselect` and `siselect` be implemented with the same
+    number of bits.
+
+    This avoids the creation of a virtualization hole due to observable differences
+    between their widths.
+
+
+    Values of `vsiselect` with the most-significant bit set (bit XLEN - 1 = 1) are
+    designated only for
+
+    custom use, presumably for accessing custom registers through the alias CSRs.
+
+    Values with the most-significant bit clear are designated only for standard use
+    and are reserved
+
+    until allocated to a standard architecture extension.
+
+
+    If XLEN is changed, the most-significant bit of `vsiselect` moves to the new position,
+
+    retaining its value from before.
+
+    '
+  fields:
+    VALUE:
+      long_name: Indirect Register Select Value
+      location_rv32: 31-0
+      location_rv64: 63-0
+      type: RW
+      description: 'The index value selecting the register accessed through the `vsireg*`
+        alias registers.
+
+        '
+      reset_value: 0
+      _lsb: 0
+      _size: 64
+  sw_read(): ''
+  _source: Smcsrind/vsiselect.yaml
+  _group: Smcsrind
+- $schema: csr_schema.json#
+  kind: csr
+  name: vsireg
+  long_name: Virtual Supervisor Indirect Register Alias
+  address: 593
+  virtual_address: 593
+  writable: true
+  priv_mode: VS
+  length: VSXLEN
+  definedBy:
+    extension:
+      name: Smcsrind
+  description: 'The `vsireg` CSR is one of several alias registers used to indirectly
+    access
+
+    virtual supervisor-level CSRs in VS-mode or VU-mode.
+
+
+    The register addressed by `vsireg` is selected by the current value of the `vsiselect`
+    CSR.
+
+
+    The alias mechanism allows indirect CSR access, which helps in virtualization
+    and future extensibility.
+
+
+    A virtual instruction exception is raised for attempts from VS-mode or VU-mode
+
+    to directly access `vsiselect` or `vsireg`, or from VU-mode to access `siselect`
+    or `sireg`.
+
+
+    The behavior of accesses to `vsireg` when `vsiselect` holds a value that is
+
+    not implemented at the HS level is UNSPECIFIED.
+
+
+    Implementations are recommended to raise an illegal instruction exception for
+
+    accesses to unimplemented targets via `vsireg`.
+
+
+    The width of `vsireg` is always the current `XLEN`, not `VSXLEN`.
+
+    For example, if `HSXLEN = 64` and `VSXLEN = 32`, then `vsireg` is 64 bits wide
+
+    when accessed from HS-mode (RV64), but 32 bits when accessed from VS-mode (RV32).
+
+    '
+  fields:
+    VALUE:
+      long_name: Indirectly Selected Register Value
+      location_rv32: 31-0
+      location_rv64: 63-0
+      type: RW
+      description: 'The data read from or written to the register selected by the
+        current
+
+        value of the `vsiselect` CSR.
+
+        '
+      reset_value: 0
+      sw_write(csr_value): "Csr handle = indirect_csr_lookup(PrivilegeMode::VS, CSR[vsiselect].VALUE,\
+        \ 1);\nif (!handle.valid) {\n  unimplemented_csr($encoding);\n}\nif (!handle.writable)\
+        \ {\n  raise (ExceptionCode::IllegalInstruction, mode(), $encoding);\n}\n\
+        csr_sw_write(handle, csr_value.VALUE);\nreturn csr_hw_read(handle);\n"
+      _lsb: 0
+      _size: 64
+  sw_read(): "Csr handle = indirect_csr_lookup(PrivilegeMode::VS, CSR[vsiselect].VALUE,\
+    \ 1);\nif (!handle.valid) {\n  unimplemented_csr($encoding);\n}\nreturn csr_sw_read(handle);\n"
+  _source: Smcsrind/vsireg.yaml
+  _group: Smcsrind
+- $schema: csr_schema.json#
+  kind: csr
+  name: vsireg2
+  long_name: Virtual Supervisor Indirect Register Alias 2
+  address: 594
+  virtual_address: 594
+  writable: true
+  priv_mode: VS
+  length: VSXLEN
+  definedBy:
+    extension:
+      name: Smcsrind
+  description: 'The `vsireg2` CSR is one of several alias registers used to indirectly
+    access
+
+    virtual supervisor-level CSRs in VS-mode or VU-mode.
+
+
+    The register addressed by `vsireg2` is selected by the current value of the `vsiselect`
+    CSR.
+
+
+    The alias mechanism allows indirect CSR access, which helps in virtualization
+    and future extensibility.
+
+
+    A virtual instruction exception is raised for attempts from VS-mode or VU-mode
+
+    to directly access `vsiselect` or `vsireg2`, or from VU-mode to access `siselect`
+    or `siregX`.
+
+
+    The behavior of accesses to `vsireg2` when `vsiselect` holds a value that is
+
+    not implemented at the HS level is UNSPECIFIED.
+
+
+    Implementations are recommended to raise an illegal instruction exception for
+
+    accesses to unimplemented targets via `vsireg2`.
+
+
+    The width of `vsireg2` is always the current `XLEN`, not `VSXLEN`.
+
+    For example, if `HSXLEN = 64` and `VSXLEN = 32`, then `vsireg2` is 64 bits wide
+
+    when accessed from HS-mode (RV64), but 32 bits when accessed from VS-mode (RV32).
+
+    '
+  fields:
+    VALUE:
+      long_name: Indirectly Selected Register Value
+      location_rv32: 31-0
+      location_rv64: 63-0
+      type: RW
+      description: 'Data read or written based on the currently selected `vsiselect`
+        value.
+
+        '
+      reset_value: 0
+      sw_write(csr_value): "Csr handle = indirect_csr_lookup(PrivilegeMode::VS, CSR[vsiselect].VALUE,\
+        \ 2);\nif (!handle.valid) {\n  unimplemented_csr($encoding);\n}\nif (!handle.writable)\
+        \ {\n  raise (ExceptionCode::IllegalInstruction, mode(), $encoding);\n}\n\
+        csr_sw_write(handle, csr_value.VALUE);\nreturn csr_hw_read(handle);\n"
+      _lsb: 0
+      _size: 64
+  sw_read(): "Csr handle = indirect_csr_lookup(PrivilegeMode::VS, CSR[vsiselect].VALUE,\
+    \ 2);\nif (!handle.valid) {\n  unimplemented_csr($encoding);\n}\nreturn csr_sw_read(handle);\n"
+  _source: Smcsrind/vsireg2.yaml
+  _group: Smcsrind
+- $schema: csr_schema.json#
+  kind: csr
+  name: vsireg3
+  long_name: Virtual Supervisor Indirect Register Alias 3
+  address: 595
+  virtual_address: 595
+  writable: true
+  priv_mode: VS
+  length: VSXLEN
+  definedBy:
+    extension:
+      name: Smcsrind
+  description: 'The `vsireg3` CSR is one of several alias registers used to indirectly
+    access
+
+    virtual supervisor-level CSRs in VS-mode or VU-mode.
+
+
+    The register addressed by `vsireg3` is selected by the current value of the `vsiselect`
+    CSR.
+
+
+    The alias mechanism allows indirect CSR access, which helps in virtualization
+    and future extensibility.
+
+
+    A virtual instruction exception is raised for attempts from VS-mode or VU-mode
+
+    to directly access `vsiselect` or `vsireg3`, or from VU-mode to access `siselect`
+    or `siregX`.
+
+
+    The behavior of accesses to `vsireg3` when `vsiselect` holds a value that is
+
+    not implemented at the HS level is UNSPECIFIED.
+
+
+    Implementations are recommended to raise an illegal instruction exception for
+
+    accesses to unimplemented targets via `vsireg3`.
+
+
+    The width of `vsireg3` is always the current `XLEN`, not `VSXLEN`.
+
+    For example, if `HSXLEN = 64` and `VSXLEN = 32`, then `vsireg3` is 64 bits wide
+
+    when accessed from HS-mode (RV64), but 32 bits when accessed from VS-mode (RV32).
+
+    '
+  fields:
+    VALUE:
+      long_name: Indirectly Selected Register Value
+      location_rv32: 31-0
+      location_rv64: 63-0
+      type: RW
+      description: The data read or written based on the currently selected `vsiselect`
+        value.
+      reset_value: 0
+      sw_write(csr_value): "Csr handle = indirect_csr_lookup(PrivilegeMode::VS, CSR[vsiselect].VALUE,\
+        \ 3);\nif (!handle.valid) {\n  unimplemented_csr($encoding);\n}\nif (!handle.writable)\
+        \ {\n  raise (ExceptionCode::IllegalInstruction, mode(), $encoding);\n}\n\
+        csr_sw_write(handle, csr_value.VALUE);\nreturn csr_hw_read(handle);\n"
+      _lsb: 0
+      _size: 64
+  sw_read(): "Csr handle = indirect_csr_lookup(PrivilegeMode::VS, CSR[vsiselect].VALUE,\
+    \ 3);\nif (!handle.valid) {\n  unimplemented_csr($encoding);\n}\nreturn csr_sw_read(handle);\n"
+  _source: Smcsrind/vsireg3.yaml
+  _group: Smcsrind
+- $schema: csr_schema.json#
+  kind: csr
+  name: vsireg4
+  long_name: Virtual Supervisor Indirect Register Alias 4
+  address: 597
+  virtual_address: 597
+  writable: true
+  priv_mode: VS
+  length: VSXLEN
+  definedBy:
+    extension:
+      name: Smcsrind
+  description: 'The `vsireg4` CSR is one of several alias registers used to indirectly
+    access
+
+    virtual supervisor-level CSRs in VS-mode or VU-mode.
+
+
+    The register addressed by `vsireg4` is selected by the current value of the `vsiselect`
+    CSR.
+
+
+    The alias mechanism allows indirect CSR access, which helps in virtualization
+    and future extensibility.
+
+
+    A virtual instruction exception is raised for attempts from VS-mode or VU-mode
+
+    to directly access `vsiselect` or `vsireg4`, or from VU-mode to access `siselect`
+    or `siregX`.
+
+
+    The behavior of accesses to `vsireg4` when `vsiselect` holds a value that is
+
+    not implemented at the HS level is UNSPECIFIED.
+
+
+    Implementations are recommended to raise an illegal instruction exception for
+
+    accesses to unimplemented targets via `vsireg4`.
+
+
+    The width of `vsireg4` is always the current `XLEN`, not `VSXLEN`.
+
+    For example, if `HSXLEN = 64` and `VSXLEN = 32`, then `vsireg4` is 64 bits wide
+
+    when accessed from HS-mode (RV64), but 32 bits when accessed from VS-mode (RV32).
+
+    '
+  fields:
+    VALUE:
+      long_name: Indirectly Selected Register Value
+      location_rv32: 31-0
+      location_rv64: 63-0
+      type: RW
+      description: The data read or written based on the currently selected `vsiselect`
+        value.
+      reset_value: 0
+      sw_write(csr_value): "Csr handle = indirect_csr_lookup(PrivilegeMode::VS, CSR[vsiselect].VALUE,\
+        \ 4);\nif (!handle.valid) {\n  unimplemented_csr($encoding);\n}\nif (!handle.writable)\
+        \ {\n  raise (ExceptionCode::IllegalInstruction, mode(), $encoding);\n}\n\
+        csr_sw_write(handle, csr_value.VALUE);\nreturn csr_hw_read(handle);\n"
+      _lsb: 0
+      _size: 64
+  sw_read(): "Csr handle = indirect_csr_lookup(PrivilegeMode::VS, CSR[vsiselect].VALUE,\
+    \ 4);\nif (!handle.valid) {\n  unimplemented_csr($encoding);\n}\nreturn csr_sw_read(handle);\n"
+  _source: Smcsrind/vsireg4.yaml
+  _group: Smcsrind
+- $schema: csr_schema.json#
+  kind: csr
+  name: vsireg5
+  long_name: Virtual Supervisor Indirect Register Alias 5
+  address: 598
+  virtual_address: 598
+  writable: true
+  priv_mode: VS
+  length: VSXLEN
+  definedBy:
+    extension:
+      name: Smcsrind
+  description: 'The `vsireg5` CSR is one of several alias registers used to indirectly
+    access
+
+    virtual supervisor-level CSRs in VS-mode or VU-mode.
+
+
+    The register addressed by `vsireg5` is selected by the current value of the `vsiselect`
+    CSR.
+
+
+    The alias mechanism allows indirect CSR access, which helps in virtualization
+    and future extensibility.
+
+
+    A virtual instruction exception is raised for attempts from VS-mode or VU-mode
+
+    to directly access `vsiselect` or `vsireg5`, or from VU-mode to access `siselect`
+    or `siregX`.
+
+
+    The behavior of accesses to `vsireg5` when `vsiselect` holds a value that is
+
+    not implemented at the HS level is UNSPECIFIED.
+
+
+    Implementations are recommended to raise an illegal instruction exception for
+
+    such accesses to unimplemented targets.
+
+
+    The width of `vsireg5` is always the current `XLEN`, not `VSXLEN`.
+
+    For example, if `HSXLEN = 64` and `VSXLEN = 32`, then `vsireg5` is 64 bits wide
+
+    when accessed from HS-mode (RV64), but 32 bits when accessed from VS-mode (RV32).
+
+    '
+  fields:
+    VALUE:
+      long_name: Indirectly Selected Register Value
+      location_rv32: 31-0
+      location_rv64: 63-0
+      type: RW
+      description: 'The data read or written from the register selected by the value
+        in `vsiselect`.
+
+        '
+      reset_value: 0
+      sw_write(csr_value): "Csr handle = indirect_csr_lookup(PrivilegeMode::VS, CSR[vsiselect].VALUE,\
+        \ 5);\nif (!handle.valid) {\n  unimplemented_csr($encoding);\n}\nif (!handle.writable)\
+        \ {\n  raise (ExceptionCode::IllegalInstruction, mode(), $encoding);\n}\n\
+        csr_sw_write(handle, csr_value.VALUE);\nreturn csr_hw_read(handle);\n"
+      _lsb: 0
+      _size: 64
+  sw_read(): "Csr handle = indirect_csr_lookup(PrivilegeMode::VS, CSR[vsiselect].VALUE,\
+    \ 5);\nif (!handle.valid) {\n  unimplemented_csr($encoding);\n}\nreturn csr_sw_read(handle);\n"
+  _source: Smcsrind/vsireg5.yaml
+  _group: Smcsrind
+- $schema: csr_schema.json#
+  kind: csr
+  name: vsireg6
+  long_name: Virtual Supervisor Indirect Register Alias 6
+  address: 599
+  virtual_address: 599
+  writable: true
+  priv_mode: VS
+  length: VSXLEN
+  definedBy:
+    extension:
+      name: Smcsrind
+  description: 'The `vsireg6` CSR is one of several alias registers used to indirectly
+    access
+
+    virtual supervisor-level CSRs in VS-mode or VU-mode.
+
+
+    The register addressed by `vsireg6` is selected by the current value of the `vsiselect`
+    CSR.
+
+
+    The alias mechanism allows indirect CSR access, which helps in virtualization
+    and future extensibility.
+
+
+    A virtual instruction exception is raised for attempts from VS-mode or VU-mode
+
+    to directly access `vsiselect` or `vsireg6`, or from VU-mode to access `siselect`
+    or `siregX`.
+
+
+    The behavior of accesses to `vsireg6` when `vsiselect` holds a value that is
+
+    not implemented at the HS level is UNSPECIFIED.
+
+
+    Implementations are recommended to raise an illegal instruction exception for
+
+    such accesses to unimplemented targets.
+
+
+    The width of `vsireg6` is always the current `XLEN`, not `VSXLEN`.
+
+    For example, if `HSXLEN = 64` and `VSXLEN = 32`, then `vsireg6` is 64 bits wide
+
+    when accessed from HS-mode (RV64), but 32 bits when accessed from VS-mode (RV32).
+
+    '
+  fields:
+    VALUE:
+      long_name: Indirectly Selected Register Value
+      location_rv32: 31-0
+      location_rv64: 63-0
+      type: RW
+      description: 'The data read or written from the register selected by the current
+        value of `vsiselect`.
+
+        '
+      reset_value: 0
+      sw_write(csr_value): "Csr handle = indirect_csr_lookup(PrivilegeMode::VS, CSR[vsiselect].VALUE,\
+        \ 6);\nif (!handle.valid) {\n  unimplemented_csr($encoding);\n}\nif (!handle.writable)\
+        \ {\n  raise (ExceptionCode::IllegalInstruction, mode(), $encoding);\n}\n\
+        csr_sw_write(handle, csr_value.VALUE);\nreturn csr_hw_read(handle);\n"
+      _lsb: 0
+      _size: 64
+  sw_read(): "Csr handle = indirect_csr_lookup(PrivilegeMode::VS, CSR[vsiselect].VALUE,\
+    \ 6);\nif (!handle.valid) {\n  unimplemented_csr($encoding);\n}\nreturn csr_sw_read(handle);\n"
+  _source: Smcsrind/vsireg6.yaml
+  _group: Smcsrind
+- $schema: csr_schema.json#
+  kind: csr
   name: vstimecmph
   long_name: Virtual supervisor timer compare high
   address: 605
@@ -16151,6 +16638,541 @@
       _size: 64
   _source: H/mtval2.yaml
   _group: H
+- $schema: csr_schema.json#
+  kind: csr
+  name: miselect
+  long_name: Machine Indirect Register Select
+  address: 848
+  writable: true
+  priv_mode: M
+  length: MXLEN
+  definedBy:
+    extension:
+      name: Smcsrind
+  description: 'The CSRs listed in the table above provide a window for accessing
+    register state indirectly.
+
+    The value of `miselect` determines which register is accessed upon read or write
+    of each of
+
+    the machine indirect alias CSRs (`mireg*`). `miselect` value ranges are allocated
+    to dependent
+
+    extensions, which specify the register state accessible via each `miregi` register,
+    for each
+
+    `miselect` value. `miselect` is a WARL register.
+
+
+    The `miselect` register implements at least enough bits to support all implemented
+    `miselect`
+
+    values (corresponding to the implemented extensions that utilize `miselect`/`mireg*`
+    to
+
+    indirectly access register state). The `miselect` register may be read-only zero
+    if there are
+
+    no extensions implemented that utilize it.
+
+
+    Values of `miselect` with the most-significant bit set (bit XLEN - 1 = 1) are
+    designated only for
+
+    custom use, presumably for accessing custom registers through the alias CSRs.
+    Values of
+
+    `miselect` with the most-significant bit clear are designated only for standard
+    use and are
+
+    reserved until allocated to a standard architecture extension.
+
+
+    If XLEN is changed, the most-significant bit of `miselect` moves to the new position,
+
+    retaining its value from before.
+
+
+    An implementation is not required to support any custom values for `miselect`.
+
+    '
+  fields:
+    VALUE:
+      long_name: Indirect Register Selector
+      location_rv32: 31-0
+      location_rv64: 63-0
+      type: RW
+      description: 'Selects which indirect register is accessed via `mireg*`.
+
+        '
+      reset_value: 0
+      _lsb: 0
+      _size: 64
+  sw_read(): ''
+  _source: Smcsrind/miselect.yaml
+  _group: Smcsrind
+- $schema: csr_schema.json#
+  kind: csr
+  name: mireg
+  long_name: Machine Indirect Register Alias
+  address: 849
+  writable: true
+  priv_mode: M
+  length: MXLEN
+  definedBy:
+    extension:
+      name: Smcsrind
+  description: 'The mireg machine indirect alias CSR is used to access another CSR''s
+    state
+
+    indirectly upon a read or write, as determined by the value of miselect.
+
+
+    The behavior upon accessing mireg from M-mode, while miselect holds a value
+
+    that is not implemented, is UNSPECIFIED.
+
+
+    It is expected that implementations will typically raise an illegal instruction
+    exception for
+
+    such accesses, so that, for example, they can be identified as software bugs.
+    Platform
+
+    specs, profile specs, and/or the Privileged ISA spec may place more restrictions
+    on
+
+    behavior for such accesses.
+
+
+    Attempts to access mireg while miselect holds a number in an allocated and implemented
+    range
+
+    results in a specific behavior that, for each combination of miselect and mireg,
+    is defined by the
+
+    extension to which the miselect value is allocated.
+
+
+    Ordinarily, mireg will access register state, access read-only 0 state, or raise
+    an
+
+    illegal instruction exception.
+
+
+    For RV32, if an extension defines an indirectly accessed register as 64 bits wide,
+    it is
+
+    recommended that the lower 32 bits of the register are accessed through mireg,
+
+    while the upper 32 bits are accessed through mireg4.
+
+    '
+  fields:
+    VALUE:
+      long_name: Indirectly Selected Register Value
+      location_rv32: 31-0
+      location_rv64: 63-0
+      type: RW
+      description: 'Register state of the CSR selected by the current `miselect` value
+
+        '
+      reset_value: 0
+      sw_write(csr_value): "Csr handle = indirect_csr_lookup(PrivilegeMode::M, CSR[miselect].VALUE,\
+        \ 1);\nif (!handle.valid) {\n  unimplemented_csr($encoding);\n}\nif (!handle.writable)\
+        \ {\n  raise (ExceptionCode::IllegalInstruction, mode(), $encoding);\n}\n\
+        csr_sw_write(handle, csr_value.VALUE);\nreturn csr_hw_read(handle);\n"
+      _lsb: 0
+      _size: 64
+  sw_read(): "Csr handle = indirect_csr_lookup(PrivilegeMode::M, CSR[miselect].VALUE,\
+    \ 1);\nif (!handle.valid) {\n  unimplemented_csr($encoding);\n}\nreturn csr_sw_read(handle);\n"
+  _source: Smcsrind/mireg.yaml
+  _group: Smcsrind
+- $schema: csr_schema.json#
+  kind: csr
+  name: mireg2
+  long_name: Machine Indirect Register Alias 2
+  address: 850
+  writable: true
+  priv_mode: M
+  length: MXLEN
+  definedBy:
+    extension:
+      name: Smcsrind
+  description: 'The `mireg2` machine indirect alias CSR is used to access register
+    state indirectly
+
+    upon a read or write, as determined by the value of `miselect`.
+
+
+    The behavior upon accessing `mireg2` from M-mode, while `miselect` holds a value
+
+    that is not implemented, is UNSPECIFIED.
+
+
+    It is expected that implementations will typically raise an illegal instruction
+    exception for
+
+    such accesses, so that, for example, they can be identified as software bugs.
+    Platform
+
+    specs, profile specs, and/or the Privileged ISA spec may place more restrictions
+    on
+
+    behavior for such accesses.
+
+
+    Attempts to access `mireg2` while `miselect` holds a number in an allocated and
+    implemented
+
+    range results in a specific behavior that, for each combination of `miselect`
+    and `mireg2`, is
+
+    defined by the extension to which the `miselect` value is allocated.
+
+
+    Ordinarily, `mireg2` will access register state, access read-only 0 state, or
+    raise an
+
+    illegal instruction exception.
+
+
+    For RV32, if an extension defines an indirectly accessed register as 64 bits wide,
+    it is
+
+    recommended that the lower 32 bits of the register are accessed through `mireg2`,
+
+    while the upper 32 bits are accessed through `mireg5`.
+
+    '
+  fields:
+    VALUE:
+      long_name: Indirect Register Value
+      location_rv32: 31-0
+      location_rv64: 63-0
+      type: RW
+      description: 'Register state of the CSR selected by the current `miselect` value
+
+        '
+      reset_value: 0
+      sw_write(csr_value): "Csr handle = indirect_csr_lookup(PrivilegeMode::M, CSR[miselect].VALUE,\
+        \ 2);\nif (!handle.valid) {\n  unimplemented_csr($encoding);\n}\nif (!handle.writable)\
+        \ {\n  raise (ExceptionCode::IllegalInstruction, mode(), $encoding);\n}\n\
+        csr_sw_write(handle, csr_value.VALUE);\nreturn csr_hw_read(handle);\n"
+      _lsb: 0
+      _size: 64
+  sw_read(): "Csr handle = indirect_csr_lookup(PrivilegeMode::M, CSR[miselect].VALUE,\
+    \ 2);\nif (!handle.valid) {\n  unimplemented_csr($encoding);\n}\nreturn csr_sw_read(handle);\n"
+  _source: Smcsrind/mireg2.yaml
+  _group: Smcsrind
+- $schema: csr_schema.json#
+  kind: csr
+  name: mireg3
+  long_name: Machine Indirect Register Alias 3
+  address: 851
+  writable: true
+  priv_mode: M
+  length: MXLEN
+  definedBy:
+    extension:
+      name: Smcsrind
+  description: 'The `mireg3` machine indirect alias CSR is used to access register
+    state indirectly
+
+    upon a read or write, as determined by the value of `miselect`.
+
+
+    The behavior upon accessing `mireg3` from M-mode, while `miselect` holds a value
+
+    that is not implemented, is UNSPECIFIED.
+
+
+    It is expected that implementations will typically raise an illegal instruction
+    exception for
+
+    such accesses, so that, for example, they can be identified as software bugs.
+    Platform
+
+    specs, profile specs, and/or the Privileged ISA spec may place more restrictions
+    on
+
+    behavior for such accesses.
+
+
+    Attempts to access `mireg3` while `miselect` holds a number in an allocated and
+    implemented
+
+    range results in a specific behavior that, for each combination of `miselect`
+    and `mireg3`, is
+
+    defined by the extension to which the `miselect` value is allocated.
+
+
+    Ordinarily, `mireg3` will access register state, access read-only 0 state, or
+    raise an
+
+    illegal instruction exception.
+
+
+    For RV32, if an extension defines an indirectly accessed register as 64 bits wide,
+    it is
+
+    recommended that the lower 32 bits of the register are accessed through `mireg3`,
+
+    while the upper 32 bits are accessed through `mireg6`.
+
+    '
+  fields:
+    VALUE:
+      long_name: Indirectly Selected Register Value
+      location_rv32: 31-0
+      location_rv64: 63-0
+      type: RW
+      description: 'Register state of the CSR selected by the current `miselect` value
+
+        '
+      reset_value: 0
+      sw_write(csr_value): "Csr handle = indirect_csr_lookup(PrivilegeMode::M, CSR[miselect].VALUE,\
+        \ 3);\nif (!handle.valid) {\n  unimplemented_csr($encoding);\n}\nif (!handle.writable)\
+        \ {\n  raise (ExceptionCode::IllegalInstruction, mode(), $encoding);\n}\n\
+        csr_sw_write(handle, csr_value.VALUE);\nreturn csr_hw_read(handle);\n"
+      _lsb: 0
+      _size: 64
+  sw_read(): "Csr handle = indirect_csr_lookup(PrivilegeMode::M, CSR[miselect].VALUE,\
+    \ 3);\nif (!handle.valid) {\n  unimplemented_csr($encoding);\n}\nreturn csr_sw_read(handle);\n"
+  _source: Smcsrind/mireg3.yaml
+  _group: Smcsrind
+- $schema: csr_schema.json#
+  kind: csr
+  name: mireg4
+  long_name: Machine Indirect Register Alias 4
+  address: 853
+  writable: true
+  priv_mode: M
+  length: MXLEN
+  definedBy:
+    extension:
+      name: Smcsrind
+  description: 'The `mireg4` machine indirect alias CSR is used to access register
+    state indirectly
+
+    upon a read or write, as determined by the value of `miselect`.
+
+
+    The behavior upon accessing `mireg4` from M-mode, while `miselect` holds a value
+
+    that is not implemented, is UNSPECIFIED.
+
+
+    It is expected that implementations will typically raise an illegal instruction
+    exception for
+
+    such accesses, so that, for example, they can be identified as software bugs.
+    Platform
+
+    specs, profile specs, and/or the Privileged ISA spec may place more restrictions
+    on
+
+    behavior for such accesses.
+
+
+    Attempts to access `mireg4` while `miselect` holds a number in an allocated and
+    implemented
+
+    range results in a specific behavior that, for each combination of `miselect`
+    and `mireg4`, is
+
+    defined by the extension to which the `miselect` value is allocated.
+
+
+    Ordinarily, `mireg4` will access register state, access read-only 0 state, or
+    raise an
+
+    illegal instruction exception.
+
+
+    For RV32, if an extension defines an indirectly accessed register as 64 bits wide,
+    it is
+
+    recommended that the upper 32 bits of the register are accessed through `mireg4`,
+
+    while the lower 32 bits are accessed through `mireg`, `mireg2`, or `mireg3`.
+
+    '
+  fields:
+    VALUE:
+      long_name: Indirectly Selected Register Value
+      location_rv32: 31-0
+      location_rv64: 63-0
+      type: RW
+      description: 'Register state of the CSR selected by the current `miselect` value
+
+        '
+      reset_value: 0
+      sw_write(csr_value): "Csr handle = indirect_csr_lookup(PrivilegeMode::M, CSR[miselect].VALUE,\
+        \ 4);\nif (!handle.valid) {\n  unimplemented_csr($encoding);\n}\nif (!handle.writable)\
+        \ {\n  raise (ExceptionCode::IllegalInstruction, mode(), $encoding);\n}\n\
+        csr_sw_write(handle, csr_value.VALUE);\nreturn csr_hw_read(handle);\n"
+      _lsb: 0
+      _size: 64
+  sw_read(): "Csr handle = indirect_csr_lookup(PrivilegeMode::M, CSR[miselect].VALUE,\
+    \ 4);\nif (!handle.valid) {\n  unimplemented_csr($encoding);\n}\nreturn csr_sw_read(handle);\n"
+  _source: Smcsrind/mireg4.yaml
+  _group: Smcsrind
+- $schema: csr_schema.json#
+  kind: csr
+  name: mireg5
+  long_name: Machine Indirect Register Alias 5
+  address: 854
+  writable: true
+  priv_mode: M
+  length: MXLEN
+  definedBy:
+    extension:
+      name: Smcsrind
+  description: 'The `mireg5` machine indirect alias CSR is used to access register
+    state indirectly
+
+    upon a read or write, as determined by the value of `miselect`.
+
+
+    The behavior upon accessing `mireg5` from M-mode, while `miselect` holds a value
+
+    that is not implemented, is UNSPECIFIED.
+
+
+    It is expected that implementations will typically raise an illegal instruction
+    exception for
+
+    such accesses, so that, for example, they can be identified as software bugs.
+    Platform
+
+    specs, profile specs, and/or the Privileged ISA spec may place more restrictions
+    on
+
+    behavior for such accesses.
+
+
+    Attempts to access `mireg5` while `miselect` holds a number in an allocated and
+    implemented
+
+    range results in a specific behavior that, for each combination of `miselect`
+    and `mireg5`, is
+
+    defined by the extension to which the `miselect` value is allocated.
+
+
+    Ordinarily, `mireg5` will access register state, access read-only 0 state, or
+    raise an
+
+    illegal instruction exception.
+
+
+    For RV32, if an extension defines an indirectly accessed register as 64 bits wide,
+    it is
+
+    recommended that the upper 32 bits of the register are accessed through `mireg5`,
+
+    while the lower 32 bits are accessed through `mireg2`.
+
+    '
+  fields:
+    VALUE:
+      long_name: Indirectly Selected Register Value
+      location_rv32: 31-0
+      location_rv64: 63-0
+      type: RW
+      description: 'Register state of the CSR selected by the current `miselect` value
+
+        '
+      reset_value: 0
+      sw_write(csr_value): "Csr handle = indirect_csr_lookup(PrivilegeMode::M, CSR[miselect].VALUE,\
+        \ 5);\nif (!handle.valid) {\n  unimplemented_csr($encoding);\n}\nif (!handle.writable)\
+        \ {\n  raise (ExceptionCode::IllegalInstruction, mode(), $encoding);\n}\n\
+        csr_sw_write(handle, csr_value.VALUE);\nreturn csr_hw_read(handle);\n"
+      _lsb: 0
+      _size: 64
+  sw_read(): "Csr handle = indirect_csr_lookup(PrivilegeMode::M, CSR[miselect].VALUE,\
+    \ 5);\nif (!handle.valid) {\n  unimplemented_csr($encoding);\n}\nreturn csr_sw_read(handle);\n"
+  _source: Smcsrind/mireg5.yaml
+  _group: Smcsrind
+- $schema: csr_schema.json#
+  kind: csr
+  name: mireg6
+  long_name: Machine Indirect Register Alias 6
+  address: 855
+  writable: true
+  priv_mode: M
+  length: MXLEN
+  definedBy:
+    extension:
+      name: Smcsrind
+  description: 'The `mireg6` machine indirect alias CSR is used to access register
+    state indirectly
+
+    upon a read or write, as determined by the value of `miselect`.
+
+
+    The behavior upon accessing `mireg6` from M-mode, while `miselect` holds a value
+
+    that is not implemented, is UNSPECIFIED.
+
+
+    It is expected that implementations will typically raise an illegal instruction
+    exception for
+
+    such accesses, so that, for example, they can be identified as software bugs.
+    Platform
+
+    specs, profile specs, and/or the Privileged ISA spec may place more restrictions
+    on
+
+    behavior for such accesses.
+
+
+    Attempts to access `mireg6` while `miselect` holds a number in an allocated and
+    implemented
+
+    range results in a specific behavior that, for each combination of `miselect`
+    and `mireg6`, is
+
+    defined by the extension to which the `miselect` value is allocated.
+
+
+    Ordinarily, `mireg6` will access register state, access read-only 0 state, or
+    raise an
+
+    illegal instruction exception.
+
+
+    For RV32, if an extension defines an indirectly accessed register as 64 bits wide,
+    it is
+
+    recommended that the upper 32 bits of the register are accessed through `mireg6`,
+
+    while the lower 32 bits are accessed through `mireg3`.
+
+    '
+  fields:
+    VALUE:
+      long_name: Indirectly Selected Register Value
+      location_rv32: 31-0
+      location_rv64: 63-0
+      type: RW
+      description: 'Register state of the CSR selected by the current `miselect` value
+
+        '
+      reset_value: 0
+      sw_write(csr_value): "Csr handle = indirect_csr_lookup(PrivilegeMode::M, CSR[miselect].VALUE,\
+        \ 6);\nif (!handle.valid) {\n  unimplemented_csr($encoding);\n}\nif (!handle.writable)\
+        \ {\n  raise (ExceptionCode::IllegalInstruction, mode(), $encoding);\n}\n\
+        csr_sw_write(handle, csr_value.VALUE);\nreturn csr_hw_read(handle);\n"
+      _lsb: 0
+      _size: 64
+  sw_read(): "Csr handle = indirect_csr_lookup(PrivilegeMode::M, CSR[miselect].VALUE,\
+    \ 6);\nif (!handle.valid) {\n  unimplemented_csr($encoding);\n}\nreturn csr_sw_read(handle);\n"
+  _source: Smcsrind/mireg6.yaml
+  _group: Smcsrind
 - $schema: csr_schema.json#
   kind: csr
   name: pmpcfg0
